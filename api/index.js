@@ -1,0 +1,14 @@
+const LISTEN_PORT = 3000
+const winston = require('winston')
+const express = require('express')
+const bodyParser = require('body-parser')
+const routes = require('./routes/routes.js')
+const app = express()
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded())
+app.use('/', routes)
+
+const server = app.listen(LISTEN_PORT, () => {
+  winston.info('Blockchain Course API server running on port ' + LISTEN_PORT)
+})

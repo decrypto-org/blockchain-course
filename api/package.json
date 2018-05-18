@@ -1,0 +1,29 @@
+{
+  "name": "blockchain-course-api",
+  "version": "1.0.0",
+  "description": "The backend for the Introduction to Blockchains course",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "contributors": [
+    {
+      "name": "Christos Nasikas",
+      "email": "xristosnasikas@gmail.com"
+    },
+    {
+      "name": "Dionysis Zindros",
+      "email": "dionyziz@gmail.com"
+    }
+  ],
+  "repository": "github:decrypto/blockchain-course",
+  "homepage": "https://blockchain-course.org/",
+  "bugs": "https://github.com/decrypto-org/blockchain-course/issues",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "npm": "^6.0.1",
+    "winston": "^2.4.2"
+  }
+}
