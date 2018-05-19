@@ -1,4 +1,6 @@
-const LISTEN_PORT = 3000
+require('dotenv').config()
+
+const LISTEN_PORT = process.env.PORT || 3000
 const winston = require('winston')
 const express = require('express')
 const bodyParser = require('body-parser')
