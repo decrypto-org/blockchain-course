@@ -33,5 +33,7 @@
     "sequelize-cli": "^4.0.0",
     "winston": "^2.4.2"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "run.env": "^1.0.1"
+  }
 }
