@@ -1,4 +1,5 @@
 const express = require('express')
+const auth = require('./auth')
 const router = express.Router()
 
 router.get('/', (req, res) => {
@@ -7,4 +8,5 @@ router.get('/', (req, res) => {
 
 module.exports = {
   '/': router,
+  '/auth': auth
 }
