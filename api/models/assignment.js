@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     position: DataTypes.INTEGER
   }, {});
   Assignment.associate = function(models) {
+    Assignment.hasMany(models.ParameterizedAssignment)
   };
   return Assignment;
 };
