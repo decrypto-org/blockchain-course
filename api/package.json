@@ -25,6 +25,8 @@
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
     "npm": "^6.0.1",
+    "sequelize": "^4.37.8",
     "winston": "^2.4.2"
-  }
+  },
+  "devDependencies": {}
 }
