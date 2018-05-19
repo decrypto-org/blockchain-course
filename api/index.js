@@ -8,7 +8,7 @@ const routes = require('./routes/routes.js')
 const app = express()
 
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded())
+app.use(bodyParser.urlencoded({extended: true}))
 app.use('/', routes)
 
 const server = app.listen(LISTEN_PORT, () => {
