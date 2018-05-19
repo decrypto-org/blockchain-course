@@ -6,6 +6,9 @@ module.exports = (sequelize, DataTypes) => {
     position: DataTypes.INTEGER
   }, {});
   LectureGroup.associate = function(models) {
+    LectureGroup.hasMany(
+      models.Lecture, {foreignKey: 'groupId'}
+    )
   };
   return LectureGroup;
 };
