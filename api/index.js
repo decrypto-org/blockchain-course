@@ -6,7 +6,13 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const routes = require('./routes/routes.js')
 const app = express()
+const session = require('express-session')
 
+app.use(session({
+  secret: process.env.APP_SECRET || 'blockchain course default session secret',
+  resave: false,
+  saveUninitialized: false
+}))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 app.use('/', routes)
