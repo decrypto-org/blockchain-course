@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
   ParameterizedAssignment.associate = function(models) {
     ParameterizedAssignment.belongsTo(models.Assignment)
     ParameterizedAssignment.belongsTo(models.User, {as: 'student'})
+    ParameterizedAssignment.hasMany(models.Solution)
   };
   return ParameterizedAssignment;
 };

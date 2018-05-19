@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('ParameterizedAssignments', {
+    return queryInterface.createTable('Solutions', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -16,16 +16,9 @@ module.exports = {
         }
       },
       studentId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Users',
-          key: 'id'
-        }
+        type: Sequelize.INTEGER
       },
-      auxPublic: {
-        type: Sequelize.TEXT
-      },
-      auxPrivate: {
+      data: {
         type: Sequelize.TEXT
       },
       createdAt: {
@@ -39,6 +32,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('ParameterizedAssignments');
+    return queryInterface.dropTable('Solutions');
   }
 };
