@@ -1,3 +1,7 @@
-# Blockchain course
+# Introduction to Blockchains
 
- An interactive course on blockchain science and engineering
+This repository contains the material for our [Introduction to
+Blockchains](https://blockchain-course.org) course.
+
+You can take the course online at
+[blockchain-course.org](https://blockchain-course.org/).
