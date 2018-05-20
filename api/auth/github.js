@@ -1,4 +1,6 @@
+const winston = require('winston')
 const GitHubStrategy = require('passport-github')
+const {User} = require('../models')
 
 const strategy = new GitHubStrategy(
   {
@@ -6,19 +8,27 @@ const strategy = new GitHubStrategy(
     clientSecret: process.env.GITHUB_CLIENT_SECRET,
     callbackURL: process.env.GITHUB_CALLBACK_URL
   },
-  (authToken, refreshToken, profile, cb) => {
-    /*
-      console.log('GitHub profile:')
-      console.log('===============')
-      console.log(profile)
-      console.log('===============')
-    */
-    cb(null, null)
-    /*
-      User.findOrCreate({githubId: profile.id}, (err, user) => {
-        return cb(err, user)
-      })
-    */
+  async (authToken, refreshToken, profile, cb) => {
+    winston.log('debug', 'Received profile from GitHub', {profile})
+
+    let [user, created] = await User.findOrCreate(
+      {
+        where: {githubId: profile.id},
+        defaults: {
+          username: profile.username,
+          email: profile.emails[0].value,
+          firstName: profile.displayName.split(' ')[0],
+          lastName: profile.displayName.split(' ').slice(1).join(' ')
+        }
+      }
+    )
+    if (created) {
+      winston.log('debug', 'Registered new user', {user})
+    }
+    else {
+      winston.log('debug', 'Logged in existing user', {user})
+    }
+    return cb(null, user)
   }
 )
 
