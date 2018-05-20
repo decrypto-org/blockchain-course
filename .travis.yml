@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+  - "node"
+
+before_script:
+  - cd api && npm install && cd ..
+  - npm install -g eslint
+
+script:
+  - cd api && eslint . && cd ..
