@@ -13,6 +13,7 @@ const strategy = new GitHubStrategy(
       console.log(profile)
       console.log('===============')
     */
+    cb(null, null)
     /*
       User.findOrCreate({githubId: profile.id}, (err, user) => {
         return cb(err, user)

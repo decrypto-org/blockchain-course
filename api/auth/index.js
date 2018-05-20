@@ -1,14 +1,15 @@
+const winston = require('winston')
 const passport = require('passport')
 const GitHubStrategy = require('./github')
 
 passport.serializeUser((user, done) => {
-  console.log('Serializing user:')
-  console.log(user)
+  winston.debug('Serializing user:', user)
   done(null, {_id: user._id})
 })
 
 passport.deserializeUser((id, done) => {
-  console.log('Deserializing user ', id)
+  winston.debug('Deserializing user ', id)
+  done(null, null)
 })
 
 passport.use(GitHubStrategy)
