@@ -18,6 +18,10 @@
     "redux-thunk": "^2.2.0",
     "typeface-roboto": "^0.0.54"
   },
+  "devDependencies": {
+    "stylelint": "^9.2.1",
+    "stylelint-config-standard": "^18.2.0"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
