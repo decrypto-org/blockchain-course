@@ -17,12 +17,12 @@ const styles = theme => ({
   menuItem: {
     '&:focus, &.active': {
       backgroundColor: theme.palette.primary.main,
-      '& $primary, & $icon': {
+      '& $textItem, & $icon': {
         color: theme.palette.common.white
       }
     }
   },
-  primary: {},
+  textItem: {},
   icon: {}
 })
 
@@ -40,7 +40,7 @@ function Sidebar ({ ...props }) {
           [classes.menuItem]: classes.menuItem,
           'active': activeRoute(prop.path)
         })
-
+        console.log(classes)
         return (
           <NavLink
             to={prop.path}
@@ -53,7 +53,7 @@ function Sidebar ({ ...props }) {
               </ListItemIcon>
               <ListItemText
                 primary={prop.sidebarName}
-                classes={{ primary: classes.primary }}
+                className={classes.textItem}
                 disableTypography
               />
             </MenuItem>
