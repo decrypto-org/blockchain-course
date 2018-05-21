@@ -5,6 +5,7 @@ const winston = require('winston')
 const express = require('express')
 const bodyParser = require('body-parser')
 const routes = require('./routes')
+const passport = require('./auth')
 const app = express()
 const session = require('express-session')
 
@@ -15,6 +16,8 @@ app.use(session({
 }))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
+app.use(passport.initialize())
+app.use(passport.session())
 
 for (url in routes) {
   app.use(url, routes[url])
