@@ -26,8 +26,8 @@ class App extends Component {
       <div className='app'>
         <CssBaseline />
         <Grid className='wrapper' container spacing={0} direction='row' alignItems='flex-start' justify='flex-start'>
-          <Header routes={appRoutes} />
-          <Sidebar routes={appRoutes} />
+          <Header routes={appRoutes} {...this.props} />
+          <Sidebar routes={appRoutes} {...this.props} />
           <main className='container'>
             {switchRoutes}
           </main>
