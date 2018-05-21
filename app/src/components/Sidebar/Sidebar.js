@@ -15,7 +15,7 @@ const styles = theme => ({
     paddingTop: 64
   },
   menuItem: {
-    '&:focus': {
+    '&:focus, &.active': {
       backgroundColor: theme.palette.primary.main,
       '& $primary, & $icon': {
         color: theme.palette.common.white
@@ -28,16 +28,26 @@ const styles = theme => ({
 
 function Sidebar ({ ...props }) {
   const { classes, routes } = props
+  // verifies if routeName is the one active (in browser input)
+  function activeRoute (routeName) {
+    return props.location.pathname.indexOf(routeName) > -1
+  }
+
   const menu = (
     <MenuList className='main-menu'>
       {routes.map((prop, key) => {
+        const menuItemClasses = cx({
+          [classes.menuItem]: classes.menuItem,
+          'active': activeRoute(prop.path)
+        })
+
         return (
           <NavLink
             to={prop.path}
             activeClassName='active'
             key={key}
           >
-            <MenuItem button className={classes.menuItem}>
+            <MenuItem button className={menuItemClasses}>
               <ListItemIcon className={classes.icon}>
                 <prop.icon />
               </ListItemIcon>
