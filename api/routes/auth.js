@@ -1,3 +1,4 @@
+const winston = require('winston')
 const express = require('express')
 const passport = require('passport')
 const router = express.Router()
@@ -18,7 +19,7 @@ router.get(
 )
 router.post('/logout', (req, res) => {
   if (req.user) {
-    console.log('Logging out user')
+    winston.debug('Logging out user:', req.user)
     req.session.destroy()
     res.clearCookie('connect.sid')
     return res.json({msg: 'Logged out'})

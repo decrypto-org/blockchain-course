@@ -1,0 +1,7 @@
+# Ignore sequelize auto-generated files
+
+migrations/
+models/index.js
+
+# Ignore experiments and documentation
+etc/

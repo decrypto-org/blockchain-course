@@ -20,11 +20,11 @@ const session = require('express-session');
   app.use(passport.initialize())
   app.use(passport.session())
 
-  for (url in routes) {
+  for (const url in routes) {
     app.use(url, routes[url])
   }
 
-  const server = app.listen(LISTEN_PORT, () => {
+  app.listen(LISTEN_PORT, () => {
     winston.info('Blockchain Course API server running on port ' + LISTEN_PORT)
   })
 })()
