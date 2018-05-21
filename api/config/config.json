@@ -1,0 +1,12 @@
+{
+  "development": {
+    "use_env_variable": "DB_URI",
+    "dialect": "postgres"
+  },
+  "test": {
+    "dialect": "postgres"
+  },
+  "production": {
+    "dialect": "postgres"
+  }
+}
