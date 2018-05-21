@@ -4,9 +4,9 @@ import { NavLink } from 'react-router-dom'
 import Drawer from '@material-ui/core/Drawer'
 import MenuList from '@material-ui/core/MenuList'
 import MenuItem from '@material-ui/core/MenuItem'
-import SendIcon from '@material-ui/icons/Send'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
+import cx from 'classnames'
 
 const styles = theme => ({
   drawerPaper: {
