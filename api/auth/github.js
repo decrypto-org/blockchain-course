@@ -11,12 +11,18 @@ const strategy = new GitHubStrategy(
   async (authToken, refreshToken, profile, cb) => {
     winston.log('debug', 'Received profile from GitHub', {profile})
 
+    let email = ''
+
+    if(profile.emails && profile.emails.length > 0) {
+      email = profile.emails[0].value
+    }
+
     let [user, created] = await User.findOrCreate(
       {
         where: {githubId: profile.id},
         defaults: {
           username: profile.username,
-          email: profile.emails[0].value,
+          email,
           firstName: profile.displayName.split(' ')[0],
           lastName: profile.displayName.split(' ').slice(1).join(' ')
         }
