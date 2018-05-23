@@ -1,5 +1,5 @@
 import LecturePage from 'views/Lecture/Lecture'
-import AssignmentPage from 'views/Assignment/Assignment'
+import AssignmentList from 'views/Assignments/AssignmentList'
 
 import {
   Class,
@@ -19,7 +19,7 @@ const appRoutes = [
     sidebarName: 'Assignments',
     navbarName: 'Assignments',
     icon: Assignment,
-    component: AssignmentPage
+    component: AssignmentList
   }
 ]
 
