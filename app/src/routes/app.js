@@ -1,4 +1,4 @@
-import LecturePage from 'views/Lecture/Lecture'
+import LecturesList from 'views/Lectures/LecturesList'
 import AssignmentList from 'views/Assignments/AssignmentList'
 
 import {
@@ -12,7 +12,7 @@ const appRoutes = [
     sidebarName: 'Lectures',
     navbarName: 'Lectures',
     icon: Class,
-    component: LecturePage
+    component: LecturesList
   },
   {
     path: '/assignments',
