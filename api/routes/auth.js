@@ -17,7 +17,7 @@ router.get(
     }
   )
 )
-router.post('/logout', (req, res) => {
+router.get('/logout', (req, res) => {
   if (req.user) {
     winston.debug('Logging out user:', req.user)
     req.session.destroy()
