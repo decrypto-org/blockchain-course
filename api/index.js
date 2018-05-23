@@ -8,10 +8,12 @@ const routes = require('./routes')
 const passport = require('./auth')
 const app = express()
 const helmet = require('helmet')
+const cors = require('cors')
 const session = require('express-session');
 
 (async () => {
   app.use(helmet())
+  app.use(cors())
   app.use(session({
     secret: process.env.APP_SECRET || 'blockchain course default session secret',
     resave: false,
