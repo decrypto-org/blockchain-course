@@ -13,18 +13,26 @@ router.get(
     'github',
     {
       successRedirect: '/',
-      failureRedirect: '/login'
+      failureRedirect: '/logout'
     }
   )
 )
-router.post('/logout', (req, res) => {
+router.get('/logout', (req, res) => {
   if (req.user) {
-    winston.debug('Logging out user:', req.user)
+    winston.log('debug', 'Logging out user', req.user)
     req.session.destroy()
     res.clearCookie('connect.sid')
     return res.json({msg: 'Logged out'})
   }
   return res.json({msg: 'You are not logged in'})
 })
+router.loginRequired = (req, res, next) => {
+  if (req.user) {
+    next()
+  }
+  else {
+    res.status(403).json({msg: 'Login required'})
+  }
+}
 
 module.exports = router

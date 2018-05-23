@@ -8,7 +8,10 @@ module.exports = (sequelize, DataTypes) => {
     position: DataTypes.INTEGER
   }, {})
   Assignment.associate = function(models) {
-    Assignment.hasMany(models.ParameterizedAssignment)
+    Assignment.hasMany(
+      models.ParameterizedAssignment,
+      {foreignKey: 'assignmentId'}
+    )
   }
   return Assignment
 }

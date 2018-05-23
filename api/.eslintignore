@@ -1,6 +1,7 @@
 # Ignore sequelize auto-generated files
 
 migrations/
+seeders/
 models/index.js
 
 # Ignore experiments and documentation
