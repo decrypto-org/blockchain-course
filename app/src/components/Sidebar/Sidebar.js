@@ -40,7 +40,7 @@ function Sidebar ({ ...props }) {
           [classes.menuItem]: classes.menuItem,
           'active': activeRoute(prop.path)
         })
-        console.log(classes)
+
         return (
           <NavLink
             to={prop.path}
