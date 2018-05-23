@@ -16,6 +16,9 @@ const session = require('express-session');
     secret: process.env.APP_SECRET || 'blockchain course default session secret',
     resave: false,
     saveUninitialized: false,
+    cookie: {
+      httpOnly: false
+    }
   }))
   app.use(bodyParser.json())
   app.use(bodyParser.urlencoded({extended: true}))
