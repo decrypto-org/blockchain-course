@@ -7,7 +7,9 @@ module.exports = (sequelize, DataTypes) => {
     auxPrivate: DataTypes.TEXT
   }, {})
   ParameterizedAssignment.associate = function(models) {
-    ParameterizedAssignment.belongsTo(models.Assignment)
+    ParameterizedAssignment.belongsTo(
+      models.Assignment, {foreignKey: 'assignmentId'}
+    )
     ParameterizedAssignment.belongsTo(models.User, {as: 'student'})
     ParameterizedAssignment.hasMany(models.Solution)
   }
