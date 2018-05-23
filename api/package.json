@@ -25,6 +25,7 @@
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
+    "format": "^0.2.2",
     "npm": "^6.0.1",
     "passport": "^0.4.0",
     "passport-github": "^1.1.0",
