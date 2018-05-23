@@ -7,13 +7,15 @@ const bodyParser = require('body-parser')
 const routes = require('./routes')
 const passport = require('./auth')
 const app = express()
+const helmet = require('helmet')
 const session = require('express-session');
 
 (async () => {
+  app.use(helmet())
   app.use(session({
     secret: process.env.APP_SECRET || 'blockchain course default session secret',
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
   }))
   app.use(bodyParser.json())
   app.use(bodyParser.urlencoded({extended: true}))
