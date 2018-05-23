@@ -19,7 +19,7 @@ router.get(
 )
 router.get('/logout', (req, res) => {
   if (req.user) {
-    winston.debug('Logging out user:', req.user)
+    winston.log('debug', 'Logging out user', req.user)
     req.session.destroy()
     res.clearCookie('connect.sid')
     return res.json({msg: 'Logged out'})
