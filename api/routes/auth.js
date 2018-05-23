@@ -13,7 +13,7 @@ router.get(
     'github',
     {
       successRedirect: '/',
-      failureRedirect: '/login'
+      failureRedirect: '/logout'
     }
   )
 )
