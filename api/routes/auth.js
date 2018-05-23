@@ -12,7 +12,7 @@ router.get(
   passport.authenticate(
     'github',
     {
-      successRedirect: process.env.APP_URL || 'http://localhost:3001/',
+      successRedirect: process.env.APP_URL || 'http://localhost:3001/loginCallback',
       failureRedirect: '/logout'
     }
   )
