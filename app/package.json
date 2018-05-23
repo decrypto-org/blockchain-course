@@ -1,7 +1,28 @@
 {
-  "name": "blockchain-course",
-  "version": "0.1.0",
-  "private": true,
+  "name": "blockchain-course-app",
+  "version": "1.0.0",
+  "description": "The frontend for the Introduction to Blockchains course",
+  "main": "index.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "contributors": [
+    {
+      "name": "Christos Nasikas",
+      "email": "xristosnasikas@gmail.com"
+    },
+    {
+      "name": "Dionysis Zindros",
+      "email": "dionyziz@gmail.com"
+    }
+  ],
+  "repository": "github:decrypto/blockchain-course",
+  "homepage": "https://blockchain-course.org/",
+  "bugs": "https://github.com/decrypto-org/blockchain-course/issues",
+  "license": "MIT",
   "dependencies": {
     "@material-ui/core": "^1.0.0",
     "@material-ui/icons": "^1.0.0",
@@ -21,11 +42,5 @@
   "devDependencies": {
     "stylelint": "^9.2.1",
     "stylelint-config-standard": "^18.2.0"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
   }
 }
