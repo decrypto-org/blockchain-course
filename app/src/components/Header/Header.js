@@ -5,8 +5,13 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
+import VerifiedUser from '@material-ui/icons/VerifiedUser'
 import MenuIcon from '@material-ui/icons/Menu'
 import { withStyles } from '@material-ui/core/styles'
+import { Link } from 'react-router-dom'
+
+import { isAuthenticated } from '../../utils/AuthService'
+import GitHub from '../Icons/Github'
 
 const styles = {
   appBar: {
@@ -21,6 +26,8 @@ const styles = {
   }
 }
 
+const avatar = isAuthenticated() ? <VerifiedUser /> : <Button color='inherit' to='/login' component={Link}>Login</Button>
+
 function Header ({ ...props }) {
   const { classes } = props
   return (
@@ -32,7 +39,7 @@ function Header ({ ...props }) {
         <Typography variant='title' color='inherit' className={cx(classes.headerTitle, 'header-link')}>
           <Link to='/'>Blockchain Cource</Link>
         </Typography>
-        <Button color='inherit'>Login</Button>
+        {avatar}
       </Toolbar>
     </AppBar>
   )
