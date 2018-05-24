@@ -9,10 +9,12 @@ import { createLogger } from 'redux-logger'
 import 'typeface-roboto'
 
 import indexRoutes from 'routes/index.js'
+import appReducers from './reducers'
 import registerServiceWorker from './registerServiceWorker'
 
 const loggerMiddleware = createLogger()
 const store = createStore(
+  appReducers,
   applyMiddleware(
     thunkMiddleware,
     loggerMiddleware

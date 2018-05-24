@@ -4,7 +4,8 @@
   "description": "The backend for the Introduction to Blockchains course",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "nodemon index.js",
+    "serve": "node index.js"
   },
   "contributors": [
     {
@@ -22,10 +23,12 @@
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
     "format": "^0.2.2",
+    "helmet": "^3.12.1",
     "js-sha256": "^0.9.0",
     "npm": "^6.0.1",
     "passport": "^0.4.0",
@@ -36,6 +39,7 @@
     "winston": "^2.4.2"
   },
   "devDependencies": {
+    "nodemon": "^1.17.5",
     "run.env": "^1.0.1"
   }
 }

@@ -7,16 +7,25 @@ const bodyParser = require('body-parser')
 const routes = require('./routes')
 const passport = require('./auth')
 const app = express()
+const helmet = require('helmet')
+const cors = require('cors')
 const session = require('express-session');
 
 (async () => {
+  app.use(helmet())
+  app.use(cors({credentials: true, origin: process.env.APP_URL, methods: ['GET', 'PUT', 'POST']}))
+  app.use(bodyParser.json())
+  app.use(bodyParser.urlencoded({extended: true}))
+
   app.use(session({
     secret: process.env.APP_SECRET || 'blockchain course default session secret',
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: false,
+      secure: false
+    }
   }))
-  app.use(bodyParser.json())
-  app.use(bodyParser.urlencoded({extended: true}))
   app.use(passport.initialize())
   app.use(passport.session())
 
