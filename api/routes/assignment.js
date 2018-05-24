@@ -34,9 +34,15 @@ router.get(
       },
     })
 
+    const paramAssignment = parameterizedAssignment[0]
+    const params = {
+      paramId: paramAssignment.id,
+      aux: paramAssignment.auxPublic
+    }
+
     return res.status(200).send(
       {
-        success: true, assignment: parameterizedAssignment
+        success: true, assignment: [{...params, ...assignment.dataValues}]
       }
     )
   }
