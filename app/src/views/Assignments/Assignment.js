@@ -6,11 +6,15 @@ import { withStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
+import TextField from '@material-ui/core/TextField'
+import Button from '@material-ui/core/Button'
+import CardActions from '@material-ui/core/CardActions'
 
 import {sprintf} from 'sprintf-js'
 
 import {
-  fetchSingleAssignment
+  fetchSingleAssignment,
+  submitSolution
 } from '../../actions'
 
 const styles = {
@@ -26,7 +30,38 @@ const styles = {
 class Assignment extends React.Component {
   constructor (props, context) {
     super(props, context)
-    this.state = {}
+    this.state = {
+      solution: ''
+    }
+
+    this.handleInputChange = this.handleInputChange.bind(this)
+    this.submitSolution = this.submitSolution.bind(this)
+  }
+
+  handleInputChange (event) {
+    const target = event.target
+    const value = target.value
+    const name = target.name
+
+    this.setState({
+      [name]: value
+    })
+  }
+
+  submitSolution (e) {
+    e.preventDefault()
+    const data = new FormData(e.target)
+    let objData = {}
+
+    data.forEach(function (value, key) {
+      objData[key] = value
+    })
+
+    objData.paramId = this.props.assignment[0].paramId
+    this.props.actions.submitSolution(this.props.match.params.id, objData)
+      .then((value) => {
+        console.log(value)
+      })
   }
 
   componentDidMount () {
@@ -40,20 +75,36 @@ class Assignment extends React.Component {
 
     const { classes } = this.props
     const assignment = this.props.assignment[0]
-    console.log(sprintf(assignment.description, [assignment.aux]))
+
     return (
       <div>
         <Grid container className='assignment-wrapper'>
           <article className='content-box-wrapper assignment'>
             <Card className={classes.card}>
-              <CardContent>
-                <Typography gutterBottom variant='headline' component='h2'>
-                  {assignment.title}
-                </Typography>
-                <Typography paragraph>
-                  {sprintf(assignment.description, [assignment.aux])}
-                </Typography>
-              </CardContent>
+              <form className={classes.container} noValidate autoComplete='off' action='post' onSubmit={this.submitSolution}>
+                <CardContent>
+                  <Typography gutterBottom variant='headline' component='h2'>
+                    {assignment.title}
+                  </Typography>
+                  <Typography paragraph>
+                    {sprintf(assignment.description, [assignment.aux])}
+                  </Typography>
+                  <Typography gutterBottom variant='headline' component='h2'>
+                    Solution
+                  </Typography>
+                  <TextField
+                    id='solution'
+                    fullWidth
+                    value={this.state.solution}
+                    onChange={this.handleInputChange}
+                    margin='normal'
+                    name='solution'
+                  />
+                </CardContent>
+                <CardActions>
+                  <Button type='submit' size='small'>Submit</Button>
+                </CardActions>
+              </form>
             </Card>
           </article>
         </Grid>
@@ -70,7 +121,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    actions: bindActionCreators({fetchSingleAssignment}, dispatch)
+    actions: bindActionCreators({fetchSingleAssignment, submitSolution}, dispatch)
   }
 }
 
