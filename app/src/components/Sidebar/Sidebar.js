@@ -12,7 +12,9 @@ const styles = theme => ({
   drawerPaper: {
     position: 'relative',
     width: 240,
-    paddingTop: 64
+    paddingTop: 64,
+    backgroundColor: '#e8e8e8',
+    border: 0
   },
   menuItem: {
     '&:focus, &.active': {
