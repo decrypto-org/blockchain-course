@@ -2,11 +2,13 @@ import { combineReducers } from 'redux'
 import user from './user'
 import lectures from './lectures'
 import assignments from './assignments'
+import singleAssignment from './assignment'
 
 const app = combineReducers({
   user,
   lectures,
-  assignments
+  assignments,
+  singleAssignment
 })
 
 export default app
