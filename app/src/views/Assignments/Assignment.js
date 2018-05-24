@@ -7,6 +7,8 @@ import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 
+import {sprintf} from 'sprintf-js'
+
 import {
   fetchSingleAssignment
 } from '../../actions'
@@ -38,6 +40,7 @@ class Assignment extends React.Component {
 
     const { classes } = this.props
     const assignment = this.props.assignment[0]
+    console.log(sprintf(assignment.description, [assignment.aux]))
     return (
       <div>
         <Grid container className='assignment-wrapper'>
@@ -48,10 +51,7 @@ class Assignment extends React.Component {
                   {assignment.title}
                 </Typography>
                 <Typography paragraph>
-                  {assignment.description}
-                </Typography>
-                <Typography>
-                  Public input: {assignment.aux}
+                  {sprintf(assignment.description, [assignment.aux])}
                 </Typography>
               </CardContent>
             </Card>
