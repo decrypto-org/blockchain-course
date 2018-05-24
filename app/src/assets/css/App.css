@@ -35,3 +35,13 @@ body {
 .page-title {
   margin: 0;
 }
+
+.assignment-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content-box-wrapper {
+  margin-left: -240px;
+}
