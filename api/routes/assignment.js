@@ -3,6 +3,7 @@ const express = require('express')
 const router = express.Router()
 const {loginRequired} = require('./auth')
 const {Assignment, ParameterizedAssignment} = require('../models')
+const assignments = require('../assignments');
 
 router.get(
   '/',
@@ -45,6 +46,47 @@ router.get(
         success: true, assignment: [{...params, ...assignment.dataValues}]
       }
     )
+  }
+)
+
+router.post(
+  '/:id(\\d+)/solution',
+  loginRequired,
+  async (req, res) => {
+
+    const assignment = await Assignment.findById(req.params.id)
+
+    if (assignment === null) {
+      return res.status(404).send({success: false, msg: 'Assignment not found'})
+    }
+
+    const key = assignment.dataValues.name
+    const judge = new assignments[key](assignment, req.user)
+
+    const solution = req.body.solution
+    const paramId = req.body.paramId
+
+    const parameterizedAssignment = await ParameterizedAssignment.findById(paramId)
+    const aux = {
+        public: parameterizedAssignment.dataValues.auxPublic,
+        private: parameterizedAssignment.dataValues.auxPrivate
+    }
+
+    judge.judge(aux, req.user, assignment, solution)
+      .then((grade) => {
+        return res.status(200).send(
+          {
+            success: true, grade
+          }
+        )
+      })
+      .catch((err) => {
+        return res.status(500).send(
+          {
+            success: false, error: err
+          }
+        )
+    })
   }
 )
 
