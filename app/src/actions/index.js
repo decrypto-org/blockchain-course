@@ -1,8 +1,9 @@
 import { fetchLectures } from './lectures'
-import { fetchAssignments, fetchSingleAssignment } from './assignments'
+import { fetchAssignments, fetchSingleAssignment, submitSolution } from './assignments'
 
 export {
   fetchLectures,
   fetchAssignments,
-  fetchSingleAssignment
+  fetchSingleAssignment,
+  submitSolution
 }
