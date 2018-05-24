@@ -12,14 +12,16 @@ const appRoutes = [
     sidebarName: 'Lectures',
     navbarName: 'Lectures',
     icon: Class,
-    component: LecturesList
+    component: LecturesList,
+    show: true
   },
   {
     path: '/assignments',
     sidebarName: 'Assignments',
     navbarName: 'Assignments',
     icon: Assignment,
-    component: AssignmentList
+    component: AssignmentList,
+    show: true
   }
 ]
 
