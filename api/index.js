@@ -13,7 +13,10 @@ const session = require('express-session');
 
 (async () => {
   app.use(helmet())
-  app.use(cors())
+  app.use(cors({credentials: true}))
+  app.use(bodyParser.json())
+  app.use(bodyParser.urlencoded({extended: true}))
+
   app.use(session({
     secret: process.env.APP_SECRET || 'blockchain course default session secret',
     resave: false,
@@ -23,8 +26,6 @@ const session = require('express-session');
       secure: false
     }
   }))
-  app.use(bodyParser.json())
-  app.use(bodyParser.urlencoded({extended: true}))
   app.use(passport.initialize())
   app.use(passport.session())
 
