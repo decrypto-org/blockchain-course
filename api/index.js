@@ -13,7 +13,7 @@ const session = require('express-session');
 
 (async () => {
   app.use(helmet())
-  app.use(cors({credentials: true}))
+  app.use(cors({credentials: true, origin: process.env.APP_URL, methods: ['GET', 'PUT', 'POST']}))
   app.use(bodyParser.json())
   app.use(bodyParser.urlencoded({extended: true}))
 
