@@ -19,7 +19,7 @@ const fetchLectures = () => {
   return async dispatch => {
     dispatch(getLectures())
 
-    const res = await axios.get(`${BASE_URL}/lecture`)
+    const res = await axios.get(`${BASE_URL}/lecture`, {withCredentials: true})
 
     dispatch(getLecturesSuccess(res.data))
   }

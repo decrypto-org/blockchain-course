@@ -19,7 +19,7 @@ const fetchAssignments = () => {
   return async dispatch => {
     dispatch(getAssignments())
 
-    const res = await axios.get(`${BASE_URL}/assignment`)
+    const res = await axios.get(`${BASE_URL}/assignment`, {withCredentials: true})
 
     dispatch(getAssignmentsSuccess(res.data))
   }
