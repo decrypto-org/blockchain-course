@@ -27,3 +27,11 @@ body {
   text-decoration: none;
   color: #fff;
 }
+
+.assignments {
+  width: 100%;
+}
+
+.page-title {
+  margin: 0;
+}
