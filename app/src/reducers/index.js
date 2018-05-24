@@ -3,12 +3,14 @@ import user from './user'
 import lectures from './lectures'
 import assignments from './assignments'
 import singleAssignment from './assignment'
+import notification from './notifications'
 
 const app = combineReducers({
   user,
   lectures,
   assignments,
-  singleAssignment
+  singleAssignment,
+  notification
 })
 
 export default app
