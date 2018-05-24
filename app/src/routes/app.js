@@ -1,5 +1,6 @@
 import LecturesList from 'views/Lectures/LecturesList'
 import AssignmentList from 'views/Assignments/AssignmentList'
+import SingleAssignment from 'views/Assignments/Assignment'
 import LoginCallback from 'views/Callbacks/LoginCallback.js'
 
 import {
@@ -23,6 +24,14 @@ const appRoutes = [
     icon: Assignment,
     component: AssignmentList,
     show: true
+  },
+  {
+    path: '/assignment/:id',
+    sidebarName: '',
+    navbarName: '',
+    icon: null,
+    component: SingleAssignment,
+    show: false
   },
   {
     path: '/login',
