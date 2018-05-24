@@ -37,7 +37,7 @@ function Sidebar ({ ...props }) {
 
   const menu = (
     <MenuList className='main-menu'>
-      {routes.map((prop, key) => {
+      {routes.filter((item) => item.show).map((prop, key) => {
         const menuItemClasses = cx({
           [classes.menuItem]: classes.menuItem,
           'active': activeRoute(prop.path)
