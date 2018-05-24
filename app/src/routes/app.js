@@ -1,5 +1,6 @@
 import LecturesList from 'views/Lectures/LecturesList'
 import AssignmentList from 'views/Assignments/AssignmentList'
+import LoginCallback from 'views/Callbacks/LoginCallback.js'
 
 import {
   Class,
@@ -22,6 +23,22 @@ const appRoutes = [
     icon: Assignment,
     component: AssignmentList,
     show: true
+  },
+  {
+    path: '/login',
+    sidebarName: '',
+    navbarName: '',
+    icon: null,
+    component: () => { window.location = 'http://localhost:3000/auth/github' },
+    show: false
+  },
+  {
+    path: '/loginCallback',
+    sidebarName: '',
+    navbarName: '',
+    icon: null,
+    component: LoginCallback,
+    show: false
   }
 ]
 
