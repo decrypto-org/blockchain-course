@@ -19,7 +19,8 @@ const session = require('express-session');
     resave: false,
     saveUninitialized: false,
     cookie: {
-      httpOnly: false
+      httpOnly: false,
+      secure: false
     }
   }))
   app.use(bodyParser.json())
