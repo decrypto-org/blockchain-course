@@ -14,7 +14,8 @@ import {sprintf} from 'sprintf-js'
 
 import {
   fetchSingleAssignment,
-  submitSolution
+  submitSolution,
+  notify
 } from '../../actions'
 
 const styles = {
@@ -60,7 +61,8 @@ class Assignment extends React.Component {
     objData.paramId = this.props.assignment[0].paramId
     this.props.actions.submitSolution(this.props.match.params.id, objData)
       .then((value) => {
-        console.log(value)
+        const msg = value.grade === 0 ? 'Wrong! Please try again.' : 'Congratulations! You found the solution'
+        this.props.actions.notify(msg)
       })
   }
 
@@ -121,7 +123,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    actions: bindActionCreators({fetchSingleAssignment, submitSolution}, dispatch)
+    actions: bindActionCreators({fetchSingleAssignment, submitSolution, notify}, dispatch)
   }
 }
 
