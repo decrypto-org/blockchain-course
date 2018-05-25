@@ -5,7 +5,7 @@ import {
   GET_LECTURES_SUCCESS
 } from './actionTypes'
 
-const BASE_URL = process.env.API_URL || 'http://localhost:3000'
+const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3000'
 
 const getLectures = () => {
   return {type: GET_LECTURES, payload: {}}

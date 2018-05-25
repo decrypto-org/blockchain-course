@@ -9,7 +9,7 @@ import {
   SUBMIT_SOLUTION_SUCCESS
 } from './actionTypes'
 
-const BASE_URL = process.env.API_URL || 'http://localhost:3000'
+const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3000'
 
 const getAssignments = () => {
   return {type: GET_ASSIGNMENTS, payload: {}}
