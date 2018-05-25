@@ -4,7 +4,9 @@ import {
   GET_ASSIGNMENTS,
   GET_ASSIGNMENTS_SUCCESS,
   GET_SIGNLE_ASSIGNMENT,
-  GET_SIGNLE_ASSIGNMENT_SUCCESS
+  GET_SIGNLE_ASSIGNMENT_SUCCESS,
+  SUBMIT_SOLUTION,
+  SUBMIT_SOLUTION_SUCCESS
 } from './actionTypes'
 
 const BASE_URL = process.env.API_URL || 'http://localhost:3000'
@@ -23,6 +25,14 @@ const getSingleAssignment = () => {
 
 const getSingleAssignmentSuccess = (data) => {
   return {type: GET_SIGNLE_ASSIGNMENT_SUCCESS, payload: {data}}
+}
+
+const postSolution = (data) => {
+  return {type: SUBMIT_SOLUTION, payload: {data}}
+}
+
+const postSolutionSuccess = (data) => {
+  return {type: SUBMIT_SOLUTION_SUCCESS, payload: {data}}
 }
 
 const fetchAssignments = () => {
@@ -45,7 +55,18 @@ const fetchSingleAssignment = (id) => {
   }
 }
 
+const submitSolution = (id, data) => {
+  return async dispatch => {
+    dispatch(postSolution(data))
+
+    const res = await axios.post(`${BASE_URL}/assignment/${id}/solution`, {...data}, {withCredentials: true})
+    dispatch(postSolutionSuccess(res.data))
+    return res.data
+  }
+}
+
 export {
   fetchAssignments,
-  fetchSingleAssignment
+  fetchSingleAssignment,
+  submitSolution
 }
