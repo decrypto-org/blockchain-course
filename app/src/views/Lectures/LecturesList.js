@@ -21,7 +21,7 @@ class LecturesList extends React.Component {
     return (
       <div>
         <Grid container>
-          Comming soon...
+          Coming soon...
         </Grid>
       </div>
     )

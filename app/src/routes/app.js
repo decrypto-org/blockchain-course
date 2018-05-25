@@ -38,7 +38,7 @@ const appRoutes = [
     sidebarName: '',
     navbarName: '',
     icon: null,
-    component: () => { window.location = 'http://localhost:3000/auth/github' },
+    component: () => { window.location = process.env.REACT_APP_LOGIN_URL },
     show: false
   },
   {
