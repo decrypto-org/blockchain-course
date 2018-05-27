@@ -45,14 +45,10 @@ class App extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    notification: state.notification
+    notification: state.notification,
+    auth: state.auth,
+    isAuthenticated: state.auth.isAuthenticated
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    actions: bindActionCreators({closeToast, notify}, dispatch)
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(App))
+export default connect(mapStateToProps, null)(withStyles(styles)(App))

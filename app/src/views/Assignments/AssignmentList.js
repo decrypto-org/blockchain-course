@@ -21,7 +21,7 @@ class AssignmentsList extends React.Component {
   }
 
   render () {
-    if (!this.props.assignments) {
+    if (!this.props.isAuthenticated || !this.props.assignments) {
       return null
     }
 
@@ -39,7 +39,8 @@ class AssignmentsList extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    assignments: state.assignments.assignments
+    assignments: state.assignments.assignments,
+    isAuthenticated: state.auth.isAuthenticated
   }
 }
 
