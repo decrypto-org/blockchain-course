@@ -10,9 +10,6 @@ import MenuIcon from '@material-ui/icons/Menu'
 import { withStyles } from '@material-ui/core/styles'
 import { Link } from 'react-router-dom'
 
-import { isAuthenticated } from '../../utils/AuthService'
-import GitHub from '../Icons/Github'
-
 const styles = {
   appBar: {
     zIndex: 10000
@@ -26,10 +23,9 @@ const styles = {
   }
 }
 
-const avatar = isAuthenticated() ? <VerifiedUser /> : <Button color='inherit' to='/login' component={Link}>Login</Button>
-
 function Header ({ ...props }) {
-  const { classes } = props
+  const { classes, isAuthenticated } = props
+  const avatar = isAuthenticated ? <VerifiedUser /> : <Button color='inherit' to='/login' component={Link}>Login</Button>
   return (
     <AppBar position='absolute' className={classes.appBar}>
       <Toolbar>

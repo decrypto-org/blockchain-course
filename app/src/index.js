@@ -3,23 +3,15 @@ import ReactDOM from 'react-dom'
 import { createBrowserHistory } from 'history'
 import { Router, Route, Switch } from 'react-router-dom'
 import { Provider } from 'react-redux'
-import { createStore, applyMiddleware } from 'redux'
-import thunkMiddleware from 'redux-thunk'
-import { createLogger } from 'redux-logger'
+import axios from 'axios'
 import 'typeface-roboto'
 
+import store from './store'
 import indexRoutes from 'routes/index.js'
-import appReducers from './reducers'
+import {responseThen, responseCatch} from './utils/interceptors'
 import registerServiceWorker from './registerServiceWorker'
 
-const loggerMiddleware = createLogger()
-const store = createStore(
-  appReducers,
-  applyMiddleware(
-    thunkMiddleware,
-    loggerMiddleware
-  )
-)
+axios.interceptors.response.use(responseThen, responseCatch)
 
 const hist = createBrowserHistory()
 

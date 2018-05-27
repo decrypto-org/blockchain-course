@@ -9,7 +9,12 @@ const isAuthenticated = () => {
   return !!sid
 }
 
-export {
+const logout = () => {
+  return cookies.remove('connect.sid')
+}
+
+export default {
   getSession,
-  isAuthenticated
+  isAuthenticated,
+  logout
 }
