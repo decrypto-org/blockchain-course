@@ -4,7 +4,8 @@ module.exports = (sequelize, DataTypes) => {
     assignmentId: DataTypes.INTEGER,
     studentId: DataTypes.INTEGER,
     auxPublic: DataTypes.TEXT,
-    auxPrivate: DataTypes.TEXT
+    auxPrivate: DataTypes.TEXT,
+    solved: DataTypes.BOOLEAN
   }, {})
   ParameterizedAssignment.associate = function(models) {
     ParameterizedAssignment.belongsTo(

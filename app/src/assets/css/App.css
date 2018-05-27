@@ -42,6 +42,19 @@ body {
   align-items: center;
 }
 
+.assignment-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.solved {
+  color: #4caf50;
+}
+
+.hidden {
+  display: none;
+}
+
 .content-box-wrapper {
   margin-left: -240px;
 }

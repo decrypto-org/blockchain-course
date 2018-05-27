@@ -9,6 +9,8 @@ import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import CardActions from '@material-ui/core/CardActions'
+import Check from '@material-ui/icons/Check'
+import cx from 'classnames'
 
 import {sprintf} from 'sprintf-js'
 
@@ -77,6 +79,7 @@ class Assignment extends React.Component {
 
     const { classes } = this.props
     const assignment = this.props.assignment[0]
+    const solvedClass = cx('solved', {hidden: !assignment.solved})
 
     return (
       <div>
@@ -103,8 +106,9 @@ class Assignment extends React.Component {
                     name='solution'
                   />
                 </CardContent>
-                <CardActions>
+                <CardActions className='assignment-actions'>
                   <Button type='submit' size='small'>Submit</Button>
+                  <div className={solvedClass}><Check /></div>
                 </CardActions>
               </form>
             </Card>
