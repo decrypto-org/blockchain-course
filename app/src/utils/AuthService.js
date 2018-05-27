@@ -10,6 +10,10 @@ const isAuthenticated = () => {
 }
 
 export {
+const logout = () => {
+  return cookies.remove('connect.sid')
+}
   getSession,
   isAuthenticated
+  logout
 }
