@@ -38,7 +38,8 @@ router.get(
     const paramAssignment = parameterizedAssignment[0]
     const params = {
       paramId: paramAssignment.id,
-      aux: paramAssignment.auxPublic
+      aux: paramAssignment.auxPublic,
+      solved: paramAssignment.solved
     }
 
     return res.status(200).send(
@@ -72,21 +73,25 @@ router.post(
         private: parameterizedAssignment.dataValues.auxPrivate
     }
 
-    judge.judge(aux, req.user, assignment, solution)
-      .then((grade) => {
-        return res.status(200).send(
-          {
-            success: true, grade
-          }
-        )
-      })
-      .catch((err) => {
-        return res.status(500).send(
-          {
-            success: false, error: err
-          }
-        )
-    })
+    try {
+      const grade = await judge.judge(aux, req.user, assignment, solution)
+
+      if(grade > 0) {
+        await parameterizedAssignment.update({solved: true})
+      }
+
+      return res.status(200).send(
+        {
+          success: true, grade
+        }
+      )
+    } catch (e) {
+      return res.status(500).send(
+        {
+          success: false, error: e.message
+        }
+      )
+    }
   }
 )
 
