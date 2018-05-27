@@ -3,12 +3,15 @@ import ReactDOM from 'react-dom'
 import { createBrowserHistory } from 'history'
 import { Router, Route, Switch } from 'react-router-dom'
 import { Provider } from 'react-redux'
+import axios from 'axios'
 import 'typeface-roboto'
 
 import store from './store'
 import indexRoutes from 'routes/index.js'
+import {responseThen, responseCatch} from './utils/interceptors'
 import registerServiceWorker from './registerServiceWorker'
 
+axios.interceptors.response.use(responseThen, responseCatch)
 
 const hist = createBrowserHistory()
 
