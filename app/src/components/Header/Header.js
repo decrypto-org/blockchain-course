@@ -33,7 +33,7 @@ function Header ({ ...props }) {
           <MenuIcon />
         </IconButton>
         <Typography variant='title' color='inherit' className={cx(classes.headerTitle, 'header-link')}>
-          <Link to='/'>Blockchain Cource</Link>
+          <Link to='/'>Blockchain Course</Link>
         </Typography>
         {avatar}
       </Toolbar>
