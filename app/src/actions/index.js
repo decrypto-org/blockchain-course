@@ -1,6 +1,7 @@
 import { fetchLectures } from './lectures'
 import { fetchAssignments, fetchSingleAssignment, submitSolution } from './assignments'
 import { closeToast, notify } from './notifications'
+import { logout } from './user'
 
 export {
   fetchLectures,
@@ -8,5 +9,6 @@ export {
   fetchSingleAssignment,
   submitSolution,
   closeToast,
-  notify
+  notify,
+  logout
 }

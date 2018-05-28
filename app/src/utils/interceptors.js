@@ -1,5 +1,5 @@
 import store from '../store'
-import { logout } from '../actions/user.js'
+import { unauthorize } from '../actions/user.js'
 
 const responseThen = (res) => {
   return res
@@ -7,7 +7,7 @@ const responseThen = (res) => {
 
 const responseCatch = (error) => {
   if (error.response.status === 403) {
-    store.dispatch(logout())
+    store.dispatch(unauthorize())
   }
   return Promise.reject(error)
 }
