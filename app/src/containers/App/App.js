@@ -9,6 +9,7 @@ import '../../assets/css/App.css'
 import Header from '../../components/Header/Header.js'
 import Sidebar from '../../components/Sidebar/Sidebar.js'
 import Messenger from '../../views/Messenger/Messenger.js'
+import Avatar from '../../views/Avatar/Avatar.js'
 
 import appRoutes from 'routes/app.js'
 
@@ -31,7 +32,7 @@ class App extends Component {
       <div className='app'>
         <CssBaseline />
         <Grid className='wrapper' container spacing={0} direction='row' alignItems='flex-start' justify='flex-start'>
-          <Header routes={appRoutes} {...this.props} />
+          <Header routes={appRoutes} {...this.props} Avatar={Avatar} />
           <Sidebar routes={appRoutes} {...this.props} />
           <main className='container'>
             {switchRoutes}
