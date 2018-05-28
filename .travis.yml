@@ -5,6 +5,9 @@ node_js:
 before_script:
   - cd api && npm install && cd ..
   - npm install -g eslint
+  - npm install -g standard
+  - cd app && npm install && cd ..
 
 script:
   - cd api && eslint . && cd ..
+  - cd app && standard && cd ..
