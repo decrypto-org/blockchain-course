@@ -1,4 +1,3 @@
-const winston = require('winston')
 const express = require('express')
 const {loginRequired} = require('./auth')
 const router = express.Router()

@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     ParameterizedAssignment.belongsTo(models.User, {as: 'student'})
     ParameterizedAssignment.hasMany(models.Solution)
   }
-  ParameterizedAssignment.beforeCreate(async (parameterizedAssignment, options) => {
+  ParameterizedAssignment.beforeCreate(async (parameterizedAssignment, options) => { // eslint-disable-line no-unused-vars
     const {Assignment, User} = require('.')
     const assignment = await Assignment.findById(parameterizedAssignment.assignmentId)
     const user = await User.findById(parameterizedAssignment.studentId)
