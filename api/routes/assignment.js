@@ -3,7 +3,7 @@ const express = require('express')
 const router = express.Router()
 const {loginRequired} = require('./auth')
 const {Assignment, ParameterizedAssignment} = require('../models')
-const assignments = require('../assignments');
+const assignments = require('../assignments')
 
 router.get(
   '/',
@@ -69,8 +69,8 @@ router.post(
 
     const parameterizedAssignment = await ParameterizedAssignment.findById(paramId)
     const aux = {
-        public: parameterizedAssignment.dataValues.auxPublic,
-        private: parameterizedAssignment.dataValues.auxPrivate
+      public: parameterizedAssignment.dataValues.auxPublic,
+      private: parameterizedAssignment.dataValues.auxPrivate
     }
 
     try {
@@ -86,6 +86,7 @@ router.post(
         }
       )
     } catch (e) {
+      winston.log('debug', 'Error', e.message)
       return res.status(500).send(
         {
           success: false, error: e.message

@@ -44,5 +44,11 @@
   "devDependencies": {
     "stylelint": "^9.2.1",
     "stylelint-config-standard": "^18.2.0"
+  },
+  "standard": {
+    "ignore": [
+      "registerServiceWorker.js",
+      "/build/"
+    ]
   }
 }
