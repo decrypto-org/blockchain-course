@@ -53,7 +53,7 @@ class Assignment extends React.Component {
 
   submitSolution (e) {
     e.preventDefault()
-    const data = new FormData(e.target)
+    const data = new FormData(e.target) // eslint-disable-line
     let objData = {}
 
     data.forEach(function (value, key) {
