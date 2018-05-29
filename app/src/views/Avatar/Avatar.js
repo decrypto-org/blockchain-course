@@ -10,7 +10,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Menu from '@material-ui/core/Menu'
 
 import {
-  logout
+  unauthorize
 } from '../../actions'
 
 const styles = {}
@@ -44,7 +44,7 @@ class Avatar extends React.Component {
 
   logout () {
     this.closeMenu()
-    this.props.actions.logout()
+    this.props.actions.unauthorize()
   }
 
   render () {
@@ -93,7 +93,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    actions: bindActionCreators({logout}, dispatch)
+    actions: bindActionCreators({unauthorize}, dispatch)
   }
 }
 
