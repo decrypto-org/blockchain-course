@@ -1,3 +1,5 @@
+/* global FormData */
+
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -53,7 +55,7 @@ class Assignment extends React.Component {
 
   submitSolution (e) {
     e.preventDefault()
-    const data = new FormData(e.target) // eslint-disable-line
+    const data = new FormData(e.target)
     let objData = {}
 
     data.forEach(function (value, key) {
