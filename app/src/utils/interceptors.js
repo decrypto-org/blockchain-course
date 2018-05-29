@@ -1,5 +1,5 @@
 import store from '../store'
-import { unauthorize } from '../actions/user.js'
+import { unauthorize } from '../actions'
 
 const responseThen = (res) => {
   return res
