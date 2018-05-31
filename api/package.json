@@ -41,5 +41,13 @@
   "devDependencies": {
     "nodemon": "^1.17.5",
     "run.env": "^1.0.1"
+  },
+  "standard": {
+    "ignore": [
+      "/migrations/",
+      "/seeders/",
+      "/models/index.js",
+      "/etc/"
+    ]
   }
 }
