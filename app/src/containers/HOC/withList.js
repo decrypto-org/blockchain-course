@@ -11,7 +11,7 @@ export default function withList (ListComponent, key, actions, route) {
   })
 
   const mapStateToProps = state => ({
-    [key]: state[key][key]
+    [key]: state[key]
   })
 
   class ListHOC extends React.Component {

@@ -10,7 +10,7 @@ const assignments = (state = [], action) => {
       if (JSON.stringify(payload.data) === JSON.stringify(state)) {
         return state
       }
-      return payload.data
+      return payload.data.assignments
     default:
       return state
   }
