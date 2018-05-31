@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     position: DataTypes.INTEGER,
     groupId: DataTypes.INTEGER
   }, {})
-  Lecture.associate = function(models) {
+  Lecture.associate = function (models) {
     Lecture.belongsTo(
       models.LectureGroup, {as: 'group'}
     )

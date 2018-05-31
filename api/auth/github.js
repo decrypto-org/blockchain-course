@@ -22,7 +22,7 @@ const strategy = new GitHubStrategy(
     }
 
     if (profile.displayName) {
-      defaults.firstName = profile.displayName.split(' ')[0],
+      defaults.firstName = profile.displayName.split(' ')[0]
       defaults.lastName = profile.displayName.split(' ').slice(1).join(' ')
     }
 
@@ -34,8 +34,7 @@ const strategy = new GitHubStrategy(
     )
     if (created) {
       winston.log('debug', 'Registered new user', {user})
-    }
-    else {
+    } else {
       winston.log('debug', 'Logged in existing user', {user})
     }
     return cb(null, user)

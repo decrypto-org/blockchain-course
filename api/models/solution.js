@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     parameterizedAssignmentId: DataTypes.INTEGER,
     data: DataTypes.TEXT
   }, {})
-  Solution.associate = function(models) {
+  Solution.associate = function (models) {
     Solution.belongsTo(models.ParameterizedAssignment)
     Solution.belongsTo(models.User, {as: 'student'})
   }

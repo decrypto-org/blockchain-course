@@ -29,8 +29,7 @@ router.get('/logout', (req, res) => {
 router.loginRequired = (req, res, next) => {
   if (req.user) {
     next()
-  }
-  else {
+  } else {
     res.status(403).json({msg: 'Login required'})
   }
 }

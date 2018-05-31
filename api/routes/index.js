@@ -7,8 +7,7 @@ const router = express.Router()
 router.get('/', (req, res) => {
   if (req.user) {
     res.send(`Hello, ${req.user.username}!`)
-  }
-  else {
+  } else {
     res.send('Hello, world!')
   }
 })

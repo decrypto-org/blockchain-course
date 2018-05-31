@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.STRING,
     position: DataTypes.INTEGER
   }, {})
-  LectureGroup.associate = function(models) {
+  LectureGroup.associate = function (models) {
     LectureGroup.hasMany(
       models.Lecture, {foreignKey: 'groupId'}
     )
