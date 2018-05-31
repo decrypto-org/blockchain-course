@@ -3,8 +3,10 @@ import withList from '../../containers/HOC/withList'
 import ListItem from '../../components/List/ListItem'
 
 import {
-  fetchLectureGroups
+  lectureGroupsActions
 } from '../../actions'
+
+const fetchLectureGroups = lectureGroupsActions.fetchLectureGroups
 
 const Groups = withList(ListItem, 'groups', {getList: fetchLectureGroups}, '/lectureGroups/')
 
