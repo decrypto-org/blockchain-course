@@ -1,4 +1,5 @@
-import axios from 'axios'
+import {createSimpleAction, createDispatchAPIAction} from '../utils/actions'
+import config from '../config'
 
 import {
   GET_ASSIGNMENTS,
@@ -9,61 +10,16 @@ import {
   SUBMIT_SOLUTION_SUCCESS
 } from './actionTypes'
 
-const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3000'
+const getAssignments = createSimpleAction(GET_ASSIGNMENTS)
+const getAssignmentsSuccess = createSimpleAction(GET_ASSIGNMENTS_SUCCESS)
+const getSingleAssignment = createSimpleAction(GET_SIGNLE_ASSIGNMENT)
+const getSingleAssignmentSuccess = createSimpleAction(GET_SIGNLE_ASSIGNMENT_SUCCESS)
+const postSolution = createSimpleAction(SUBMIT_SOLUTION)
+const postSolutionSuccess = createSimpleAction(SUBMIT_SOLUTION_SUCCESS)
 
-const getAssignments = () => {
-  return {type: GET_ASSIGNMENTS, payload: {}}
-}
-
-const getAssignmentsSuccess = (data) => {
-  return {type: GET_ASSIGNMENTS_SUCCESS, payload: {data}}
-}
-
-const getSingleAssignment = () => {
-  return {type: GET_SIGNLE_ASSIGNMENT, payload: {}}
-}
-
-const getSingleAssignmentSuccess = (data) => {
-  return {type: GET_SIGNLE_ASSIGNMENT_SUCCESS, payload: {data}}
-}
-
-const postSolution = (data) => {
-  return {type: SUBMIT_SOLUTION, payload: {data}}
-}
-
-const postSolutionSuccess = (data) => {
-  return {type: SUBMIT_SOLUTION_SUCCESS, payload: {data}}
-}
-
-const fetchAssignments = () => {
-  return async dispatch => {
-    dispatch(getAssignments())
-
-    const res = await axios.get(`${BASE_URL}/assignment`, {withCredentials: true})
-
-    dispatch(getAssignmentsSuccess(res.data))
-  }
-}
-
-const fetchSingleAssignment = (id) => {
-  return async dispatch => {
-    dispatch(getSingleAssignment())
-
-    const res = await axios.get(`${BASE_URL}/assignment/${id}`, {withCredentials: true})
-
-    dispatch(getSingleAssignmentSuccess(res.data))
-  }
-}
-
-const submitSolution = (id, data) => {
-  return async dispatch => {
-    dispatch(postSolution(data))
-
-    const res = await axios.post(`${BASE_URL}/assignment/${id}/solution`, {...data}, {withCredentials: true})
-    dispatch(postSolutionSuccess(res.data))
-    return res.data
-  }
-}
+const fetchAssignments = createDispatchAPIAction(getAssignments, getAssignmentsSuccess, `${config.BASE_URL}/assignment`)
+const fetchSingleAssignment = createDispatchAPIAction(getSingleAssignment, getSingleAssignmentSuccess, `${config.BASE_URL}/assignment/:id`)
+const submitSolution = createDispatchAPIAction(postSolution, postSolutionSuccess, `${config.BASE_URL}/assignment/:id/solution`, 'post')
 
 export {
   fetchAssignments,

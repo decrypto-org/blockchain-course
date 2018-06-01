@@ -1,29 +1,15 @@
-import axios from 'axios'
+import {createSimpleAction, createDispatchAPIAction} from '../utils/actions'
+import config from '../config'
 
 import {
   GET_LECTURES,
   GET_LECTURES_SUCCESS
 } from './actionTypes'
 
-const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3000'
+const getLectures = createSimpleAction(GET_LECTURES)
+const getLecturesSuccess = createSimpleAction(GET_LECTURES_SUCCESS)
 
-const getLectures = () => {
-  return {type: GET_LECTURES, payload: {}}
-}
-
-const getLecturesSuccess = (data) => {
-  return {type: GET_LECTURES_SUCCESS, payload: {data}}
-}
-
-const fetchLectures = () => {
-  return async dispatch => {
-    dispatch(getLectures())
-
-    const res = await axios.get(`${BASE_URL}/lecture`, {withCredentials: true})
-
-    dispatch(getLecturesSuccess(res.data))
-  }
-}
+const fetchLectures = createDispatchAPIAction(getLectures, getLecturesSuccess, `${config.BASE_URL}/lecture`)
 
 export {
   fetchLectures

@@ -1,51 +1,39 @@
 import React from 'react'
-import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import Grid from '@material-ui/core/Grid'
-import List from '@material-ui/core/List'
+import { bindActionCreators } from 'redux'
+import withList from '../../containers/HOC/withList'
 import ListItem from '../../components/List/ListItem'
 
 import {
-  fetchAssignments
+  fetchAssignments,
+  notify
 } from '../../actions'
 
-class AssignmentsList extends React.Component {
-  constructor (props, context) {
-    super(props, context)
-    this.state = {}
-  }
+const Assignments = withList(ListItem, 'assignments', {getList: fetchAssignments}, '/assignment/')
 
+class AssignmentsList extends React.Component {
   componentDidMount () {
-    this.props.actions.fetchAssignments()
+    if (!this.props.isAuthenticated) {
+      this.props.actions.notify('Unauthorized action! Please login.')
+    }
   }
 
   render () {
-    if (!this.props.isAuthenticated || !this.props.assignments) {
-      return null
-    }
-
     return (
-      <div>
-        <Grid container>
-          <List component='nav' className='assignments'>
-            {this.props.assignments.map((item, index) => <ListItem key={index} {...item} to={'/assignment/' + item.id} />)}
-          </List>
-        </Grid>
-      </div>
+      this.props.isAuthenticated ? <Assignments /> : null
     )
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    assignments: state.assignments.assignments,
     isAuthenticated: state.auth.isAuthenticated
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    actions: bindActionCreators({fetchAssignments}, dispatch)
+    actions: bindActionCreators({fetchAssignments, notify}, dispatch)
   }
 }
 

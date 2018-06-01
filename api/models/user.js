@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     githubId: DataTypes.INTEGER
   }, {})
-  User.associate = function(models) {
+  User.associate = function (models) {
     // associations can be defined here
     User.hasMany(models.Solution, {as: 'student'})
   }

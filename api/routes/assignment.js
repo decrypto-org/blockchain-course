@@ -22,7 +22,6 @@ router.get(
   '/:id(\\d+)',
   loginRequired,
   async (req, res) => {
-
     const assignment = await Assignment.findById(req.params.id)
     if (assignment === null) {
       return res.status(404).send({success: false, msg: 'Assignment not found'})
@@ -32,7 +31,7 @@ router.get(
       where: {
         assignmentId: assignment.dataValues.id,
         studentId: req.user.id
-      },
+      }
     })
 
     const paramAssignment = parameterizedAssignment[0]
@@ -54,7 +53,6 @@ router.post(
   '/:id(\\d+)/solution',
   loginRequired,
   async (req, res) => {
-
     const assignment = await Assignment.findById(req.params.id)
 
     if (assignment === null) {
@@ -76,7 +74,7 @@ router.post(
     try {
       const grade = await judge.judge(aux, req.user, assignment, solution)
 
-      if(grade > 0) {
+      if (grade > 0) {
         await parameterizedAssignment.update({solved: true})
       }
 

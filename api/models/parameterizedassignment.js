@@ -7,14 +7,14 @@ module.exports = (sequelize, DataTypes) => {
     auxPrivate: DataTypes.TEXT,
     solved: DataTypes.BOOLEAN
   }, {})
-  ParameterizedAssignment.associate = function(models) {
+  ParameterizedAssignment.associate = function (models) {
     ParameterizedAssignment.belongsTo(
       models.Assignment, {foreignKey: 'assignmentId'}
     )
     ParameterizedAssignment.belongsTo(models.User, {as: 'student'})
     ParameterizedAssignment.hasMany(models.Solution)
   }
-  ParameterizedAssignment.beforeCreate(async (parameterizedAssignment, options) => { // eslint-disable-line no-unused-vars
+  ParameterizedAssignment.beforeCreate(async (parameterizedAssignment, options) => {
     const {Assignment, User} = require('.')
     const assignment = await Assignment.findById(parameterizedAssignment.assignmentId)
     const user = await User.findById(parameterizedAssignment.studentId)
