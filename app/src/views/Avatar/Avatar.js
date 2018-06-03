@@ -52,6 +52,7 @@ class Avatar extends React.Component {
       <div>
         {this.props.isAuthenticated ? (
           <div>
+            {this.props.user.email}
             <IconButton
               aria-owns={this.state.open ? 'menu-appbar' : null}
               aria-haspopup='true'
@@ -87,6 +88,7 @@ class Avatar extends React.Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     auth: state.auth,
+    user: state.user,
     isAuthenticated: state.auth.isAuthenticated
   }
 }
