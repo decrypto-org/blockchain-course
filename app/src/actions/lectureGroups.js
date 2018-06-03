@@ -1,4 +1,4 @@
-import {createSimpleAction, createDispactAPIAction} from '../utils/actions'
+import {createSimpleAction, createDispatchAPIAction} from '../utils/actions'
 import config from '../config'
 
 import {
@@ -9,7 +9,7 @@ import {
 const getLectureGroups = createSimpleAction(GET_LECTURE_GROUPS)
 const getLectureGroupsSuccess = createSimpleAction(GET_LECTURE_GROUPS_SUCCESS)
 
-const fetchLectureGroups = createDispactAPIAction(getLectureGroups, getLectureGroupsSuccess, `${config.BASE_URL}/lectureGroup`)
+const fetchLectureGroups = createDispatchAPIAction(getLectureGroups, getLectureGroupsSuccess, `${config.BASE_URL}/lectureGroup`)
 
 export {
   fetchLectureGroups
