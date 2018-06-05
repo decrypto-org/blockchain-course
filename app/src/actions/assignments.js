@@ -1,28 +1,17 @@
-import {createSimpleAction, createDispatchAPIAction} from '../utils/actions'
-import config from '../config'
+import {buildActions} from '../utils/actions'
 
-import {
-  GET_ASSIGNMENTS,
-  GET_ASSIGNMENTS_SUCCESS,
-  GET_SIGNLE_ASSIGNMENT,
-  GET_SIGNLE_ASSIGNMENT_SUCCESS,
-  SUBMIT_SOLUTION,
-  SUBMIT_SOLUTION_SUCCESS
-} from './actionTypes'
+import * as types from './actionTypes'
 
-const getAssignments = createSimpleAction(GET_ASSIGNMENTS)
-const getAssignmentsSuccess = createSimpleAction(GET_ASSIGNMENTS_SUCCESS)
-const getSingleAssignment = createSimpleAction(GET_SIGNLE_ASSIGNMENT)
-const getSingleAssignmentSuccess = createSimpleAction(GET_SIGNLE_ASSIGNMENT_SUCCESS)
-const postSolution = createSimpleAction(SUBMIT_SOLUTION)
-const postSolutionSuccess = createSimpleAction(SUBMIT_SOLUTION_SUCCESS)
+const actions = buildActions({
+  getAssignments: types.GET_ASSIGNMENTS,
+  getAssignmentsSuccess: types.GET_ASSIGNMENTS_SUCCESS,
+  getSingleAssignment: types.GET_SIGNLE_ASSIGNMENT,
+  getSingleAssignmentSuccess: types.GET_SIGNLE_ASSIGNMENT_SUCCESS,
+  postSolution: types.SUBMIT_SOLUTION,
+  postSolutionSuccess: types.SUBMIT_SOLUTION_SUCCESS,
+  fetchAssignments: ['getAssignments', 'getAssignmentsSuccess', 'assignment'],
+  fetchSingleAssignment: ['getSingleAssignment', 'getSingleAssignmentSuccess', 'assignment/:id'],
+  submitSolution: ['postSolution', 'postSolutionSuccess', 'assignment/:id/solution', 'post']
+})
 
-const fetchAssignments = createDispatchAPIAction(getAssignments, getAssignmentsSuccess, `${config.BASE_URL}/assignment`)
-const fetchSingleAssignment = createDispatchAPIAction(getSingleAssignment, getSingleAssignmentSuccess, `${config.BASE_URL}/assignment/:id`)
-const submitSolution = createDispatchAPIAction(postSolution, postSolutionSuccess, `${config.BASE_URL}/assignment/:id/solution`, 'post')
-
-export {
-  fetchAssignments,
-  fetchSingleAssignment,
-  submitSolution
-}
+export default actions

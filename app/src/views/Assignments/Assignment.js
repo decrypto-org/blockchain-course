@@ -17,8 +17,7 @@ import cx from 'classnames'
 import {sprintf} from 'sprintf-js'
 
 import {
-  fetchSingleAssignment,
-  submitSolution,
+  assignmentActions,
   notify
 } from '../../actions'
 
@@ -31,6 +30,9 @@ const styles = {
     paddingTop: '56.25%'
   }
 }
+
+const fetchSingleAssignment = assignmentActions.fetchSingleAssignment
+const submitSolution = assignmentActions.submitSolution
 
 class Assignment extends React.Component {
   constructor (props, context) {
