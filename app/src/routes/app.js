@@ -1,4 +1,3 @@
-import LecturesList from 'views/Lectures/LecturesList'
 import LectureGroupList from 'views/Lectures/LectureGroupList'
 import LectureGroup from 'views/Lectures/Group'
 import AssignmentList from 'views/Assignments/AssignmentList'
@@ -25,14 +24,6 @@ const appRoutes = [
     navbarName: '',
     icon: null,
     component: LectureGroup,
-    show: false
-  },
-  {
-    path: '/lectures',
-    sidebarName: 'Lectures',
-    navbarName: 'Lectures',
-    icon: Class,
-    component: LecturesList,
     show: false
   },
   {
