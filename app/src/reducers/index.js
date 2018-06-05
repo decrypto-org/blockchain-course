@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
 import user from './user'
 import lectures from './lectures'
+import groups from './lectureGroups'
 import assignments from './assignments'
 import singleAssignment from './assignment'
 import notification from './notifications'
@@ -12,7 +13,8 @@ const app = combineReducers({
   assignments,
   singleAssignment,
   notification,
-  auth
+  auth,
+  groups
 })
 
 export default app
