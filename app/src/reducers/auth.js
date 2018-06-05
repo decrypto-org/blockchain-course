@@ -1,28 +1,17 @@
 import authService from '../utils/AuthService'
 
-import {
-  USER_LOGGED_IN,
-  USER_LOGGED_OUT,
-  UNAUTHORIZED_ACTION
-} from '../actions/actionTypes'
+import * as types from '../actions/actionTypes'
+
+import {createReducer} from '../utils/reducers'
 
 const defaultState = {
   isAuthenticated: authService.isAuthenticated()
 }
 
-const auth = (state = defaultState, action) => {
-  const { type } = action
-
-  switch (type) {
-    case USER_LOGGED_IN:
-      return {...state, isAuthenticated: true}
-    case UNAUTHORIZED_ACTION:
-      return {...state, isAuthenticated: false}
-    case USER_LOGGED_OUT:
-      return {...state, isAuthenticated: false}
-    default:
-      return state
-  }
-}
+const auth = createReducer(defaultState, {
+  [types.USER_LOGGED_IN]: (state) => { return {...state, isAuthenticated: true} },
+  [types.UNAUTHORIZED_ACTION]: (state) => { return {...state, isAuthenticated: false} },
+  [types.USER_LOGGED_OUT]: (state) => { return {...state, isAuthenticated: false} }
+})
 
 export default auth

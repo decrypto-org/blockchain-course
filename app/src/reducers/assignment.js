@@ -2,18 +2,8 @@ import {
   GET_SIGNLE_ASSIGNMENT_SUCCESS
 } from '../actions/actionTypes'
 
-const assignment = (state = [], action) => {
-  const { payload, type } = action
+import {createSimpleReducer} from '../utils/reducers'
 
-  switch (type) {
-    case GET_SIGNLE_ASSIGNMENT_SUCCESS:
-      if (JSON.stringify(payload.data) === JSON.stringify(state)) {
-        return state
-      }
-      return payload.data.assignment
-    default:
-      return state
-  }
-}
+const assignment = createSimpleReducer([], {type: GET_SIGNLE_ASSIGNMENT_SUCCESS, key: 'assignment'})
 
 export default assignment
