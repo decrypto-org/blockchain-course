@@ -1,24 +1,15 @@
-import {
-  OPEN_TOAST,
-  CLOSE_TOAST
-} from '../actions/actionTypes'
+import * as types from '../actions/actionTypes'
+
+import {createReducer} from '../utils/reducers'
 
 const defaultState = {
   open: false,
   message: ''
 }
 
-const notification = (state = defaultState, action) => {
-  const { payload, type } = action
-
-  switch (type) {
-    case CLOSE_TOAST:
-      return {...state, open: false}
-    case OPEN_TOAST:
-      return {...state, open: true, message: payload.message}
-    default:
-      return state
-  }
-}
+const notification = createReducer(defaultState, {
+  [types.CLOSE_TOAST]: (state) => { return {...state, open: false} },
+  [types.OPEN_TOAST]: (state, action) => { return {...state, open: true, message: action.payload.message} }
+})
 
 export default notification

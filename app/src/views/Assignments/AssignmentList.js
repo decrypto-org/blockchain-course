@@ -5,9 +5,11 @@ import withList from '../../containers/HOC/withList'
 import ListItem from '../../components/List/ListItem'
 
 import {
-  fetchAssignments,
+  assignmentActions,
   notify
 } from '../../actions'
+
+const fetchAssignments = assignmentActions.fetchAssignments
 
 const Assignments = withList(ListItem, 'assignments', {getList: fetchAssignments}, '/assignment/')
 

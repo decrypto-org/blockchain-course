@@ -1,4 +1,6 @@
 import axios from 'axios'
+import { isString } from './helpers'
+import config from '../config'
 
 const createSimpleAction = (type) => {
   return (data = {}) => {
@@ -11,7 +13,7 @@ const createDispatchAPIAction = (before, after, url, action = 'get') => {
     return async dispatch => {
       dispatch(before())
 
-      let replacedUrl = url
+      let replacedUrl = `${config.BASE_URL}/${url}`
 
       if (id) {
         replacedUrl = replacedUrl.replace(':id', id)
@@ -35,7 +37,29 @@ const createDispatchAPIAction = (before, after, url, action = 'get') => {
   }
 }
 
+const buildActions = (actions) => {
+  actions = {...actions}
+
+  for (let action in actions) {
+    if (actions.hasOwnProperty(action)) {
+      if (isString(actions[action])) {
+        actions[action] = createSimpleAction(actions[action])
+      }
+
+      if (Array.isArray(actions[action])) {
+        let [before, after, url, httpAction = 'get'] = actions[action]
+        before = actions[before]
+        after = actions[after]
+        actions[action] = createDispatchAPIAction(before, after, url, httpAction)
+      }
+    }
+  }
+
+  return actions
+}
+
 export {
   createSimpleAction,
-  createDispatchAPIAction
+  createDispatchAPIAction,
+  buildActions
 }
