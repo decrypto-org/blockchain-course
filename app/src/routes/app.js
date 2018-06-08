@@ -1,5 +1,6 @@
 import LectureGroupList from 'views/Lectures/LectureGroupList'
 import LectureGroup from 'views/Lectures/Group'
+import Lecture from 'views/Lecture/Lecture'
 import AssignmentList from 'views/Assignments/AssignmentList'
 import SingleAssignment from 'views/Assignments/Assignment'
 import LoginCallback from 'views/Callbacks/LoginCallback.js'
@@ -24,6 +25,14 @@ const appRoutes = [
     navbarName: '',
     icon: null,
     component: LectureGroup,
+    show: false
+  },
+  {
+    path: '/lecture/:id',
+    sidebarName: '',
+    navbarName: '',
+    icon: null,
+    component: Lecture,
     show: false
   },
   {
