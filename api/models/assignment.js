@@ -12,6 +12,11 @@ module.exports = (sequelize, DataTypes) => {
       models.ParameterizedAssignment,
       {foreignKey: 'assignmentId'}
     )
+
+    Assignment.belongsTo(
+      models.LectureGroup, {as: 'group'}
+    )
   }
+
   return Assignment
 }
