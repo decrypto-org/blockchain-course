@@ -10,6 +10,7 @@ const app = express()
 const helmet = require('helmet')
 const cors = require('cors')
 const session = require('express-session');
+const {loginRequired} = require('./middlewares/authentication')
 
 (async () => {
   app.use(helmet())
@@ -28,6 +29,8 @@ const session = require('express-session');
   }))
   app.use(passport.initialize())
   app.use(passport.session())
+
+  app.use(loginRequired)
 
   for (const url in routes) {
     app.use(url, routes[url])

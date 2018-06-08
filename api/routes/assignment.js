@@ -1,13 +1,11 @@
 const winston = require('winston')
 const express = require('express')
 const router = express.Router()
-const {loginRequired} = require('./auth')
 const {Assignment, ParameterizedAssignment} = require('../models')
 const assignments = require('../assignments')
 
 router.get(
   '/',
-  loginRequired,
   async (req, res) => {
     const assignments = await Assignment.findAll()
     return res.status(200).send(
@@ -20,7 +18,6 @@ router.get(
 
 router.get(
   '/:id(\\d+)',
-  loginRequired,
   async (req, res) => {
     const assignment = await Assignment.findById(req.params.id)
     if (assignment === null) {
@@ -51,7 +48,6 @@ router.get(
 
 router.post(
   '/:id(\\d+)/solution',
-  loginRequired,
   async (req, res) => {
     const assignment = await Assignment.findById(req.params.id)
 

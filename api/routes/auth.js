@@ -26,12 +26,5 @@ router.get('/logout', (req, res) => {
   }
   return res.json({msg: 'You are not logged in'})
 })
-router.loginRequired = (req, res, next) => {
-  if (req.user) {
-    next()
-  } else {
-    res.status(403).json({msg: 'Login required'})
-  }
-}
 
 module.exports = router
