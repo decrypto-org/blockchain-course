@@ -2,18 +2,8 @@ import {
   GET_LECTURES_SUCCESS
 } from '../actions/actionTypes'
 
-const lectures = (state = [], action) => {
-  const { payload, type } = action
+import {createSimpleReducer} from '../utils/reducers'
 
-  switch (type) {
-    case GET_LECTURES_SUCCESS:
-      if (JSON.stringify(payload.data) === JSON.stringify(state)) {
-        return state
-      }
-      return payload.data
-    default:
-      return state
-  }
-}
+const lectures = createSimpleReducer([], {type: GET_LECTURES_SUCCESS, key: 'lectures'})
 
 export default lectures
