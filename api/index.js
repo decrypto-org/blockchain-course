@@ -9,10 +9,10 @@ const passport = require('./auth')
 const app = express()
 const helmet = require('helmet')
 const cors = require('cors')
-const session = require('express-session');
+const session = require('express-session')
 const {loginRequired} = require('./middlewares/authentication')
 
-(async () => {
+;(async () => {
   app.use(helmet())
   app.use(cors({credentials: true, origin: process.env.APP_URL, methods: ['GET', 'PUT', 'POST']}))
   app.use(bodyParser.json())
