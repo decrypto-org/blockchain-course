@@ -1,6 +1,6 @@
 import authService from '../utils/AuthService'
 
-import * as types from '../actions/actionTypes'
+import types from '../actions/actionTypes'
 
 import {createReducer} from '../utils/reducers'
 

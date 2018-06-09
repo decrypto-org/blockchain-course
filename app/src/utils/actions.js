@@ -2,6 +2,13 @@ import axios from 'axios'
 import { isString } from './helpers'
 import config from '../config'
 
+const buildActionTypes = (types) => {
+  return types.reduce((obj, item) => {
+    obj[item] = item
+    return obj
+  }, {})
+}
+
 const createSimpleAction = (type) => {
   return (data = {}) => {
     return {type, payload: {data}}
@@ -61,5 +68,6 @@ const buildActions = (actions) => {
 export {
   createSimpleAction,
   createDispatchAPIAction,
-  buildActions
+  buildActions,
+  buildActionTypes
 }
