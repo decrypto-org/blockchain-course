@@ -10,6 +10,9 @@ coverage/
 # production
 build/
 
+# files
+files/
+
 # misc
 *.log*
 .DS_Store
