@@ -3,7 +3,6 @@ import Grid from '@material-ui/core/Grid'
 import { withStyles } from '@material-ui/core/styles'
 
 import ItemHeader from './Header'
-import ItemContent from './Content'
 
 const styles = {}
 
@@ -15,11 +14,14 @@ function Item ({ ...props }) {
         <ItemHeader {...item} />
       </Grid>
       {
-        contents.map((content) => (
-          <Grid item xs={12}>
-            <ItemContent {...content} />
-          </Grid>
-        ))
+        contents.map((content, index) => {
+          const {component: Component, ...rest} = content
+          return (
+            <Grid item xs={12} key={index}>
+              <Component {...rest} />
+            </Grid>
+          )
+        })
       }
     </Grid>
   )
