@@ -26,4 +26,27 @@ module.exports = class LectureController extends BaseController {
       }
     )
   }
+
+  async download (req, res, id, hash) {
+    const file = await File.findOne({
+      where: {hash},
+      attributes: ['title', 'fileType']
+    })
+
+    const {title, fileType} = file.dataValues
+
+    if (file === null) {
+      return res.status(404).send({success: false, msg: 'File not found'})
+    }
+
+    const options = {
+      dotfiles: 'deny',
+      headers: {
+        'x-timestamp': Date.now(),
+        'x-sent': true
+      }
+    }
+
+    return res.download(`${process.env.UPLOAD_FOLDER}/${hash}.${fileType}`, `${title}.${fileType}`, options)
+  }
 }
