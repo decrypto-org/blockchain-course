@@ -24,7 +24,7 @@ function FileContent ({ ...props }) {
         <List dense>
           {
             list.map((subItem, index) => (
-              <ListItem button onClick={() => props.onClick(subItem.hash)} key={index}>
+              <ListItem button onClick={() => props.dowloadFile(subItem.hash)} key={index}>
                 <ListItemIcon>
                   <FileIcon type={subItem.fileType} />
                 </ListItemIcon>

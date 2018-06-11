@@ -21,8 +21,8 @@ function Content ({ ...props }) {
       <CardContent>
         <List dense>
           {
-            list.map((subItem) => (
-              <ListItem button component={Link} to={`${to}/${subItem.id}`}>
+            list.map((subItem, index) => (
+              <ListItem button component={Link} to={`${to}/${subItem.id}`} key={index}>
                 <ListItemText
                   primary={subItem.title}
                   secondary={subItem.description}
