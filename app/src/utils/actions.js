@@ -16,15 +16,15 @@ const createSimpleAction = (type) => {
 }
 
 const createDispatchAPIAction = (before, after, url, action = 'get') => {
-  return (id = null, data = {}) => {
+  return (urlKeys = {}, data = {}) => {
     return async dispatch => {
       dispatch(before())
 
       let replacedUrl = `${config.BASE_URL}/${url}`
 
-      if (id) {
-        replacedUrl = replacedUrl.replace(':id', id)
-      }
+      replacedUrl = Object.keys(urlKeys).reduce((previous, current) => {
+        return previous.replace(`:${current}`, urlKeys[current])
+      }, replacedUrl)
 
       let res = {}
 
