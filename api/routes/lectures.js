@@ -1,5 +1,5 @@
 const {createSimpleRouter} = require('../utils/routes')
 
-const router = createSimpleRouter('LectureController')
+const {router, controller} = createSimpleRouter('LectureController')
 
 module.exports = router
