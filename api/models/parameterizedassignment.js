@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     const AssignmentJudge = require(assignmentPath)
     const assignmentJudge = new AssignmentJudge()
 
-    const aux = assignmentJudge.aux(user, assignment)
+    const aux = assignmentJudge.formatAux(assignmentJudge.aux(user, assignment))
     parameterizedAssignment.auxPrivate = aux.private
     parameterizedAssignment.auxPublic = aux.public
   })
