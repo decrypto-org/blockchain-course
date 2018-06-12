@@ -9,6 +9,10 @@ module.exports = (sequelize, DataTypes) => {
     LectureGroup.hasMany(
       models.Lecture, {foreignKey: 'groupId'}
     )
+
+    LectureGroup.hasMany(
+      models.Assignment, {foreignKey: 'groupId'}
+    )
   }
   return LectureGroup
 }

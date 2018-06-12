@@ -1,6 +1,6 @@
 import {buildActions} from '../utils/actions'
 
-import * as types from './actionTypes'
+import types from './actionTypes'
 
 const actions = buildActions({
   getLectureGroups: types.GET_LECTURE_GROUPS,
