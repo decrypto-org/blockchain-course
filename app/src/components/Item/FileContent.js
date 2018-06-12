@@ -5,13 +5,15 @@ import { withStyles } from '@material-ui/core/styles'
 import CardContent from '@material-ui/core/CardContent'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
-import { Link } from 'react-router-dom'
+
+import FileIcon from './FileIcon'
 
 const styles = {}
 
-function Content ({ ...props }) {
-  const {title, list, to} = props
+function FileContent ({ ...props }) {
+  const {title, list} = props
   return (
     <Card>
       <CardHeader
@@ -22,7 +24,10 @@ function Content ({ ...props }) {
         <List dense>
           {
             list.map((subItem, index) => (
-              <ListItem button component={Link} to={`${to}/${subItem.id}`} key={index}>
+              <ListItem button onClick={() => props.dowloadFile(subItem.hash)} key={index}>
+                <ListItemIcon>
+                  <FileIcon type={subItem.fileType} />
+                </ListItemIcon>
                 <ListItemText
                   primary={subItem.title}
                   secondary={subItem.description}
@@ -36,4 +41,4 @@ function Content ({ ...props }) {
   )
 }
 
-export default withStyles(styles)(Content)
+export default withStyles(styles)(FileContent)

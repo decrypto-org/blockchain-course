@@ -14,7 +14,7 @@ export default function withSingleItem (Component, key, actions, route, styles =
 
   class SingleItemHOC extends React.Component {
     componentDidMount () {
-      this.props.actions.getItem(this.props.id).catch(e => console.log(e))
+      this.props.actions.getItem({id: this.props.id}).catch(e => console.log(e))
     }
 
     render () {

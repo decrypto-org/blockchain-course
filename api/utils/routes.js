@@ -11,7 +11,7 @@ const createControllerRoutes = (controller) => {
 const createSimpleRouter = (key) => {
   const Controller = require(`../controllers/${key}`)
   const controller = new Controller()
-  return createControllerRoutes(controller)
+  return {router: createControllerRoutes(controller), controller}
 }
 
 module.exports = {
