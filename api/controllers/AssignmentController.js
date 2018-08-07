@@ -39,6 +39,14 @@ module.exports = class AssignmentController extends OrderedDataController {
     )
   }
 
+  async list (req, res) {
+    const metadata = Object.values(assignments).map((res) => {
+      return res.metadata
+    })
+
+    return res.status(200).json({ success: true, assignments: metadata })
+  }
+
   async solution (req, res, id) {
     const assignment = await Assignment.findById(id)
 
