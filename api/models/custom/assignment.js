@@ -1,4 +1,5 @@
 const assignments = require('../../assignments')
+const _ = require('lodash')
 
 class Assignment {
   static findByName(name) {
@@ -10,6 +11,13 @@ class Assignment {
 
   static findAll() {
     return Object.values(assignments).map(res => res.metadata)
+  }
+
+  static findAllByGroup(group) {
+    return _.chain(assignments)
+      .values()
+      .filter(res => res.metadata.group == group)
+      .value()
   }
 }
 
