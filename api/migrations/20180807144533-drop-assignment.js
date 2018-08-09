@@ -15,7 +15,13 @@ module.exports = {
       }
     )
 
-    await queryInterface.dropTable('assignments', {force: true})
+    await queryInterface.renameColumn(
+      'ParameterizedAssignments',
+      'assignmentId',
+      'assignmentName'
+    )
+
+    await queryInterface.dropTable('Assignments', {force: true})
   },
 
   down: async (queryInterface, Sequelize) => {
@@ -51,9 +57,11 @@ module.exports = {
       }
     });
 
-    await queryInterface.changeColumn('ParameterizedAssignments', 'assignmentId', {
-      type: 'INTEGER USING CAST("assignmentId" as INTEGER)'
+    await queryInterface.changeColumn('ParameterizedAssignments', 'assignmentName', {
+      type: 'INTEGER USING CAST("assignmentName" as INTEGER)'
     });
+
+    await queryInterface.renameColumn('ParameterizedAssignments', 'assignmentName', 'assignmentId');
 
     await queryInterface.changeColumn(
       'ParameterizedAssignments',
