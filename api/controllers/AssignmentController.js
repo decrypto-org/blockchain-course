@@ -12,15 +12,15 @@ module.exports = class AssignmentController extends OrderedDataController {
    * Get the specified resource.
    *
    */
-  async read (req, res, id) {
-    const assignment = await Assignment.findById(id)
+  async read (req, res, name) {
+    const assignment = Assignment.findByName(name)
 
     /* throws an HTTPError if the resource is not found */
     this.requireResourceFound(assignment)
 
     const parameterizedAssignment = await ParameterizedAssignment.findOrCreate({
       where: {
-        assignmentId: assignment.dataValues.id,
+        assignmentName: assignment.metadata.name,
         studentId: req.user.id
       }
     })
@@ -34,21 +34,13 @@ module.exports = class AssignmentController extends OrderedDataController {
 
     return res.status(200).send(
       {
-        success: true, assignment: [{ ...params, ...assignment.dataValues }]
+        success: true, assignment: [{ ...params, ...assignment.metadata }]
       }
     )
   }
 
-  async list (req, res) {
-    const metadata = Object.values(assignments).map((res) => {
-      return res.metadata
-    })
-
-    return res.status(200).json({ success: true, assignments: metadata })
-  }
-
-  async solution (req, res, id) {
-    const assignment = await Assignment.findById(id)
+  async solution (req, res, name) {
+    const assignment = await Assignment.findByName(name)
 
     /* throws an HTTPError if the resource is not found */
     this.requireResourceFound(assignment)

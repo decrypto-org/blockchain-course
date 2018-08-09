@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid'
 import List from '@material-ui/core/List'
 import cx from 'classnames'
 
-export default function withList (ListComponent, key, actions, route) {
+export default function withList (ListComponent, key, actions, route, routeKey = 'id') {
   const mapDispatchToProps = dispatch => ({
     actions: bindActionCreators({ ...actions }, dispatch)
   })
@@ -27,7 +27,7 @@ export default function withList (ListComponent, key, actions, route) {
       let items = ''
       if (this.props[key] && this.props[key].length > 0) {
         items = this.props[key].map((item, index) => {
-          return <ListComponent {...item} key={index} className={cx('item', key)} to={route + item.id} />
+          return <ListComponent {...item} key={index} className={cx('item', key)} to={route + item[routeKey]} />
         })
       }
       return (

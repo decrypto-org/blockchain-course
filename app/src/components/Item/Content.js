@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom'
 const styles = {}
 
 function Content ({ ...props }) {
-  const { title, list, to } = props
+  const { title, list, to, toKey } = props
   return (
     <Card>
       <CardHeader
@@ -22,7 +22,7 @@ function Content ({ ...props }) {
         <List dense>
           {
             list.map((subItem, index) => (
-              <ListItem button component={Link} to={`${to}/${subItem.id}`} key={index}>
+              <ListItem button component={Link} to={`${to}/${subItem[toKey]}`} key={index}>
                 <ListItemText
                   primary={subItem.title}
                   secondary={subItem.description}
