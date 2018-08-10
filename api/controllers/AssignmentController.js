@@ -1,7 +1,6 @@
 const winston = require('winston')
 const OrderedDataController = require('./OrderedDataController')
 const { Assignment, ParameterizedAssignment } = require('../models')
-const assignments = require('../assignments')
 
 module.exports = class AssignmentController extends OrderedDataController {
   constructor () {
@@ -40,13 +39,12 @@ module.exports = class AssignmentController extends OrderedDataController {
   }
 
   async solution (req, res, name) {
-    const assignment = await Assignment.findByName(name)
+    const AssignmentClass = await Assignment.findByName(name)
 
     /* throws an HTTPError if the resource is not found */
-    this.requireResourceFound(assignment)
+    this.requireResourceFound(AssignmentClass)
 
-    const key = assignment.dataValues.name
-    const judge = new assignments[key](assignment, req.user)
+    const judge = new AssignmentClass(AssignmentClass, req.user)
 
     const solution = req.body.solution
     const paramId = req.body.paramId
@@ -64,7 +62,7 @@ module.exports = class AssignmentController extends OrderedDataController {
     let grade = 0
 
     try {
-      grade = await judge.judge(aux, req.user, assignment, solution)
+      grade = await judge.judge(aux, req.user, AssignmentClass, solution)
     } catch (e) {
       winston.log('debug', 'Error', e.message)
       return res.status(500).send(
