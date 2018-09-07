@@ -2,17 +2,18 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
-import VerifiedUser from '@material-ui/icons/VerifiedUser'
 import Button from '@material-ui/core/Button'
 import { Link } from 'react-router-dom'
 import IconButton from '@material-ui/core/IconButton'
-import MenuItem from '@material-ui/core/MenuItem'
-import Menu from '@material-ui/core/Menu'
+import AccountCircle from '@material-ui/icons/AccountCircle'
+import Popover from '@material-ui/core/Popover'
+import Divider from '@material-ui/core/Divider'
 
 import {
-  unauthorize
+  userActions
 } from '../../actions'
 
+const unauthorize = userActions.unauthorize
 const styles = {}
 
 class Avatar extends React.Component {
@@ -52,16 +53,15 @@ class Avatar extends React.Component {
       <div>
         {this.props.isAuthenticated ? (
           <div>
-            {this.props.user.email}
             <IconButton
               aria-owns={this.state.open ? 'menu-appbar' : null}
               aria-haspopup='true'
               onClick={this.openMenu}
               color='inherit'
             >
-              <VerifiedUser />
+              <AccountCircle />
             </IconButton>
-            <Menu
+            <Popover
               id='menu-appbar'
               anchorEl={this.state.anchorEl}
               anchorOrigin={{
@@ -75,10 +75,25 @@ class Avatar extends React.Component {
               open={this.state.open}
               onClose={this.closeMenu}
             >
-              <MenuItem onClick={this.logout}>Logout</MenuItem>
-            </Menu>
+              <div className='user-popover-wrapper'>
+                <div className='user-popover-content user-info'>
+                  <div className='title'>{this.props.user.firstName} {this.props.user.lastName}</div>
+                  <div className='sub-title'>{this.props.user.username}</div>
+                  <div className='sub-title'>{this.props.user.email}</div>
+                </div>
+                <Divider />
+                <div className='user-popover-actions'>
+                  <Button variant='outlined' color='primary'>
+                    Profile
+                  </Button>
+                  <Button variant='outlined' color='primary' onClick={this.logout}>
+                    Sign out
+                  </Button>
+                </div>
+              </div>
+            </Popover>
           </div>
-        ) : (<Button color='inherit' to='/login' component={Link}>Login</Button>)
+        ) : (<Button variant='outlined' color='inherit' to='/login' component={Link}>Login</Button>)
         }
       </div>
     )
