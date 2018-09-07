@@ -1,5 +1,8 @@
 import store from '../store'
-import { unauthorize, notify } from '../actions'
+
+import { userActions, notify } from '../actions'
+
+const unauthorize = userActions.unauthorize
 
 const responseThen = (res) => {
   return res

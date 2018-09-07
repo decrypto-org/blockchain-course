@@ -2,7 +2,7 @@ import lectureGroupsActions from './lectureGroups'
 import lectureActions from './lectures'
 import assignmentActions from './assignments'
 import { closeToast, notify } from './notifications'
-import { logout, unauthorize } from './user'
+import userActions from './user'
 
 export {
   lectureGroupsActions,
@@ -10,6 +10,5 @@ export {
   lectureActions,
   closeToast,
   notify,
-  logout,
-  unauthorize
+  userActions
 }

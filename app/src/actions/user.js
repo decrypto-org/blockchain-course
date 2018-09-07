@@ -1,6 +1,7 @@
 import { notify } from './notifications'
 import auth from '../utils/AuthService'
 import types from './actionTypes'
+import { buildActions } from '../utils/actions'
 
 const logout = () => {
   return dispatch => {
@@ -18,7 +19,13 @@ const unauthorize = () => {
   }
 }
 
-export {
-  logout,
-  unauthorize
-}
+let actions = buildActions({
+  getCurrentUser: types.GET_CURRENT_USER,
+  getCurrentUserSuccess: types.GET_CURRENT_USER_SUCCESS,
+  fetchCurrentUser: ['getCurrentUser', 'getCurrentUserSuccess', 'user/current']
+})
+
+actions.logout = logout
+actions.unauthorize = unauthorize
+
+export default actions
