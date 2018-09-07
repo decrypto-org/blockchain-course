@@ -6,6 +6,11 @@ const responseThen = (res) => {
 }
 
 const responseCatch = (error) => {
+  if (!error.hasOwnProperty('response')) {
+    store.dispatch(notify(`Error: ${error.message}`))
+    return Promise.reject(error)
+  }
+
   if (error.response.status === 403) {
     store.dispatch(unauthorize())
   }
