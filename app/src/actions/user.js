@@ -8,6 +8,7 @@ const logout = () => {
     dispatch({ type: types.LOGOUT_REQUEST, payload: {} })
     auth.logout()
     dispatch({ type: types.LOGOUT_SUCCESS, payload: {} })
+    dispatch({ type: types.USER_LOGGED_OUT, payload: {} })
   }
 }
 

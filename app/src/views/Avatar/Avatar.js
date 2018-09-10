@@ -13,7 +13,7 @@ import {
   userActions
 } from '../../actions'
 
-const unauthorize = userActions.unauthorize
+const logout = userActions.logout
 const styles = {}
 
 class Avatar extends React.Component {
@@ -45,7 +45,7 @@ class Avatar extends React.Component {
 
   logout () {
     this.closeMenu()
-    this.props.actions.unauthorize()
+    this.props.actions.logout()
   }
 
   render () {
@@ -110,7 +110,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    actions: bindActionCreators({ unauthorize }, dispatch)
+    actions: bindActionCreators({ logout }, dispatch)
   }
 }
 
