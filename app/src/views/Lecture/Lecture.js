@@ -8,7 +8,7 @@ import {
 
 const fetchSingleLecture = lectureActions.fetchSingleLecture
 
-const SingleLecture = withSingleItem(LectureDetails, 'lecture', {getItem: fetchSingleLecture}, '/lecture/')
+const SingleLecture = withSingleItem(LectureDetails, 'lecture', { getItem: fetchSingleLecture }, '/lecture/')
 
 export default class Lecture extends React.Component {
   constructor () {

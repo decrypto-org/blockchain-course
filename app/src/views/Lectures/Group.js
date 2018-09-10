@@ -8,7 +8,7 @@ import {
 
 const fetchSingleLectureGroup = lectureGroupsActions.fetchSingleLectureGroup
 
-const SingleGroup = withSingleItem(GroupDetails, 'group', {getItem: fetchSingleLectureGroup}, '/lecture/')
+const SingleGroup = withSingleItem(GroupDetails, 'group', { getItem: fetchSingleLectureGroup }, '/lecture/')
 
 export default class LecturesList extends React.Component {
   render () {

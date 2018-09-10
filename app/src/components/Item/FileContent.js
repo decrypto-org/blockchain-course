@@ -13,7 +13,7 @@ import FileIcon from './FileIcon'
 const styles = {}
 
 function FileContent ({ ...props }) {
-  const {title, list} = props
+  const { title, list } = props
   return (
     <Card>
       <CardHeader

@@ -11,7 +11,7 @@ import {
 
 const fetchAssignments = assignmentActions.fetchAssignments
 
-const Assignments = withList(ListItem, 'assignments', {getList: fetchAssignments}, '/assignment/')
+const Assignments = withList(ListItem, 'assignments', { getList: fetchAssignments }, '/assignment/')
 
 class AssignmentsList extends React.Component {
   componentDidMount () {
@@ -35,7 +35,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    actions: bindActionCreators({fetchAssignments, notify}, dispatch)
+    actions: bindActionCreators({ fetchAssignments, notify }, dispatch)
   }
 }
 

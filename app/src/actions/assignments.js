@@ -1,4 +1,4 @@
-import {buildActions} from '../utils/actions'
+import { buildActions } from '../utils/actions'
 
 import types from './actionTypes'
 

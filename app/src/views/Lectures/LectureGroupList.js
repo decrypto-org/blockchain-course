@@ -8,7 +8,7 @@ import {
 
 const fetchLectureGroups = lectureGroupsActions.fetchLectureGroups
 
-const Groups = withList(ListItem, 'groups', {getList: fetchLectureGroups}, '/lectureGroups/')
+const Groups = withList(ListItem, 'groups', { getList: fetchLectureGroups }, '/lectureGroups/')
 
 export default class LectureGroups extends React.Component {
   render () {
