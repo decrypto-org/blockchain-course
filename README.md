@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/SignedBlock/blockchain-course.svg?style=svg&circle-token=fb8a1e182558aa8a1998d4c36d9b74c8531f43f9)](https://circleci.com/gh/SignedBlock/blockchain-course)
+
 # Introduction to Blockchains
 
 This repository contains the material for our [Introduction to
