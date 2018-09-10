@@ -1,5 +1,3 @@
-![build status](https://travis-ci.com/dionyziz/blockchain-course.svg?branch=master)
-
 # Introduction to Blockchains
 
 This repository contains the material for our [Introduction to
