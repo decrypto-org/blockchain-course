@@ -13,6 +13,7 @@ const session = require('express-session')
 const {loginRequired} = require('./middlewares/authentication')
 
 ;(async () => {
+  app.set('trust proxy', '127.0.0.1')
   app.use(helmet())
   app.use(cors({credentials: true, origin: process.env.APP_URL, methods: ['GET', 'PUT', 'POST']}))
   app.use(bodyParser.json())
