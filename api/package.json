@@ -48,10 +48,9 @@
   },
   "standard": {
     "ignore": [
-      "/migrations/",
-      "/seeders/",
-      "/models/index.js",
-      "/etc/"
+      "**/migrations/*",
+      "**/seeders/*",
+      "**/models/*"
     ]
   }
 }
