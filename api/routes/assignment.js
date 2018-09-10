@@ -1,4 +1,4 @@
-const {createControllerRoutes} = require('../utils/routes')
+const { createControllerRoutes } = require('../utils/routes')
 const AssignmentController = require('../controllers/AssignmentController')
 
 const controller = new AssignmentController()

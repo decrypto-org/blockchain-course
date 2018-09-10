@@ -1,6 +1,6 @@
 const winston = require('winston')
 const GitHubStrategy = require('passport-github')
-const {User} = require('../models')
+const { User } = require('../models')
 
 const strategy = new GitHubStrategy(
   {
@@ -9,7 +9,7 @@ const strategy = new GitHubStrategy(
     callbackURL: process.env.GITHUB_CALLBACK_URL
   },
   async (authToken, refreshToken, profile, cb) => {
-    winston.log('debug', 'Received profile from GitHub', {profile})
+    winston.log('debug', 'Received profile from GitHub', { profile })
     const defaults = {
       username: profile.username,
       email: '',
@@ -28,14 +28,14 @@ const strategy = new GitHubStrategy(
 
     let [user, created] = await User.findOrCreate(
       {
-        where: {githubId: profile.id},
+        where: { githubId: profile.id },
         defaults
       }
     )
     if (created) {
-      winston.log('debug', 'Registered new user', {user})
+      winston.log('debug', 'Registered new user', { user })
     } else {
-      winston.log('debug', 'Logged in existing user', {user})
+      winston.log('debug', 'Logged in existing user', { user })
     }
     return cb(null, user)
   }
