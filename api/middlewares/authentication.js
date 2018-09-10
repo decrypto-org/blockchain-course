@@ -1,8 +1,8 @@
-const _ = require('lodash')
-const requireAuth = ['user', 'assignment']
+const { inPath } = require('../utils/helpers')
+const requireAuth = ['^/user/', '^/assignment']
 
 const loginRequired = (req, res, next) => {
-  if (!_.includes(requireAuth, req.path)) {
+  if (!inPath(requireAuth, req.path)) {
     return next()
   }
 
