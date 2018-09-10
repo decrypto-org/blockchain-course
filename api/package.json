@@ -6,11 +6,9 @@
   "scripts": {
     "start": "nodemon index.js",
     "serve": "node index.js"
+  "engines": {
+    "node": ">=8.11.4"
   },
-  "engines" :
-    {
-      "node" : ">=8.9.4"
-    },
   "contributors": [
     {
       "name": "Christos Nasikas",
