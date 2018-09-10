@@ -11,7 +11,7 @@ const buildActionTypes = (types) => {
 
 const createSimpleAction = (type) => {
   return (data = {}) => {
-    return {type, payload: {data}}
+    return { type, payload: { data } }
   }
 }
 
@@ -30,10 +30,10 @@ const createDispatchAPIAction = (before, after, url, action = 'get') => {
 
       switch (action) {
         case 'get':
-          res = await axios.get(replacedUrl, {withCredentials: true})
+          res = await axios.get(replacedUrl, { withCredentials: true })
           break
         case 'post':
-          res = await axios.post(replacedUrl, {...data}, {withCredentials: true})
+          res = await axios.post(replacedUrl, { ...data }, { withCredentials: true })
           break
         default:
       }
@@ -45,7 +45,7 @@ const createDispatchAPIAction = (before, after, url, action = 'get') => {
 }
 
 const buildActions = (actions) => {
-  actions = {...actions}
+  actions = { ...actions }
 
   for (let action in actions) {
     if (actions.hasOwnProperty(action)) {

@@ -95,7 +95,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    actions: bindActionCreators({unauthorize}, dispatch)
+    actions: bindActionCreators({ unauthorize }, dispatch)
   }
 }
 

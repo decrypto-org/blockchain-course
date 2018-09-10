@@ -34,16 +34,16 @@ module.exports = class BaseController extends AbstractController {
     try {
       const data = await this.model.findById(id)
       if (data === null) {
-        return res.status(404).send({success: false, msg: `${this.singular} not found`})
+        return res.status(404).send({ success: false, msg: `${this.singular} not found` })
       }
 
       return res.status(200).send(
         {
-          success: true, [this.singular]: [{...data.dataValues}]
+          success: true, [this.singular]: [{ ...data.dataValues }]
         }
       )
     } catch (e) {
-      res.status(500).json({error: e.message})
+      res.status(500).json({ error: e.message })
     }
   }
 

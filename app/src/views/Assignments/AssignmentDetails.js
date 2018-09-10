@@ -9,13 +9,13 @@ import Button from '@material-ui/core/Button'
 import CardActions from '@material-ui/core/CardActions'
 import Check from '@material-ui/icons/Check'
 import cx from 'classnames'
-import {sprintf} from 'sprintf-js'
+import { sprintf } from 'sprintf-js'
 
 export default class AssignmentDetails extends React.Component {
   render () {
     const { classes } = this.props
     const assignment = this.props.item
-    const solvedClass = cx('solved', {hidden: !assignment.solved})
+    const solvedClass = cx('solved', { hidden: !assignment.solved })
 
     return (
       <div>

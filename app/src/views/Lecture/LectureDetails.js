@@ -4,7 +4,7 @@ import FileContent from '../../components/Item/FileContent'
 
 export default class LectureDetails extends React.Component {
   render () {
-    const item = {name: 'lecture', title: this.props.item.title, description: this.props.item.description}
+    const item = { name: 'lecture', title: this.props.item.title, description: this.props.item.description }
     const contents = [
       {
         title: 'Material',

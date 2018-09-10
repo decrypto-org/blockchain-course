@@ -5,7 +5,7 @@ import { withStyles } from '@material-ui/core/styles'
 
 export default function withSingleItem (Component, key, actions, route, styles = {}) {
   const mapDispatchToProps = dispatch => ({
-    actions: bindActionCreators({...actions}, dispatch)
+    actions: bindActionCreators({ ...actions }, dispatch)
   })
 
   const mapStateToProps = state => ({
@@ -14,7 +14,7 @@ export default function withSingleItem (Component, key, actions, route, styles =
 
   class SingleItemHOC extends React.Component {
     componentDidMount () {
-      this.props.actions.getItem({id: this.props.id}).catch(e => console.log(e))
+      this.props.actions.getItem({ id: this.props.id }).catch(e => console.log(e))
     }
 
     render () {

@@ -1,0 +1,76 @@
+version: 2
+jobs:
+  api:
+    docker:
+      - image: circleci/node:8.11.4
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+              - yarn-v1-api{{ checksum "./api/yarn.lock" }}-{{ arch }}
+              - yarn-v1-api
+
+      - restore_cache:
+          keys:
+              - node-v1-api{{ checksum "./api/package.json" }}-{{ arch }}
+              - node-v1-api
+
+      # install dependencies
+      - run: cd api && yarn install
+
+      - save_cache:
+          key: yarn-v1-api{{ checksum "./api/yarn.lock" }}-{{ arch }}
+          paths:
+            - ~/.cache/yarn
+
+      - save_cache:
+          key: node-v1-api{{ checksum "./api/package.json" }}-{{ arch }}
+          paths:
+            - ./api/node_modules
+
+      # run linter!
+      - run: cd api && yarn lint
+  app:
+    docker:
+      - image: circleci/node:8.11.4-browsers
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - yarn-v1-app{{ checksum "./app/yarn.lock" }}-{{ arch }}
+            - yarn-v1-app
+
+      - restore_cache:
+          keys:
+              - node-v1-app{{ checksum "./app/package.json" }}-{{ arch }}
+              - node-v1-app
+
+      # install dependencies
+      - run: cd app && yarn install
+
+      - save_cache:
+          key: yarn-v1-app{{ checksum "./app/yarn.lock" }}-{{ arch }}
+          paths:
+            - ~/.cache/yarn
+
+      - save_cache:
+          key: node-v1-app{{ checksum "./app/package.json" }}-{{ arch }}
+          paths:
+            - ./app/node_modules
+
+      # run compiler!
+      - run: cd app && yarn build
+
+      # run linter!
+      - run: cd app && yarn lint
+
+workflows:
+  version: 2
+  api-app:
+    jobs:
+      - api
+      - app:
+          requires:
+            - api

@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles'
 const styles = {}
 
 function ItemHeader ({ ...props }) {
-  const {title, description} = props
+  const { title, description } = props
   return (
     <Card>
       <CardHeader

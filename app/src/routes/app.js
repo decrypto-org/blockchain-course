@@ -1,4 +1,4 @@
-import {createAppRoutes} from '../utils/routes'
+import { createAppRoutes } from '../utils/routes'
 
 import LectureGroupList from 'views/Lectures/LectureGroupList'
 import LectureGroup from 'views/Lectures/Group'

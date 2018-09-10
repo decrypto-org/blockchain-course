@@ -7,7 +7,7 @@ import cx from 'classnames'
 
 export default function withList (ListComponent, key, actions, route) {
   const mapDispatchToProps = dispatch => ({
-    actions: bindActionCreators({...actions}, dispatch)
+    actions: bindActionCreators({ ...actions }, dispatch)
   })
 
   const mapStateToProps = state => ({

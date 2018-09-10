@@ -15,7 +15,7 @@ function Item ({ ...props }) {
       </Grid>
       {
         contents.map((content, index) => {
-          const {component: Component, ...rest} = content
+          const { component: Component, ...rest } = content
           return (
             <Grid item xs={12} key={index}>
               <Component {...rest} />

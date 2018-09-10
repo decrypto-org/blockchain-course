@@ -6,7 +6,7 @@ const createAppRoutes = (routes) => {
   }
 
   return routes.map((item) => {
-    return {...defaults, ...item}
+    return { ...defaults, ...item }
   })
 }
 

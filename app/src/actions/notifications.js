@@ -12,7 +12,7 @@ const notify = message => {
     clearTimeout(hideTimeout)
     hideTimeout = setTimeout(dispatch.bind({}, closeToast()), 7000)
 
-    dispatch({ type: types.OPEN_TOAST, payload: {message} })
+    dispatch({ type: types.OPEN_TOAST, payload: { message } })
   }
 }
 

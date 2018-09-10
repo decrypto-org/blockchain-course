@@ -8,7 +8,7 @@ const icons = {
 }
 
 function FileIcon ({ ...props }) {
-  const {type} = props
+  const { type } = props
   const Icon = icons[type || 'default']
   return (
     <Icon />

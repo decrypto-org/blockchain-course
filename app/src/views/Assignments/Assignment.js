@@ -24,7 +24,7 @@ const styles = {
 const fetchSingleAssignment = assignmentActions.fetchSingleAssignment
 const submitSolution = assignmentActions.submitSolution
 
-const SingleAssignment = withSingleItem(AssignmentDetails, 'singleAssignment', {getItem: fetchSingleAssignment}, '/assignment/', styles)
+const SingleAssignment = withSingleItem(AssignmentDetails, 'singleAssignment', { getItem: fetchSingleAssignment }, '/assignment/', styles)
 
 class Assignment extends React.Component {
   constructor (props, context) {
@@ -56,7 +56,7 @@ class Assignment extends React.Component {
       objData[key] = value
     })
 
-    this.props.actions.submitSolution({id: this.props.match.params.id}, objData)
+    this.props.actions.submitSolution({ id: this.props.match.params.id }, objData)
       .then((value) => {
         const msg = value.grade === 0 ? 'Wrong! Please try again.' : 'Congratulations! You found the solution'
         this.props.actions.notify(msg)
@@ -72,7 +72,7 @@ class Assignment extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    actions: bindActionCreators({submitSolution, notify}, dispatch)
+    actions: bindActionCreators({ submitSolution, notify }, dispatch)
   }
 }
 

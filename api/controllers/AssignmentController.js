@@ -1,6 +1,6 @@
 const winston = require('winston')
 const BaseController = require('./BaseController')
-const {Assignment, ParameterizedAssignment} = require('../models')
+const { Assignment, ParameterizedAssignment } = require('../models')
 const assignments = require('../assignments')
 
 module.exports = class AssignmentController extends BaseController {
@@ -15,7 +15,7 @@ module.exports = class AssignmentController extends BaseController {
   async read (req, res, id) {
     const assignment = await Assignment.findById(id)
     if (assignment === null) {
-      return res.status(404).send({success: false, msg: 'Assignment not found'})
+      return res.status(404).send({ success: false, msg: 'Assignment not found' })
     }
 
     const parameterizedAssignment = await ParameterizedAssignment.findOrCreate({
@@ -34,7 +34,7 @@ module.exports = class AssignmentController extends BaseController {
 
     return res.status(200).send(
       {
-        success: true, assignment: [{...params, ...assignment.dataValues}]
+        success: true, assignment: [{ ...params, ...assignment.dataValues }]
       }
     )
   }
@@ -43,7 +43,7 @@ module.exports = class AssignmentController extends BaseController {
     const assignment = await Assignment.findById(id)
 
     if (assignment === null) {
-      return res.status(404).send({success: false, msg: 'Assignment not found'})
+      return res.status(404).send({ success: false, msg: 'Assignment not found' })
     }
 
     const key = assignment.dataValues.name
@@ -72,7 +72,7 @@ module.exports = class AssignmentController extends BaseController {
     }
 
     if (grade > 0) {
-      await parameterizedAssignment.update({solved: true})
+      await parameterizedAssignment.update({ solved: true })
     }
 
     return res.status(200).send(

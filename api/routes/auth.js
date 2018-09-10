@@ -5,7 +5,7 @@ const router = express.Router()
 
 router.get(
   '/github',
-  passport.authenticate('github', {scope: ['profile']})
+  passport.authenticate('github', { scope: ['profile'] })
 )
 router.get(
   '/github/callback',
@@ -22,9 +22,9 @@ router.get('/logout', (req, res) => {
     winston.log('debug', 'Logging out user', req.user)
     req.session.destroy()
     res.clearCookie('connect.sid')
-    return res.json({msg: 'Logged out'})
+    return res.json({ msg: 'Logged out' })
   }
-  return res.json({msg: 'You are not logged in'})
+  return res.json({ msg: 'You are not logged in' })
 })
 
 module.exports = router

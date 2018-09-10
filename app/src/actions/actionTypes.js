@@ -1,4 +1,4 @@
-import {buildActionTypes} from '../utils/actions'
+import { buildActionTypes } from '../utils/actions'
 
 const types = [
   'GET_LECTURES',

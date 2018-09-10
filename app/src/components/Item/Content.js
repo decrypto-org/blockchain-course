@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom'
 const styles = {}
 
 function Content ({ ...props }) {
-  const {title, list, to} = props
+  const { title, list, to } = props
   return (
     <Card>
       <CardHeader
