@@ -7,7 +7,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "standard"
   },
   "contributors": [
     {
@@ -39,6 +40,7 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
     "sprintf-js": "^1.1.1",
+    "standard": "^12.0.1",
     "typeface-roboto": "^0.0.54"
   },
   "devDependencies": {
