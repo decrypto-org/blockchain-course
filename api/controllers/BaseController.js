@@ -12,8 +12,8 @@ module.exports = class BaseController extends AbstractController {
   /**
    * Display a listing of the resource.
    */
-  async list (req, res) {
-    const data = await this.model.findAll()
+  async list (req, res, options = {}) {
+    const data = await this.model.findAll({ ...options })
     return res.status(200).send(
       {
         success: true, [this.key]: data
