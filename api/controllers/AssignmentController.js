@@ -14,9 +14,9 @@ module.exports = class AssignmentController extends BaseController {
    */
   async read (req, res, id) {
     const assignment = await Assignment.findById(id)
-    if (assignment === null) {
-      return res.status(404).send({ success: false, msg: 'Assignment not found' })
-    }
+
+    /* throws an HTTPError if the resource is not found */
+    this.requireResourceFound(assignment)
 
     const parameterizedAssignment = await ParameterizedAssignment.findOrCreate({
       where: {
@@ -42,9 +42,8 @@ module.exports = class AssignmentController extends BaseController {
   async solution (req, res, id) {
     const assignment = await Assignment.findById(id)
 
-    if (assignment === null) {
-      return res.status(404).send({ success: false, msg: 'Assignment not found' })
-    }
+    /* throws an HTTPError if the resource is not found */
+    this.requireResourceFound(assignment)
 
     const key = assignment.dataValues.name
     const judge = new assignments[key](assignment, req.user)
@@ -53,6 +52,10 @@ module.exports = class AssignmentController extends BaseController {
     const paramId = req.body.paramId
 
     const parameterizedAssignment = await ParameterizedAssignment.findById(paramId)
+
+    /* throws an HTTPError if the resource is not found */
+    this.requireResourceFound(parameterizedAssignment)
+
     const aux = {
       public: parameterizedAssignment.dataValues.auxPublic,
       private: parameterizedAssignment.dataValues.auxPrivate

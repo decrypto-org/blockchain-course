@@ -32,20 +32,16 @@ module.exports = class BaseController extends AbstractController {
    *
    */
   async read (req, res, id) {
-    try {
-      const data = await this.model.findById(id)
-      if (data === null) {
-        return res.status(404).send({ success: false, msg: `${this.singular} not found` })
-      }
+    const data = await this.model.findById(id)
 
-      return res.status(200).send(
-        {
-          success: true, [this.singular]: [{ ...data.dataValues }]
-        }
-      )
-    } catch (e) {
-      res.status(500).json({ error: e.message })
-    }
+    /* throws an HTTPError if the resource is not found */
+    this.requireResourceFound(data)
+
+    return res.status(200).json(
+      {
+        success: true, [this.singular]: [{ ...data.dataValues }]
+      }
+    )
   }
 
   /**

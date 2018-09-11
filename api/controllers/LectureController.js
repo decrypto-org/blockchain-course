@@ -9,9 +9,8 @@ module.exports = class LectureController extends BaseController {
   async read (req, res, id) {
     const lecture = await Lecture.findById(id)
 
-    if (lecture === null) {
-      return res.status(404).send({ success: false, msg: 'Lecture group not found' })
-    }
+    /* throws an HTTPError if the resource is not found */
+    this.requireResourceFound(lecture)
 
     const files = await File.findAll({
       where: {
@@ -33,11 +32,10 @@ module.exports = class LectureController extends BaseController {
       attributes: ['title', 'fileType']
     })
 
-    const { title, fileType } = file.dataValues
+    /* throws an HTTPError if the resource is not found */
+    this.requireResourceFound(file)
 
-    if (file === null) {
-      return res.status(404).send({ success: false, msg: 'File not found' })
-    }
+    const { title, fileType } = file.dataValues
 
     const options = {
       dotfiles: 'deny',
