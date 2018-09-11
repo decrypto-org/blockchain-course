@@ -1,4 +1,5 @@
 const AbstractController = require('./AbstractController')
+const { HTTPError } = require('../errors')
 
 module.exports = class BaseController extends AbstractController {
   constructor (model, key, singular) {
@@ -60,5 +61,13 @@ module.exports = class BaseController extends AbstractController {
   */
   async destroy (req, res, id) {
 
+  }
+
+  requireResourceFound (resource) {
+    if (resource === null) {
+      throw new HTTPError(404, `${this.singular} not found`)
+    }
+
+    return resource
   }
 }
