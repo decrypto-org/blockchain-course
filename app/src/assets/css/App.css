@@ -91,3 +91,8 @@ body {
   display: flex;
   justify-content: space-between;
 }
+
+.icon a {
+  text-decoration: none;
+  color: #000;
+}
