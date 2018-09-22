@@ -1,9 +1,9 @@
 const winston = require('winston')
-const BaseController = require('./BaseController')
+const OrderedDataController = require('./OrderedDataController')
 const { Assignment, ParameterizedAssignment } = require('../models')
 const assignments = require('../assignments')
 
-module.exports = class AssignmentController extends BaseController {
+module.exports = class AssignmentController extends OrderedDataController {
   constructor () {
     super(Assignment, 'assignments', 'assignments')
   }

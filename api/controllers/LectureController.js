@@ -1,7 +1,7 @@
-const BaseController = require('./BaseController')
+const OrderedDataController = require('./OrderedDataController')
 const { Lecture, File } = require('../models')
 
-module.exports = class LectureController extends BaseController {
+module.exports = class LectureController extends OrderedDataController {
   constructor () {
     super(Lecture, 'lectures', 'lecture')
   }
