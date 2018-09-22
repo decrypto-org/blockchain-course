@@ -1,0 +1,89 @@
+.user-profile {
+  position: relative;
+}
+
+.user-profile-wrapper {
+  padding: 60px 24px 24px 24px;
+}
+
+.user-profile .close-icon {
+  position: absolute;
+  right: 24px;
+}
+
+.user-profile .close-icon svg {
+  font-size: 48px;
+}
+
+.user-profile-wrapper > * {
+  display: flex;
+  justify-content: center;
+}
+
+.profile-header {
+  background: #2a56c6;
+}
+
+.profile-header .profile-header-info {
+  display: flex;
+  align-items: center;
+  padding: 39px 0 39px 40px;
+  color: #fff;
+}
+
+.profile-avatar .avatar {
+  width: 90px;
+  height: 90px;
+  font-size: 40px;
+  background: #d32f2f;
+  color: #fff;
+  text-align: center;
+}
+
+.profile-full-name {
+  font-size: 24px;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-left: 40px;
+}
+
+.profile-row {
+  display: flex;
+  align-items: flex-start;
+  background-color: #f9f9f9;
+  padding: 40px 38px 0 40px;
+}
+
+.profile-row .row-header {
+  flex: 0 0 138px;
+  margin-bottom: 10px;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-row .row-info {
+  flex: 1 1 auto;
+  overflow: hidden;
+}
+
+.row-info > .row-info-wrapper {
+  background-color: #fff;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  margin: 0 2px 10px;
+  padding: 16px 22px;
+}
+
+.row-info .label {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.row-info .text {
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.row-info-entry:not(:first-child) {
+  margin-top: 20px;
+}
