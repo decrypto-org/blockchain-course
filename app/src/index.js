@@ -20,7 +20,7 @@ ReactDOM.render(
     <Provider store={store}>
       <Switch>
         {indexRoutes.map((prop, key) => {
-          return <Route path={prop.path} component={prop.component} key={key} />
+          return <Route path={prop.path} component={prop.component} key={key} exact={prop.exact} />
         })}
       </Switch>
     </Provider>
