@@ -1,7 +1,7 @@
-const BaseController = require('./BaseController')
+const OrderedDataController = require('./OrderedDataController')
 const { LectureGroup, Lecture, Assignment } = require('../models')
 
-module.exports = class LectureGroupController extends BaseController {
+module.exports = class LectureGroupController extends OrderedDataController {
   constructor () {
     super(LectureGroup, 'groups', 'group')
   }
@@ -11,10 +11,13 @@ module.exports = class LectureGroupController extends BaseController {
    *
    */
   async read (req, res, id) {
-    const group = await LectureGroup.findById(id, { include: [
-      { model: Lecture },
-      { model: Assignment, attributes: ['id', 'title', 'position'] }
-    ] })
+    const group = await LectureGroup.findById(id, {
+      include: [
+        { model: Lecture },
+        { model: Assignment, attributes: ['id', 'title', 'position'] }
+      ],
+      order: [ [ Lecture, 'position', 'ASC' ], [ Assignment, 'position', 'ASC' ] ]
+    })
 
     /* throws an HTTPError if the resource is not found */
     this.requireResourceFound(group)
