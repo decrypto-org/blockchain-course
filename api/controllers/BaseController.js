@@ -1,4 +1,5 @@
 const AbstractController = require('./AbstractController')
+const { HTTPError } = require('../errors')
 
 module.exports = class BaseController extends AbstractController {
   constructor (model, key, singular) {
@@ -31,20 +32,16 @@ module.exports = class BaseController extends AbstractController {
    *
    */
   async read (req, res, id) {
-    try {
-      const data = await this.model.findById(id)
-      if (data === null) {
-        return res.status(404).send({ success: false, msg: `${this.singular} not found` })
-      }
+    const data = await this.model.findById(id)
 
-      return res.status(200).send(
-        {
-          success: true, [this.singular]: [{ ...data.dataValues }]
-        }
-      )
-    } catch (e) {
-      res.status(500).json({ error: e.message })
-    }
+    /* throws an HTTPError if the resource is not found */
+    this.requireResourceFound(data)
+
+    return res.status(200).json(
+      {
+        success: true, [this.singular]: [{ ...data.dataValues }]
+      }
+    )
   }
 
   /**
@@ -60,5 +57,13 @@ module.exports = class BaseController extends AbstractController {
   */
   async destroy (req, res, id) {
 
+  }
+
+  requireResourceFound (resource) {
+    if (resource === null) {
+      throw new HTTPError(404, `${this.singular} not found`)
+    }
+
+    return resource
   }
 }

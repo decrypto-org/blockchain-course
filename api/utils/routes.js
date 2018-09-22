@@ -2,8 +2,8 @@ const express = require('express')
 
 const createControllerRoutes = (controller) => {
   const router = express.Router()
-  router.get('/', (req, res) => controller.list(req, res))
-  router.get('/:id(\\d+)', (req, res) => controller.read(req, res, req.params.id))
+  router.get('/', (req, res, next) => controller.list(req, res).catch(next))
+  router.get('/:id(\\d+)', (req, res, next) => controller.read(req, res, req.params.id).catch(next))
 
   return router
 }

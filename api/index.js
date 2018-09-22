@@ -11,6 +11,7 @@ const helmet = require('helmet')
 const cors = require('cors')
 const session = require('express-session')
 const { loginRequired } = require('./middlewares/authentication')
+const { HTTPErrorHandler } = require('./middlewares/error')
 
 ;(async () => {
   app.set('trust proxy', '127.0.0.1')
@@ -36,6 +37,8 @@ const { loginRequired } = require('./middlewares/authentication')
   for (const url in routes) {
     app.use(url, routes[url])
   }
+
+  app.use(HTTPErrorHandler)
 
   app.listen(LISTEN_PORT, () => {
     winston.info('Blockchain Course API server running on port ' + LISTEN_PORT)

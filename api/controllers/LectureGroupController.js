@@ -3,7 +3,7 @@ const { LectureGroup, Lecture, Assignment } = require('../models')
 
 module.exports = class LectureGroupController extends BaseController {
   constructor () {
-    super(LectureGroup, 'groups')
+    super(LectureGroup, 'groups', 'group')
   }
 
   /**
@@ -16,12 +16,11 @@ module.exports = class LectureGroupController extends BaseController {
       { model: Assignment, attributes: ['id', 'title', 'position'] }
     ] })
 
-    if (group === null) {
-      return res.status(404).send({ success: false, msg: 'Lecture group not found' })
-    }
+    /* throws an HTTPError if the resource is not found */
+    this.requireResourceFound(group)
 
     let { Lectures: lectures, Assignments: assignments, ...rest } = { ...group.dataValues }
-    return res.status(200).send(
+    return res.status(200).json(
       {
         success: true, group: [{ ...rest, lectures, assignments }]
       }
