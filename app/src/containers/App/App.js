@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles'
@@ -12,6 +13,13 @@ import Messenger from '../../views/Messenger/Messenger.js'
 import Avatar from '../../views/Avatar/Avatar.js'
 
 import appRoutes from 'routes/app.js'
+
+import {
+  userActions,
+  notify
+} from '../../actions'
+
+const fetchCurrentUser = userActions.fetchCurrentUser
 
 const switchRoutes = (
   <Switch>
@@ -27,6 +35,12 @@ const switchRoutes = (
 const styles = {}
 
 class App extends Component {
+  componentDidMount () {
+    if (this.props.isAuthenticated) {
+      this.props.actions.fetchCurrentUser()
+    }
+  }
+
   render () {
     return (
       <div className='app'>
@@ -52,4 +66,10 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps, null)(withStyles(styles)(App))
+const mapDispatchToProps = dispatch => {
+  return {
+    actions: bindActionCreators({ fetchCurrentUser, notify }, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(App))

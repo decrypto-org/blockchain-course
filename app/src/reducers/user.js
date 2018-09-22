@@ -1,10 +1,7 @@
-const defaultState = {
-  id: 1,
-  email: ''
-}
+import types from '../actions/actionTypes'
 
-const user = (state = defaultState, action) => {
-  return state
-}
+import { createSimpleReducer } from '../utils/reducers'
+
+const user = createSimpleReducer([], { type: types.GET_CURRENT_USER_SUCCESS, key: 'user' })
 
 export default user

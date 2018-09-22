@@ -1,11 +1,19 @@
 import store from '../store'
-import { unauthorize, notify } from '../actions'
+
+import { userActions, notify } from '../actions'
+
+const unauthorize = userActions.unauthorize
 
 const responseThen = (res) => {
   return res
 }
 
 const responseCatch = (error) => {
+  if (!error.hasOwnProperty('response')) {
+    store.dispatch(notify(`Error: ${error.message}`))
+    return Promise.reject(error)
+  }
+
   if (error.response.status === 403) {
     store.dispatch(unauthorize())
   }
