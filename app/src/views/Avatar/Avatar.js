@@ -83,7 +83,7 @@ class Avatar extends React.Component {
                 </div>
                 <Divider />
                 <div className='user-popover-actions'>
-                  <Button variant='outlined' color='primary'>
+                  <Button variant='outlined' color='primary' to='/profile' component={Link}>
                     Profile
                   </Button>
                   <Button variant='outlined' color='primary' onClick={this.logout}>
