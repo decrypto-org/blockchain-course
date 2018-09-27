@@ -1,0 +1,40 @@
+{
+  "name": "blockchain-course-cli",
+  "version": "1.0.0",
+  "description": "The cli for the Introduction to Blockchains course",
+  "main": "cli.js",
+  "bin" : {
+      "course" : "./cli.js"
+  },
+  "scripts": {
+    "lint": "standard"
+  },
+  "contributors": [
+    {
+      "name": "Christos Nasikas",
+      "email": "xristosnasikas@gmail.com"
+    },
+    {
+      "name": "Dionysis Zindros",
+      "email": "dionyziz@gmail.com"
+    }
+  ],
+  "repository": "github:decrypto/blockchain-course",
+  "homepage": "https://blockchain-course.org/",
+  "bugs": "https://github.com/decrypto-org/blockchain-course/issues",
+  "license": "MIT",
+  "dependencies": {
+    "yargs": "^12.0.2"
+  },
+  "devDependencies": {
+    "standard": "^12.0.1"
+  },
+  "standard": {
+    "ignore": [
+      "/build/"
+    ]
+  },
+  "engine": {
+    "node": ">=8.11"
+  }
+}
