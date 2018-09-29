@@ -27,3 +27,20 @@ You can take the course online at
 ## Serve API
 
 - `cd api && yarn serve`
+
+## CLI Usage
+
+```
+node cli.js <command>
+
+Commands:
+  cli.js add <command>     Add an entity <group|lecture|file>
+  cli.js delete <command>  Delete an entity <group|lecture|file>
+  cli.js dgst <file>       File digest
+  cli.js get <command>     Get an entity <group|lecture|file>
+  cli.js update <command>  Update an entity <group|lecture|file>
+
+Options:
+  --version  Show version number                                       [boolean]
+  --help     Show help                                                 [boolean]
+```
