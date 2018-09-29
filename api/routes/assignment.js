@@ -5,8 +5,13 @@ const controller = new AssignmentController()
 const router = createControllerRoutes(controller)
 
 router.post(
-  '/:id(\\d+)/solution',
-  (req, res) => { controller.solution(req, res, req.params.id) }
+  '/:name/solution',
+  (req, res, next) => { controller.solution(req, res, req.params.name).catch(next) }
+)
+
+router.get(
+  '/:name',
+  (req, res, next) => { controller.read(req, res, req.params.name).catch(next) }
 )
 
 module.exports = router

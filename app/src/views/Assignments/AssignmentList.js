@@ -11,7 +11,7 @@ import {
 
 const fetchAssignments = assignmentActions.fetchAssignments
 
-const Assignments = withList(ListItem, 'assignments', { getList: fetchAssignments }, '/assignment/')
+const Assignments = withList(ListItem, 'assignments', { getList: fetchAssignments }, '/assignment/', 'name')
 
 class AssignmentsList extends React.Component {
   componentDidMount () {
