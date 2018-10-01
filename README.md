@@ -13,7 +13,7 @@ You can take the course online at
 - `cd db && yarn install && yarn link`
 - Copy `.env-template` to `.env` and modify the variables
 - `cd cli && yarn install && yarn link blockchain-course-db`
-- `cd api && yarn install`
+- `cd api && yarn install && yarn link blockchain-course-db`
 - Copy `.env-template` to `.env` and modify the variables
 - `cd app && yarn install`
 - Copy `.env-template` to `.env.local` and modify the variables

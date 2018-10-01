@@ -1,7 +1,7 @@
 const winston = require('winston')
 const passport = require('passport')
 const GitHubStrategy = require('./github')
-const { User } = require('../models')
+const { User } = require('blockchain-course-db').models
 
 passport.serializeUser((user, done) => {
   winston.log('debug', 'Serializing user', { user })

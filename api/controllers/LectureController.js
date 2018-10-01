@@ -1,5 +1,5 @@
 const OrderedDataController = require('./OrderedDataController')
-const { Lecture, File } = require('../models')
+const { Lecture, File } = require('blockchain-course-db').models
 
 module.exports = class LectureController extends OrderedDataController {
   constructor () {

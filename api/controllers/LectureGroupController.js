@@ -1,5 +1,5 @@
 const OrderedDataController = require('./OrderedDataController')
-const { LectureGroup, Lecture, Assignment } = require('../models')
+const { LectureGroup, Lecture, Assignment } = require('blockchain-course-db').models
 const _ = require('lodash')
 
 module.exports = class LectureGroupController extends OrderedDataController {

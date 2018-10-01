@@ -1,6 +1,6 @@
 const winston = require('winston')
 const OrderedDataController = require('./OrderedDataController')
-const { Assignment, ParameterizedAssignment } = require('../models')
+const { Assignment, ParameterizedAssignment } = require('blockchain-course-db').models
 
 module.exports = class AssignmentController extends OrderedDataController {
   constructor () {
