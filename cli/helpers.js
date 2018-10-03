@@ -2,6 +2,13 @@ const { sequelize } = require('blockchain-course-db').models
 const crypto = require('crypto')
 const fs = require('fs')
 
+class ResourceNotFoundError extends Error {
+  constructor () {
+    super()
+    this.message = 'Resource not found'
+  }
+}
+
 const slugify = (string) => {
   return string
     .toString()
@@ -35,6 +42,14 @@ const _buildHandler = (key, Model, handlerFunc) => {
     const data = await handlerFunc(argv, Model, key)
     printAndExit(data)
   }
+}
+
+const _requireResourceFound = (resource) => {
+  if (resource === null) {
+    throw new ResourceNotFoundError()
+  }
+
+  return resource
 }
 
 const buildCommand = (cmd, subCmds = {}) => {
@@ -81,6 +96,7 @@ const handleGetEntity = async (argv, Model, key) => {
 
   console.log(`[*] Getting ${key}...`)
   data = await Model.findById(argv.id, { raw: true })
+  _requireResourceFound(data)
   console.log(`[*] Done!`)
 
   return data
@@ -132,6 +148,9 @@ const handleUpdateEntity = async (argv, Model, key) => {
 const handleDeleteEntity = async (argv, Model, key) => {
   console.log(`[*] Deleting ${key}...`)
   const model = await Model.findById(argv.id)
+
+  _requireResourceFound(model)
+
   const data = await model.destroy()
   console.log(`[*] Done!`)
   return data.dataValues || data
