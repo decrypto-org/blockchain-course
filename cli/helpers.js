@@ -1,7 +1,6 @@
 const { sequelize } = require('blockchain-course-db').models
 const crypto = require('crypto')
 const fs = require('fs')
-const _ = require('lodash')
 
 const slugify = (string) => {
   return string
@@ -130,10 +129,19 @@ const handleUpdateEntity = async (argv, Model, key) => {
   return data.dataValues || data
 }
 
+const handleDeleteEntity = async (argv, Model, key) => {
+  console.log(`[*] Deleting ${key}...`)
+  const model = await Model.findById(argv.id)
+  const data = await model.destroy()
+  console.log(`[*] Done!`)
+  return data.dataValues || data
+}
+
 module.exports = {
   buildCommand,
   hashFile,
   handleGetEntity,
   handleAddEntity,
-  handleUpdateEntity
+  handleUpdateEntity,
+  handleDeleteEntity
 }
