@@ -109,9 +109,31 @@ const handleAddEntity = async (argv, Model, key) => {
   return data.dataValues || data
 }
 
+const handleUpdateEntity = async (argv, Model, key) => {
+  console.log(`[*] Updating ${key}...`)
+
+  const model = await Model.findById(argv.id)
+  const { _: cmds } = argv
+
+  if (cmds[1] === 'group' && argv.title) {
+    argv.name = slugify(argv.title)
+  }
+
+  if (cmds[1] === 'file' && argv.file) {
+    model.hash = await hashFile(argv.file)
+    model.fileType = 'pdf' // TODO: Read file type from file
+  }
+
+  const data = await model.update({ ...argv })
+  console.log(`[*] Done!`)
+
+  return data.dataValues || data
+}
+
 module.exports = {
   buildCommand,
-  handleGetEntity,
   hashFile,
-  handleAddEntity
+  handleGetEntity,
+  handleAddEntity,
+  handleUpdateEntity
 }
