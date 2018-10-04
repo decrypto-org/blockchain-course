@@ -78,7 +78,7 @@ const buildCommand = (cmd, subCmds = {}) => {
 
   return {
     command: cmd.command,
-    desc: cmd.command,
+    desc: cmd.desc,
     builder: mainCmdbuilder,
     handler: (argv) => {}
   }
