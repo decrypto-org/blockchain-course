@@ -65,12 +65,42 @@ jobs:
 
       # run linter!
       - run: cd app && yarn lint
+  cli:
+    docker:
+      - image: circleci/node:8.11.4
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+              - yarn-v1-api{{ checksum "./cli/yarn.lock" }}-{{ arch }}
+              - yarn-v1-cli
+
+      - restore_cache:
+          keys:
+              - node-v1-cli{{ checksum "./cli/package.json" }}-{{ arch }}
+              - node-v1-cli
+
+      - run: cd cli && yarn install
+
+      - save_cache:
+          key: yarn-v1-cli{{ checksum "./cli/yarn.lock" }}-{{ arch }}
+          paths:
+            - ~/.cache/yarn
+
+      - save_cache:
+          key: node-v1-cli{{ checksum "./cli/package.json" }}-{{ arch }}
+          paths:
+            - ./cli/node_modules
+
+      - run: cd cli && yarn lint
 
 workflows:
   version: 2
   api-app:
     jobs:
       - api
+      - cli
       - app:
           requires:
             - api

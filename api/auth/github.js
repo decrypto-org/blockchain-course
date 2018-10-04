@@ -1,6 +1,6 @@
 const winston = require('winston')
 const GitHubStrategy = require('passport-github')
-const { User } = require('../models')
+const { User } = require('blockchain-course-db').models
 
 const strategy = new GitHubStrategy(
   {

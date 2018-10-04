@@ -4,7 +4,9 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     description: DataTypes.STRING,
     hash: DataTypes.STRING,
-    fileType: DataTypes.STRING
+    fileType: DataTypes.STRING,
+    type: DataTypes.STRING,
+    objId: DataTypes.INTEGER
   }, {})
 
   return File
