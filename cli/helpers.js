@@ -90,6 +90,7 @@ const handleGetEntity = async (argv, Model, key) => {
   if (argv.all || !argv.id) {
     console.log(`[*] Getting all ${key}s...`)
     data = await Model.findAll({ limit: 10, raw: true })
+    console.log(sequelize)
     console.log(`[*] Done!`)
     return data
   }
@@ -135,8 +136,8 @@ const handleUpdateEntity = async (argv, Model, key) => {
   }
 
   if (cmds[1] === 'file' && argv.file) {
-    model.hash = await hashFile(argv.file)
-    model.fileType = 'pdf' // TODO: Read file type from file
+    argv.hash = await hashFile(argv.file)
+    argv.fileType = 'pdf' // TODO: Read file type from file
   }
 
   const data = await model.update({ ...argv })
