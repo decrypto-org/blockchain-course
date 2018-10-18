@@ -90,7 +90,6 @@ const handleGetEntity = async (argv, Model, key) => {
   if (argv.all || !argv.id) {
     console.log(`[*] Getting all ${key}s...`)
     data = await Model.findAll({ limit: 10, raw: true })
-    console.log(sequelize)
     console.log(`[*] Done!`)
     return data
   }
