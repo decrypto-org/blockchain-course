@@ -15,10 +15,10 @@ router.get('/', (req, res) => {
 })
 
 module.exports = {
-  '/': router,
-  '/auth': auth,
-  '/assignment': assignment,
-  '/user': user,
-  '/lectureGroup': groups,
-  '/lecture': lectures
+  '/api': router,
+  '/api/auth': auth,
+  '/api/assignment': assignment,
+  '/api/user': user,
+  '/api/lectureGroup': groups,
+  '/api/lecture': lectures
 }
