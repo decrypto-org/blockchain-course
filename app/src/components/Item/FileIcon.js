@@ -1,9 +1,11 @@
 import React from 'react'
 import PictureAsPdf from '@material-ui/icons/PictureAsPdf'
+import Code from '@material-ui/icons/Code'
 import InsertDriveFile from '@material-ui/icons/InsertDriveFile'
 
 const icons = {
   pdf: PictureAsPdf,
+  sol: Code,
   default: InsertDriveFile
 }
 
