@@ -1,11 +1,11 @@
 require('dotenv').config()
 
 const LISTEN_PORT = process.env.PORT || 3000
-const winston = require('winston')
 const express = require('express')
 const bodyParser = require('body-parser')
 const routes = require('./routes')
 const passport = require('./auth')
+const logger = require('./config/winston')
 const app = express()
 const helmet = require('helmet')
 const cors = require('cors')
@@ -41,6 +41,6 @@ const { HTTPErrorHandler } = require('./middlewares/error')
   app.use(HTTPErrorHandler)
 
   app.listen(LISTEN_PORT, () => {
-    winston.info('Blockchain Course API server running on port ' + LISTEN_PORT)
+    logger.info('Blockchain Course API server running on port %d', LISTEN_PORT)
   })
 })()
