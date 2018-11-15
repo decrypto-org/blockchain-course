@@ -24,7 +24,6 @@
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "dotenv": "^6.0.0",
-    "ganache-cli": "^6.1.8",
     "pg": "^7.4.3",
     "sequelize": "^4.39.0",
     "sequelize-cli": "^4.1.1",
