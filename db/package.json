@@ -21,6 +21,8 @@
   "bugs": "https://github.com/decrypto-org/blockchain-course/issues",
   "license": "MIT",
   "dependencies": {
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
     "dotenv": "^6.0.0",
     "ganache-cli": "^6.1.8",
     "pg": "^7.4.3",
