@@ -11,6 +11,8 @@ import Check from '@material-ui/icons/Check'
 import cx from 'classnames'
 import { sprintf } from 'sprintf-js'
 
+import PictureAsPdf from '@material-ui/icons/PictureAsPdf'
+
 export default class AssignmentDetails extends React.Component {
   render () {
     const { classes } = this.props
@@ -33,14 +35,29 @@ export default class AssignmentDetails extends React.Component {
                   <Typography gutterBottom variant='headline' component='h2'>
                     Solution
                   </Typography>
-                  <TextField
-                    id='solution'
-                    fullWidth
-                    value={this.props.solution}
-                    onChange={this.props.handleInputChange}
-                    margin='normal'
-                    name='solution'
-                  />
+                  {assignment.type !== 2
+                    ? (
+                      <TextField
+                        id='solution'
+                        fullWidth
+                        value={this.props.solution}
+                        onChange={this.props.handleInputChange}
+                        margin='normal'
+                        name='solution'
+                      />
+                    ) : (
+                      <TextField
+                        id='solution'
+                        name='solution'
+                        fullWidth
+                        multiline
+                        rows='6'
+                        variant='outlined'
+                        value={this.props.solution}
+                        onChange={this.props.handleInputChange}
+                        margin='normal'
+                      />
+                    )}
                   <Input type='hidden' value={assignment.paramId} name='paramId' />
                 </CardContent>
                 <CardActions className='assignment-actions'>
