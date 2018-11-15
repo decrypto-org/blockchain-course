@@ -31,9 +31,16 @@ module.exports = class AssignmentController extends OrderedDataController {
       solved: paramAssignment.solved
     }
 
+    const files = await File.findAll({
+      where: {
+        type: 'assignment',
+        objId: name
+      }
+    })
+
     return res.status(200).send(
       {
-        success: true, assignment: [{ ...params, ...assignment.metadata }]
+        success: true, assignment: [{ ...params, ...assignment.metadata, files }]
       }
     )
   }
