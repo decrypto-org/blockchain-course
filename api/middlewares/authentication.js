@@ -1,5 +1,5 @@
 const { inPath } = require('../utils/helpers')
-const requireAuth = ['^/user/', '^/assignment']
+const requireAuth = ['^/api/user/', '^/api/assignment']
 
 const loginRequired = (req, res, next) => {
   if (!inPath(requireAuth, req.path)) {
