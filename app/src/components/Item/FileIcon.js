@@ -9,7 +9,8 @@ const icons = {
 
 function FileIcon ({ ...props }) {
   const { type } = props
-  const Icon = icons[type || 'default']
+  const iconKey = icons.hasOwnProperty(type) ? type : 'default'
+  const Icon = icons[iconKey]
   return (
     <Icon />
   )
