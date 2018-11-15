@@ -47,6 +47,21 @@ body {
   justify-content: space-between;
 }
 
+.assignment-material {
+  margin: 16px 0;
+}
+
+.assignment-material button {
+  padding-left: 0;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.assignment-material button svg {
+  margin-right: 15px;
+}
+
 .solved {
   color: #4caf50;
 }

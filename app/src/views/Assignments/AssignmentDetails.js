@@ -11,13 +11,31 @@ import Check from '@material-ui/icons/Check'
 import cx from 'classnames'
 import { sprintf } from 'sprintf-js'
 
-import PictureAsPdf from '@material-ui/icons/PictureAsPdf'
+import FileIcon from '../../components/Item/FileIcon'
 
 export default class AssignmentDetails extends React.Component {
   render () {
     const { classes } = this.props
     const assignment = this.props.item
     const solvedClass = cx('solved', { hidden: !assignment.solved })
+
+    let material
+
+    if (assignment.files && assignment.files.length > 0) {
+      material = <div className='assignment-material'>
+        <Typography gutterBottom variant='headline' component='h2'>
+            Material
+        </Typography>
+        {
+          assignment.files.map((file, index) =>
+            <Button onClick={() => this.props.dowloadFile(file.hash)} key={index}>
+              <FileIcon type={file.fileType} />
+              {`${file.title}.${file.fileType}`}
+            </Button>
+          )
+        }
+      </div>
+    }
 
     return (
       <div>
@@ -32,6 +50,7 @@ export default class AssignmentDetails extends React.Component {
                   <Typography paragraph>
                     {sprintf(assignment.description, [assignment.aux])}
                   </Typography>
+                  {material}
                   <Typography gutterBottom variant='headline' component='h2'>
                     Solution
                   </Typography>
