@@ -1,16 +1,14 @@
 const winston = require('winston')
 const OrderedDataController = require('./OrderedDataController')
-const { Assignment, ParameterizedAssignment, Solution } = require('blockchain-course-db').models
+const Downloadable = require('./Downloadable')
+const { classMixin } = require('../utils/helpers')
+const { Assignment, ParameterizedAssignment, Solution, File } = require('blockchain-course-db').models
 
-module.exports = class AssignmentController extends OrderedDataController {
+module.exports = class AssignmentController extends classMixin(OrderedDataController, Downloadable) {
   constructor () {
     super(Assignment, 'assignments', 'assignments')
   }
 
-  /**
-   * Get the specified resource.
-   *
-   */
   async read (req, res, name) {
     const assignment = Assignment.findByName(name)
 
