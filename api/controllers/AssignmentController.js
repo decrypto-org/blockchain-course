@@ -1,4 +1,4 @@
-const winston = require('winston')
+const logger = require('../config/winston')
 const OrderedDataController = require('./OrderedDataController')
 const Downloadable = require('./Downloadable')
 const { classMixin } = require('../utils/helpers')
@@ -80,7 +80,7 @@ module.exports = class AssignmentController extends classMixin(OrderedDataContro
 
       await solutionModel.update({ data: solution })
     } catch (e) {
-      winston.log('debug', 'Error', e.message)
+      logger.error(`${e.constructor.name}: ${e.message}`)
       return res.status(500).send(
         {
           error: { code: 500, message: e.message }
