@@ -68,7 +68,6 @@ module.exports = class AssignmentController extends classMixin(OrderedDataContro
 
     try {
       grade = await judge.judge(aux, req.user, AssignmentClass, solution)
-
       const [solutionModel] = await Solution.findOrCreate(
         {
           where: { studentId: req.user.id, parameterizedAssignmentId: paramId },
@@ -84,7 +83,7 @@ module.exports = class AssignmentController extends classMixin(OrderedDataContro
       winston.log('debug', 'Error', e.message)
       return res.status(500).send(
         {
-          success: false, error: e.message
+          error: { code: 500, message: e.message }
         }
       )
     }

@@ -19,6 +19,8 @@ export default class AssignmentDetails extends React.Component {
     const assignment = this.props.item
     const solvedClass = cx('solved', { hidden: !assignment.solved })
 
+    assignment.description = sprintf(assignment.description, [assignment.aux])
+    let description = assignment.description.split('\n')
     let material
 
     if (assignment.files && assignment.files.length > 0) {
@@ -48,7 +50,14 @@ export default class AssignmentDetails extends React.Component {
                     {assignment.title}
                   </Typography>
                   <Typography paragraph>
-                    {sprintf(assignment.description, [assignment.aux])}
+                    {
+                      description.map((el, index) => (
+                        <span key={index}>
+                          {el}
+                          <br />
+                        </span>
+                      ))
+                    }
                   </Typography>
                   {material}
                   <Typography gutterBottom variant='headline' component='h2'>
