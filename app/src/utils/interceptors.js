@@ -22,6 +22,10 @@ const responseCatch = (error) => {
     store.dispatch(notify('404! The page you are looking for can\'t be found'))
   }
 
+  if (error.response.status === 500) {
+    store.dispatch(notify(`Request failed with status code 500: ${error.message}`))
+  }
+
   return Promise.reject(error)
 }
 
