@@ -18,6 +18,12 @@ const responseCatch = (error) => {
     store.dispatch(unauthorize())
   }
 
+  if (error.response.data && error.response.data.error) {
+    const e = error.response.data.error
+    store.dispatch(notify(e.message))
+    return Promise.reject(error)
+  }
+
   if (error.response.status === 404) {
     store.dispatch(notify('404! The page you are looking for can\'t be found'))
   }
