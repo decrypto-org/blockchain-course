@@ -17,8 +17,11 @@ const mapJSFiles = (dirname, mapFn, exclude = []) => {
     .forEach(mapFn)
 }
 
+const classMixin = (A, B) => class A extends B {}
+
 module.exports = {
   isString,
   inPath,
-  mapJSFiles
+  mapJSFiles,
+  classMixin
 }

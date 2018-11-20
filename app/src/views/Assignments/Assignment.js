@@ -35,6 +35,11 @@ class Assignment extends React.Component {
 
     this.handleInputChange = this.handleInputChange.bind(this)
     this.submitSolution = this.submitSolution.bind(this)
+    this.dowloadFile = this.dowloadFile.bind(this)
+  }
+
+  dowloadFile (hash) {
+    window.location = `${process.env.REACT_APP_API_URL}/assignment/${this.props.match.params.id}/material/${hash}`
   }
 
   handleInputChange (event) {
@@ -65,7 +70,7 @@ class Assignment extends React.Component {
 
   render () {
     return (
-      <SingleAssignment submitSolution={this.submitSolution} id={this.props.match.params.id} handleInputChange={this.handleInputChange} solution={this.setState.solution} />
+      <SingleAssignment submitSolution={this.submitSolution} id={this.props.match.params.id} handleInputChange={this.handleInputChange} solution={this.setState.solution} dowloadFile={this.dowloadFile} />
     )
   }
 }

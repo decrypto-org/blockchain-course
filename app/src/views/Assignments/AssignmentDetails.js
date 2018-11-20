@@ -11,11 +11,33 @@ import Check from '@material-ui/icons/Check'
 import cx from 'classnames'
 import { sprintf } from 'sprintf-js'
 
+import FileIcon from '../../components/Item/FileIcon'
+
 export default class AssignmentDetails extends React.Component {
   render () {
     const { classes } = this.props
     const assignment = this.props.item
     const solvedClass = cx('solved', { hidden: !assignment.solved })
+
+    assignment.description = sprintf(assignment.description, [assignment.aux])
+    let description = assignment.description.split('\n')
+    let material
+
+    if (assignment.files && assignment.files.length > 0) {
+      material = <div className='assignment-material'>
+        <Typography gutterBottom variant='headline' component='h2'>
+            Material
+        </Typography>
+        {
+          assignment.files.map((file, index) =>
+            <Button onClick={() => this.props.dowloadFile(file.hash)} key={index}>
+              <FileIcon type={file.fileType} />
+              {`${file.title}.${file.fileType}`}
+            </Button>
+          )
+        }
+      </div>
+    }
 
     return (
       <div>
@@ -28,19 +50,42 @@ export default class AssignmentDetails extends React.Component {
                     {assignment.title}
                   </Typography>
                   <Typography paragraph>
-                    {sprintf(assignment.description, [assignment.aux])}
+                    {
+                      description.map((el, index) => (
+                        <span key={index}>
+                          {el}
+                          <br />
+                        </span>
+                      ))
+                    }
                   </Typography>
+                  {material}
                   <Typography gutterBottom variant='headline' component='h2'>
                     Solution
                   </Typography>
-                  <TextField
-                    id='solution'
-                    fullWidth
-                    value={this.props.solution}
-                    onChange={this.props.handleInputChange}
-                    margin='normal'
-                    name='solution'
-                  />
+                  {assignment.type !== 2
+                    ? (
+                      <TextField
+                        id='solution'
+                        fullWidth
+                        value={this.props.solution}
+                        onChange={this.props.handleInputChange}
+                        margin='normal'
+                        name='solution'
+                      />
+                    ) : (
+                      <TextField
+                        id='solution'
+                        name='solution'
+                        fullWidth
+                        multiline
+                        rows='6'
+                        variant='outlined'
+                        value={this.props.solution}
+                        onChange={this.props.handleInputChange}
+                        margin='normal'
+                      />
+                    )}
                   <Input type='hidden' value={assignment.paramId} name='paramId' />
                 </CardContent>
                 <CardActions className='assignment-actions'>

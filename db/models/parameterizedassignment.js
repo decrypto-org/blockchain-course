@@ -8,8 +8,8 @@ module.exports = (sequelize, DataTypes) => {
     solved: DataTypes.BOOLEAN
   }, {})
   ParameterizedAssignment.associate = function (models) {
-    ParameterizedAssignment.belongsTo(models.User, {as: 'student'})
-    ParameterizedAssignment.hasMany(models.Solution)
+    ParameterizedAssignment.belongsTo(models.User, {as: 'student', foreignKey: 'studentId', targetKey: 'id'})
+    ParameterizedAssignment.hasMany(models.Solution, {foreignKey: 'parameterizedAssignmentId', sourceKey: 'id'})
   }
   ParameterizedAssignment.beforeCreate(async (parameterizedAssignment, options) => {
     const {User, Assignment} = require('.')
