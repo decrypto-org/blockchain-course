@@ -81,6 +81,20 @@ module.exports = class AssignmentController extends classMixin(OrderedDataContro
       await solutionModel.update({ data: solution })
     } catch (e) {
       logger.error(`${e.constructor.name}: ${e.message}`)
+      const errorType = e.constructor.name
+
+      if (
+        errorType === 'CompilationError' ||
+        errorType === 'AssertionError' ||
+        errorType === 'MissingMethodError'
+      ) {
+        return res.status(400).send(
+          {
+            error: { code: 400, message: e.message }
+          }
+        )
+      }
+
       return res.status(500).send(
         {
           error: { code: 500, message: e.message }
