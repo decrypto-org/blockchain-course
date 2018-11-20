@@ -9,7 +9,7 @@ const loginRequired = (req, res, next) => {
   if (req.user) {
     return next()
   } else {
-    res.status(403).json({ error: { status: 403, msg: 'Login required' } })
+    res.status(403).json({ error: { status: 403, message: 'Unauthorized action! Please login.' } })
   }
 }
 
