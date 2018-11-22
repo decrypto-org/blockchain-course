@@ -7,6 +7,7 @@ import group from './lectureGroup'
 import assignments from './assignments'
 import singleAssignment from './assignment'
 import notification from './notifications'
+import request from './requests'
 import auth from './auth'
 
 const app = combineReducers({
@@ -16,6 +17,7 @@ const app = combineReducers({
   assignments,
   singleAssignment,
   notification,
+  request,
   auth,
   groups,
   group
