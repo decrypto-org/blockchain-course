@@ -8,9 +8,10 @@ import 'typeface-roboto'
 
 import store from './store'
 import indexRoutes from 'routes/index.js'
-import { responseThen, responseCatch } from './utils/interceptors'
+import { requestThen, requestCatch, responseThen, responseCatch } from './utils/interceptors'
 import { unregister } from './registerServiceWorker'
 
+axios.interceptors.request.use(requestThen, requestCatch)
 axios.interceptors.response.use(responseThen, responseCatch)
 
 const hist = createBrowserHistory()
