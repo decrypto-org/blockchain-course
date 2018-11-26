@@ -1,6 +1,7 @@
 const { sequelize } = require('blockchain-course-db').models
 const crypto = require('crypto')
 const fs = require('fs')
+const path = require('path')
 
 class ResourceNotFoundError extends Error {
   constructor () {
@@ -114,7 +115,7 @@ const handleAddEntity = async (argv, Model, key) => {
 
   if (cmds[1] === 'file') {
     model.hash = await hashFile(argv.file)
-    model.fileType = 'pdf' // TODO: Read file type from file
+    model.fileType = path.extname(path.basename(argv.file)).substr(1)
   }
 
   const data = await model.save()
@@ -136,7 +137,7 @@ const handleUpdateEntity = async (argv, Model, key) => {
 
   if (cmds[1] === 'file' && argv.file) {
     argv.hash = await hashFile(argv.file)
-    argv.fileType = 'pdf' // TODO: Read file type from file
+    argv.fileType = path.extname(path.basename(argv.file)).substr(1)
   }
 
   const data = await model.update({ ...argv })
