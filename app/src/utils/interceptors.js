@@ -1,14 +1,27 @@
 import store from '../store'
 
-import { userActions, notify } from '../actions'
+import { userActions, notify, requestStart, requestFinish } from '../actions'
 
 const unauthorize = userActions.unauthorize
 
+const requestThen = (config) => {
+  store.dispatch(requestStart())
+  return config
+}
+
+const requestCatch = (error) => {
+  store.dispatch(requestFinish())
+  return Promise.reject(error)
+}
+
 const responseThen = (res) => {
+  store.dispatch(requestFinish())
   return res
 }
 
 const responseCatch = (error) => {
+  store.dispatch(requestFinish())
+
   if (!error.hasOwnProperty('response')) {
     store.dispatch(notify(`Error: ${error.message}`))
     return Promise.reject(error)
@@ -36,6 +49,8 @@ const responseCatch = (error) => {
 }
 
 export {
+  requestThen,
+  requestCatch,
   responseThen,
   responseCatch
 }
