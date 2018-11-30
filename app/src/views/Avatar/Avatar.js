@@ -56,6 +56,7 @@ class Avatar extends React.Component {
             <div className='avatar-button' onClick={this.openMenu}>
               <FontAwesomeIcon icon={faGithubAlt} size='2x' />
             </div>
+            <div className='avatar-username'>{this.props.user.username}</div>
             <Popover
               id='menu-appbar'
               anchorEl={this.state.anchorEl}
