@@ -15,6 +15,26 @@ body {
   src: url('../fonts/arcadeclassic.ttf') format('truetype');
 }
 
+.egg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+
+  img {
+    width: 55px;
+    height: auto;
+  }
+
+  span {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 24px;
+    margin-left: 15px;
+  }
+}
+
+/* Old CSS follows */
+
 .wrapper {
   flex-grow: 1;
   z-index: 1;
