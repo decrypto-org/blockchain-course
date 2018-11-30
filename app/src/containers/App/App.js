@@ -6,6 +6,7 @@ import { withStyles } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Grid from '@material-ui/core/Grid'
 
+import 'bootstrap/dist/css/bootstrap.min.css'
 import '../../assets/scss/main.scss'
 
 import Header from '../../components/Header/Header.js'
