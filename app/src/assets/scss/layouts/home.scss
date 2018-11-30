@@ -1,0 +1,79 @@
+.start-screen {
+  height: 100vh;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 10000;
+
+  h1 {
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+    font-size: 9vh;
+    padding: 0;
+    letter-spacing: 0.1em;
+  }
+
+  .enter-game {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 4.5vh;
+    color: orange;
+    margin: 25px 0;
+
+    a {
+      text-decoration: underline;
+      color: red;
+    }
+  }
+}
+
+.start-screen-wrapper {
+  background-color: #000;
+  width: 100%;
+  height: 100%;
+  font-family: 'Press Start 2P', cursive;
+  color: white;
+  padding: 50px;
+}
+
+.scoreboard {
+  margin: auto;
+  font-size: 4.5vh;
+
+  thead {
+    text-align: center;
+  }
+
+  tbody {
+    tr:nth-child(1) {
+      color: red;
+    }
+    tr:nth-child(2) {
+      color: orange;
+    }
+    tr:nth-child(3) {
+      color: yellow;
+    }
+    tr:nth-child(4) {
+      color: green;
+    }
+    tr:nth-child(5) {
+      color: cyan;
+    }
+    tr:nth-child(6) {
+      color: magenta;
+    }
+    tr:nth-child(7) {
+      color: blue;
+    }
+  }
+
+  td {
+    &.score {
+      text-align: right;
+    }
+  }
+}
