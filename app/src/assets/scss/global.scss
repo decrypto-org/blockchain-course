@@ -6,13 +6,15 @@ body {
 }
 
 html,
-body {
+body,
+#root,
+.app {
   min-height: 100vh;
 }
 
-@font-face {
-  font-family: 'Arcade Classic';
-  src: url('../fonts/arcadeclassic.ttf') format('truetype');
+.app {
+  padding: 0;
+  margin: 0;
 }
 
 .egg {
