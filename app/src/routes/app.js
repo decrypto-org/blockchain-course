@@ -24,7 +24,7 @@ const appRoutes = [
     component: Lecture
   },
   {
-    path: '/assignments',
+    path: '/assignment',
     sidebarName: 'Assignments',
     icon: Assignment,
     component: AssignmentList,
