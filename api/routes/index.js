@@ -2,7 +2,6 @@ const express = require('express')
 const auth = require('./auth')
 const assignment = require('./assignment')
 const user = require('./user')
-const groups = require('./lectureGroup')
 const lectures = require('./lectures')
 const router = express.Router()
 
@@ -19,6 +18,5 @@ module.exports = {
   '/api/auth': auth,
   '/api/assignment': assignment,
   '/api/user': user,
-  '/api/lectureGroup': groups,
   '/api/lecture': lectures
 }
