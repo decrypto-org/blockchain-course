@@ -1,6 +1,8 @@
 const BaseController = require('./BaseController')
 const { File } = require('blockchain-course-db').models
 
+const UPLOAD_FOLDER = path.resolve(__dirname, '../../resources/files')
+
 module.exports = class Downloadable extends BaseController {
   async download (req, res, id, hash) {
     const file = await File.findOne({
@@ -21,6 +23,6 @@ module.exports = class Downloadable extends BaseController {
       }
     }
 
-    return res.download(`${process.env.UPLOAD_FOLDER}/${hash}.${fileType}`, `${title}.${fileType}`, options)
+    return res.download(`${UPLOAD_FOLDER}/${hash}.${fileType}`, `${title}.${fileType}`, options)
   }
 }
