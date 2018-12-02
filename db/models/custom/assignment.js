@@ -1,4 +1,6 @@
-const assignments = require('../../assignments')
+const ASSIGNMENT_FOLDER = process.env.ASSIGNMENT_FOLDER || '../../assignments'
+
+const assignments = require(ASSIGNMENT_FOLDER)
 const _ = require('lodash')
 
 const FileContainer = require('./FileContainer')
