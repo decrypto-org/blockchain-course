@@ -10,6 +10,7 @@ You can take the course online at
 
 ## Installation
 
+- `git submodule init && git submodule update`
 - `cd db && yarn install && yarn link`
 - Copy `.env-template` to `.env` and modify the variables
 - `cd cli && yarn install && yarn link blockchain-course-db`
