@@ -22,5 +22,6 @@ class Assignment {
 }
 
 Assignment.name = "Assignment"
+Assignment.hidden = false;
 
 module.exports = Assignment

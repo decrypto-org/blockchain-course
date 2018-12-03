@@ -14,7 +14,17 @@ const createSimpleRouter = (controllerName, path = ':id(\\d+)', param = 'id') =>
   return { router: createControllerRoutes(controller, path, param), controller }
 }
 
+const createDownloadableRoute = (router, controller) => {
+  router.get(
+    '/:name/material/:hash([0-9A-Fa-f]{64})',
+    (req, res, next) => { controller.download(req, res, req.params.name, req.params.hash).catch(next) }
+  )
+
+  return router
+}
+
 module.exports = {
   createSimpleRouter,
-  createControllerRoutes
+  createControllerRoutes,
+  createDownloadableRoute
 }
