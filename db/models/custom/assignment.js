@@ -1,10 +1,15 @@
 const assignments = require('../../assignments')
 const _ = require('lodash')
 
-class Assignment {
-  static findByName(name) {
+const FileContainer = require('./FileContainer')
+
+class Assignment extends FileContainer {
+  static findByName(name, options = {}) {
     if (name in assignments) {
-      return assignments[name]
+      let instance = new Assignment()
+      instance.metadata = assignments[name].metadata
+      instance.Judge = assignments[name];
+      return instance
     }
     return null;
   }

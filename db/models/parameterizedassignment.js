@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     const assignment = Assignment.findByName(parameterizedAssignment.assignmentName)
     const user = await User.findById(parameterizedAssignment.studentId)
 
-    const assignmentJudge = new assignment()
+    const assignmentJudge = new assignment.Judge()
 
     const aux = assignmentJudge.formatAux(assignmentJudge.aux(user, assignment))
     parameterizedAssignment.auxPrivate = aux.private
