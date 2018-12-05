@@ -1,8 +1,4 @@
-const path = require('path')
-
 const BaseController = require('./BaseController')
-
-const UPLOAD_FOLDER = path.resolve(__dirname, '../../resources/files')
 
 module.exports = class Downloadable extends BaseController {
   async download (req, res, name, hash) {
@@ -25,6 +21,6 @@ module.exports = class Downloadable extends BaseController {
       }
     }
 
-    return res.download(`${UPLOAD_FOLDER}/${hash}.${fileType}`, `${title}.${fileType}`, options)
+    return res.download(`${resource.getResourceFolderPath()}/${hash}.${fileType}`, `${title}.${fileType}`, options)
   }
 }

@@ -2,10 +2,15 @@ const ASSIGNMENT_FOLDER = process.env.ASSIGNMENT_FOLDER || '../../assignments'
 
 const assignments = require(ASSIGNMENT_FOLDER)
 const _ = require('lodash')
+const path = require('path');
 
 const FileContainer = require('./FileContainer')
 
 class Assignment extends FileContainer {
+  getResourceFolderPath() {
+    return path.resolve(ASSIGNMENT_FOLDER, this.metadata.name)
+  }
+
   static findByName(name, options = {}) {
     if (name in assignments) {
       let instance = new Assignment()
