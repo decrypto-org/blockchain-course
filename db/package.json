@@ -33,7 +33,9 @@
     "winston": "^3.1.0"
   },
   "devDependencies": {
-    "standard": "^12.0.1"
+    "standard": "^12.0.1",
+    "nodemon": "^1.17.5",
+    "run.env": "^1.0.1"
   },
   "standard": {
     "ignore": [
