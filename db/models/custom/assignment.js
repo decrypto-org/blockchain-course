@@ -20,10 +20,10 @@ class Assignment extends FileContainer {
     return Object.values(assignments).map(res => res.metadata)
   }
 
-  static findAllByGroup(group) {
+  static findAllByLecture(lecture) {
     return _.chain(assignments)
       .values()
-      .filter(res => res.metadata.group == group)
+      .filter(res => res.metadata.lecture == lecture)
       .value()
   }
 }
