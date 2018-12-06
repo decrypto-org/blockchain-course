@@ -1,7 +1,6 @@
 import { createAppRoutes } from '../utils/routes'
 
-import LectureGroupList from 'views/Lectures/LectureGroupList'
-import LectureGroup from 'views/Lectures/Group'
+import LectureList from 'views/Lecture/LectureList'
 import Lecture from 'views/Lecture/Lecture'
 import AssignmentList from 'views/Assignments/AssignmentList'
 import SingleAssignment from 'views/Assignments/Assignment'
@@ -14,22 +13,18 @@ import {
 
 const appRoutes = [
   {
-    path: '/lectureGroups',
+    path: '/lecture',
     sidebarName: 'Lectures',
     icon: Class,
-    component: LectureGroupList,
+    component: LectureList,
     show: true
-  },
-  {
-    path: '/lectureGroups/:id',
-    component: LectureGroup
   },
   {
     path: '/lecture/:id',
     component: Lecture
   },
   {
-    path: '/assignments',
+    path: '/assignment',
     sidebarName: 'Assignments',
     icon: Assignment,
     component: AssignmentList,

@@ -30,7 +30,9 @@ Object.keys(models).forEach(modelName => {
 // Map custom models
 mapJSFiles(CUSTOM_MODELS_PATH, (file) => {
   const model = require(path.join(CUSTOM_MODELS_PATH, file))
-  models[model.name] = model
+  if(!model.hidden) {
+    models[model.name] = model
+  }
 })
 
 models.sequelize = sequelize

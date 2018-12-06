@@ -1,3 +1,4 @@
+const _ = require('lodash')
 const AbstractController = require('./AbstractController')
 const { HTTPError } = require('../errors')
 
@@ -60,7 +61,7 @@ module.exports = class BaseController extends AbstractController {
   }
 
   requireResourceFound (resource) {
-    if (resource === null) {
+    if (_.isEmpty(resource)) {
       throw new HTTPError(404, `${this.singular} not found`)
     }
 

@@ -2,7 +2,7 @@ const logger = require('../config/winston')
 const OrderedDataController = require('./OrderedDataController')
 const Downloadable = require('./Downloadable')
 const { classMixin } = require('../utils/helpers')
-const { Assignment, ParameterizedAssignment, Solution, File } = require('blockchain-course-db').models
+const { Assignment, ParameterizedAssignment, Solution } = require('blockchain-course-db').models
 
 module.exports = class AssignmentController extends classMixin(OrderedDataController, Downloadable) {
   constructor () {
@@ -29,27 +29,20 @@ module.exports = class AssignmentController extends classMixin(OrderedDataContro
       solved: paramAssignment.solved
     }
 
-    const files = await File.findAll({
-      where: {
-        type: 'assignment',
-        objId: name
-      }
-    })
-
     return res.status(200).send(
       {
-        success: true, assignment: [{ ...params, ...assignment.metadata, files }]
+        success: true, assignment: [{ ...params, ...assignment.metadata }]
       }
     )
   }
 
   async solution (req, res, name) {
-    const AssignmentClass = await Assignment.findByName(name)
+    const assignment = await Assignment.findByName(name)
 
     /* throws an HTTPError if the resource is not found */
-    this.requireResourceFound(AssignmentClass)
+    this.requireResourceFound(assignment)
 
-    const judge = new AssignmentClass(AssignmentClass, req.user)
+    const judge = new assignment.Judge(assignment.judge, req.user)
 
     const solution = req.body.solution
     const paramId = req.body.paramId
@@ -67,7 +60,7 @@ module.exports = class AssignmentController extends classMixin(OrderedDataContro
     let grade = 0
 
     try {
-      grade = await judge.judge(aux, req.user, AssignmentClass, solution)
+      grade = await judge.judge(aux, req.user, assignment.Judge, solution)
       const [solutionModel] = await Solution.findOrCreate(
         {
           where: { studentId: req.user.id, parameterizedAssignmentId: paramId },

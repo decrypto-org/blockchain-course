@@ -1,17 +1,17 @@
 const BaseController = require('./BaseController')
-const { File } = require('blockchain-course-db').models
 
 module.exports = class Downloadable extends BaseController {
-  async download (req, res, id, hash) {
-    const file = await File.findOne({
-      where: { hash },
-      attributes: ['title', 'fileType']
-    })
+  async download (req, res, name, hash) {
+    const resource = await this.model.findByName(name)
 
     /* throws an HTTPError if the resource is not found */
+    this.requireResourceFound(resource)
+
+    const file = resource.getFileByHash(hash)
+
     this.requireResourceFound(file)
 
-    const { title, fileType } = file.dataValues
+    const { title, fileType } = file
 
     const options = {
       dotfiles: 'deny',
@@ -21,6 +21,6 @@ module.exports = class Downloadable extends BaseController {
       }
     }
 
-    return res.download(`${process.env.UPLOAD_FOLDER}/${hash}.${fileType}`, `${title}.${fileType}`, options)
+    return res.download(`${resource.getResourceFolderPath()}/${hash}.${fileType}`, `${title}.${fileType}`, options)
   }
 }
