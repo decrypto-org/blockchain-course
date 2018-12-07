@@ -13,7 +13,8 @@ import {
 
 const styles = {
   card: {
-    width: 800
+    maxWidth: 650,
+    width: '100%'
   },
   media: {
     height: 0,
