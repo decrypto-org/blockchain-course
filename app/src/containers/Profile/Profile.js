@@ -54,7 +54,7 @@ class Profile extends Component {
               <header className={classNames('profile-header', this.props.classes.header)} >
                 <div className='profile-header-info'>
                   <div className='profile-avatar'>
-                    <Avatar className={classNames('avatar', this.props.classes.avatar)}>{this.props.user.firstName ? this.props.user.firstName[0] : 'A'}</Avatar>
+                    <Avatar className='avatar'>{this.props.user.firstName ? this.props.user.firstName[0] : ''}</Avatar>
                   </div>
                   <div className='profile-full-name'>{this.props.user.firstName} {this.props.user.lastName}</div>
                 </div>
