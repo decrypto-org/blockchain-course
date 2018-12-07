@@ -75,6 +75,12 @@ body {
   margin-left: -240px;
 }
 
+@media all and (max-width: 1280px) {
+  .content-box-wrapper {
+    margin-left: 0;
+  }
+}
+
 .user-popover-wrapper {
   min-width: 240px;
 }
