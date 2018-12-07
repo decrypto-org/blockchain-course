@@ -6,6 +6,10 @@ import MenuList from '@material-ui/core/MenuList'
 import MenuItem from '@material-ui/core/MenuItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
+import Hidden from '@material-ui/core/Hidden'
+import CloseIcon from '@material-ui/icons/Close'
+import IconButton from '@material-ui/core/IconButton'
+
 import cx from 'classnames'
 
 const styles = theme => ({
@@ -66,14 +70,42 @@ function Sidebar ({ ...props }) {
   )
 
   return (
-    <Drawer
-      variant='permanent'
-      classes={{
-        paper: classes.drawerPaper
-      }}
-    >
-      {menu}
-    </Drawer>
+    <div>
+      <Hidden mdUp implementation='css'>
+        <Drawer
+          variant='temporary'
+          classes={{
+            paper: classes.drawerPaper
+          }}
+          open={props.mobileDrawerOpen}
+          onClose={props.closeMobileDrawer}
+        >
+          <div className='closeBtn'>
+            <IconButton ccolor='inherit' aria-label='Close' onClick={props.closeMobileDrawer}>
+              <CloseIcon />
+            </IconButton>
+          </div>
+          <div
+            tabIndex={0}
+            role='button'
+            onClick={props.closeMobileDrawer}
+            onKeyDown={props.closeMobileDrawer}
+          >
+            {menu}
+          </div>
+        </Drawer>
+      </Hidden>
+      <Hidden mdDown implementation='css'>
+        <Drawer
+          variant='permanent'
+          classes={{
+            paper: classes.drawerPaper
+          }}
+        >
+          {menu}
+        </Drawer>
+      </Hidden>
+    </div>
   )
 }
 
