@@ -50,8 +50,8 @@ class Profile extends Component {
         <div className='icon close-icon'><Link to='/'><Close /></Link></div>
         <div className='user-profile-wrapper'>
           <Grid container spacing={24}>
-            <Grid item xs={9}>
-              <header className={classNames('profile-header', this.props.classes.header)} >
+            <Grid item xs={12} lg={9}>
+              <header className={classNames('profile-header', this.props.classes.header)}>
                 <div className='profile-header-info'>
                   <div className='profile-avatar'>
                     <Avatar className='avatar'>{this.props.user.firstName ? this.props.user.firstName[0] : ''}</Avatar>
