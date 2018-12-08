@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/SignedBlock/blockchain-course.svg?style=svg&circle-token=fb8a1e182558aa8a1998d4c36d9b74c8531f43f9)](https://circleci.com/gh/SignedBlock/blockchain-course)
+[![CircleCI](https://circleci.com/gh/decrypto-org/blockchain-course.svg?style=svg)](https://circleci.com/gh/decrypto-org/blockchain-course)
 
 # Introduction to Blockchains
 
