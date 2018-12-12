@@ -5,6 +5,7 @@ import Lecture from 'views/Lecture/Lecture'
 import AssignmentList from 'views/Assignments/AssignmentList'
 import SingleAssignment from 'views/Assignments/Assignment'
 import LoginCallback from 'views/Callbacks/LoginCallback.js'
+import Home from 'views/Home/Home.js'
 
 import {
   Class,
@@ -12,6 +13,12 @@ import {
 } from '@material-ui/icons/'
 
 const appRoutes = [
+  {
+    path: '/',
+    sidebarName: 'Home',
+    component: Home,
+    show: false
+  },
   {
     path: '/lecture',
     sidebarName: 'Lectures',

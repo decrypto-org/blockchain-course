@@ -127,3 +127,11 @@ body {
   z-index: 100;
   background: rgba(255, 255, 255, 0.5);
 }
+
+a.jumpotron {
+  font-size: 200%;
+}
+
+.home-title {
+  font-weight: 300;
+}
