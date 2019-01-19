@@ -12,13 +12,13 @@ You can take the course online at
 
 - `git submodule init && git submodule update`
 - `cd db && yarn install && yarn link`
+-  Inside `db` folder copy `.env-template` to `.env` and modify the variables accordingly
 - `cd db && ./node_modules/.bin/run.env ./node_modules/.bin/sequelize db:migrate`
-- Copy `.env-template` to `.env` and modify the variables
 - `cd cli && yarn install && yarn link blockchain-course-db`
 - `cd api && yarn install && yarn link blockchain-course-db`
-- Copy `.env-template` to `.env` and modify the variables
+- Inside `api` folder copy `.env-template` to `.env` and modify the variables accordingly
 - `cd app && yarn install`
-- Copy `.env-template` to `.env.local` and modify the variables
+- Inside `app` folder copy `.env-template` to `.env.local` and modify the variables accordingly
 
 
 ## Assignments
