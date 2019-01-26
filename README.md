@@ -10,19 +10,42 @@ You can take the course online at
 
 ## Installation
 
-- `git submodule init && git submodule update`
-- Install [postgres](https://www.postgresql.org/).
-- Create a database named `blockchain_course`
-- Create a database user and grant access for `blockchain_course`
-- `cd db && yarn install && yarn link`
--  Copy `.env-template` to `.env` and modify the variables accordingly
-- `./node_modules/.bin/run.env ./node_modules/.bin/sequelize db:migrate`
-- `cd ../cli && yarn install && yarn link blockchain-course-db`
-- `cd ../api && yarn install && yarn link blockchain-course-db`
-- [Create](https://developer.github.com/apps/building-oauth-apps/creating-an-oauth-app/) an OAuth App on Github
-- Copy `.env-template` to `.env` and modify the variables accordingly
-- `cd ../app && yarn install`
-- Copy `.env-template` to `.env.development.local` for development or `.env.production.local` for production and modify the variables accordingly. See more at [create-react-app](https://facebook.github.io/create-react-app/docs/adding-custom-environment-variables#what-other-env-files-can-be-used)
+This installation needs a database to function correctly. Any database will do.
+We provide here instructions for setting up and using
+[Postgres](https://www.postgresql.org/).
+- If you don't have a Postgres) installation, install `postgresql` using your
+  package manager (e.g `sudo apt install posgtgresql`) and follow the [generic
+  instructions](https://wiki.postgresql.org/wiki/First_steps) or the ones
+  specific to your distribution (e.g.
+  [Arch](https://wiki.archlinux.org/index.php/PostgreSQL),
+  [Ubuntu](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-18-04))
+  to initialize the database cluster, start the database server and create a
+  user. After this step, you should be able to create databases with your normal
+  user account.
+- Create a datatbase with the name of your choice, owned by your normal user
+  account. With Postgres, you can achieve this with `createdb <db_name>`.
+- Create an [OAuth
+  App](https://developer.github.com/apps/building-oauth-apps/creating-an-oauth-app/)
+  on Github
+    - Development:
+      - Homepage URL: http://localhost:3001/
+      - Authorisation callback URL: http://localhost:3000/api/auth/github/callback
+    - Production:
+      - Homepage URL: https://blockchain-course.org
+      - Authorisation callback URL: https://blockchain-course.org/api/auth/github/callback
+- `cd api && cp .env-template .env`
+- Add your OAuth App client ID and secret as provided by GitHub to the
+  respective variables in `.env`.
+- `cd ../db && cp .env-template .env`
+- Add your username in the respective placeholders in the first variable of `.env`.
+    - _Note_: The default database name is set to `blockchain_course`. If you
+      prefer to give it a different name, change the name in `install.sh` and
+      `.env`.
+- `cd .. && chmod +x install.sh && ./install.sh`
+- In the `app` directory, copy `.env-template` to `.env.development.local` for
+  development or `.env.production.local` for production and modify the variables
+  accordingly. See more at
+  [create-react-app](https://facebook.github.io/create-react-app/docs/adding-custom-environment-variables#what-other-env-files-can-be-used).
 
 ## Environment variables
 
@@ -68,7 +91,7 @@ Each assignment has to implement `judge (aux, user, assignment, solution)` and `
 
 ### Example
 
-```
+```javascript
 const BaseJudge = require('../judge/BaseJudge')
 const { sha256 } = require('../helpers')
 
