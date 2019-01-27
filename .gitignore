@@ -29,3 +29,4 @@ yarn-error.log*
 
 db/assignments/*
 !db/assignments/judge
+!db/assignments/index.js
