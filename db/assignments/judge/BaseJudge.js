@@ -1,5 +1,5 @@
 const util = require('util')
-const { isString } = require('../helpers.js')
+const { isString } = require('../../helpers.js')
 
 class BaseJudge {
   constructor (assignment, user) {
