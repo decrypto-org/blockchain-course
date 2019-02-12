@@ -81,6 +81,7 @@ export default class AssignmentDetails extends React.Component {
                         multiline
                         rows='6'
                         variant='outlined'
+                        placeholder='Paste your solidity code here'
                         value={this.props.solution}
                         onChange={this.props.handleInputChange}
                         margin='normal'
