@@ -11,6 +11,14 @@ class BaseJudge {
     return util.format(assignment.description, aux.public)
   }
 
+  parseErrorMessage (msg) {
+    if (msg.includes('VM Exception')) {
+      return msg
+    }
+
+    return `Error: ${msg.split(':')[0]}`
+  }
+
   format (value) {
     if (isString(value)) {
       return value
