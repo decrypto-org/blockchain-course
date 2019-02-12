@@ -129,6 +129,9 @@ module.exports = ProofOfWorkAssignmentJudge
 
 ## Development
 
+- Place the files of your assignment in `db/assignments/<assignment_name>/`.
+  Each assignment must be in its own directory and should contain a file named
+  `<assignment_name>.js` that exports the assignment.
 - `cd api && yarn start`
 - `cd app && yarn start`
 
