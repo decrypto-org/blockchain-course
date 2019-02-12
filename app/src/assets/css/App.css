@@ -135,3 +135,7 @@ a.jumpotron {
 .home-title {
   font-weight: 300;
 }
+
+.toast-message {
+  margin: 3px 0 0 0;
+}
