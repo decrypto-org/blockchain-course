@@ -62,9 +62,8 @@ class Assignment extends React.Component {
     })
 
     this.props.actions.submitSolution({ id: this.props.match.params.id }, objData)
-      .then((value) => {
-        const msg = value.grade === 0 ? 'Wrong! Please try again.' : 'Congratulations! Solution correct.'
-        this.props.actions.notify(msg)
+      .then((res) => {
+        this.props.actions.notify(res.judgement.msg)
       })
   }
 
