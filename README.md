@@ -13,7 +13,7 @@ You can take the course online at
 This installation needs a database to function correctly. Any database will do.
 We provide here instructions for setting up and using
 [Postgres](https://www.postgresql.org/).
-- If you don't have a Postgres) installation, install `postgresql` using your
+- If you don't have a Postgres installation, install `postgresql` using your
   package manager (e.g `sudo apt install posgtgresql`) and follow the [generic
   instructions](https://wiki.postgresql.org/wiki/First_steps) or the ones
   specific to your distribution (e.g.
@@ -22,7 +22,7 @@ We provide here instructions for setting up and using
   to initialize the database cluster, start the database server and create a
   user. After this step, you should be able to create databases with your normal
   user account.
-- Create a datatbase with the name of your choice, owned by your normal user
+- Create a database with the name of your choice, owned by your normal user
   account. With Postgres, you can achieve this with `createdb <db_name>`.
 - Create an [OAuth
   App](https://developer.github.com/apps/building-oauth-apps/creating-an-oauth-app/)
