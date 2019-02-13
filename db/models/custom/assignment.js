@@ -26,10 +26,7 @@ class Assignment extends FileContainer {
   }
 
   static findAllByLecture(lecture) {
-    return _.chain(assignments)
-      .values()
-      .filter(res => res.metadata.lecture == lecture)
-      .value()
+      return Object.values(assignments).filter(assignment => assignment.metadata.lecture === lecture).map(assignment => assignment.metadata)
   }
 }
 
