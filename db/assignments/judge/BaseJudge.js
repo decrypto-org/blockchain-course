@@ -1,10 +1,28 @@
 const util = require('util')
 const { isString } = require('../../helpers.js')
 
+const FAIL = {
+  grade: 0,
+  msg: 'Wrong! Please try again.'
+}
+
+const PASS = {
+  grade: 1,
+  msg: 'Congratulations! Solution correct.'
+}
+
 class BaseJudge {
   constructor (assignment, user) {
     this.assignment = assignment
     this.user = user
+  }
+
+  static get FAIL () {
+    return FAIL
+  }
+
+  static get PASS () {
+    return PASS
   }
 
   description (aux, user, assignment) {
