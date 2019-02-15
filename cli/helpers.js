@@ -157,6 +157,17 @@ const handleDeleteEntity = async (argv, Model, key) => {
   return data.dataValues || data
 }
 
+const checkUserMiddleware = (argv) => {
+  if (argv.user) {
+    if (argv.user.id === undefined || argv.user.username === undefined) {
+      const user = { id: 1, username: 'fake_user' }
+      console.log(`[*] user.id or user.username is undefined! I am going to use: ${JSON.stringify(user)}`)
+      return { ...argv, user }
+    }
+  }
+  return argv
+}
+
 const checkAuxMiddleware = (argv) => {
   if (argv.aux) {
     if (argv.aux.public === undefined && argv.aux.private === undefined) {
@@ -173,5 +184,6 @@ module.exports = {
   handleAddEntity,
   handleUpdateEntity,
   handleDeleteEntity
+  checkUserMiddleware,
   checkAuxMiddleware
 }
