@@ -157,6 +157,14 @@ const handleDeleteEntity = async (argv, Model, key) => {
   return data.dataValues || data
 }
 
+const handleAuxGeneration = (argv, Assignment, key) => {
+  const assignment = Assignment.findByName(argv.id)
+  _requireResourceFound(assignment)
+  const assignmentJudge = new assignment.Judge()
+  const aux = assignmentJudge.formatAux(assignmentJudge.aux(argv.user, assignment))
+  return { ...aux }
+}
+
 const checkUserMiddleware = (argv) => {
   if (argv.user) {
     if (argv.user.id === undefined || argv.user.username === undefined) {
@@ -183,7 +191,7 @@ module.exports = {
   handleGetEntity,
   handleAddEntity,
   handleUpdateEntity,
-  handleDeleteEntity
+  handleAuxGeneration,
   checkUserMiddleware,
   checkAuxMiddleware
 }
