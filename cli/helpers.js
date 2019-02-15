@@ -2,6 +2,9 @@ const { sequelize } = require('blockchain-course-db').models
 const crypto = require('crypto')
 const fs = require('fs')
 const path = require('path')
+const util = require('util')
+
+const readFile = util.promisify(fs.readFile)
 
 class ResourceNotFoundError extends Error {
   constructor () {
@@ -185,6 +188,14 @@ const checkAuxMiddleware = (argv) => {
   return argv
 }
 
+const solutionMiddleware = async (argv) => {
+  if (argv.solution && argv.file) {
+    argv.solution = await readFile(argv.solution, 'utf8')
+  }
+
+  return argv
+}
+
 const handleJudgement = async (argv, Assignment) => {
   const assignment = Assignment.findByName(argv.id)
   _requireResourceFound(assignment)
@@ -207,5 +218,6 @@ module.exports = {
   handleAuxGeneration,
   handleJudgement,
   checkUserMiddleware,
-  checkAuxMiddleware
+  checkAuxMiddleware,
+  solutionMiddleware
 }
