@@ -11,6 +11,10 @@ class Assignment extends FileContainer {
     return path.resolve(ASSIGNMENT_FOLDER, this.metadata.name)
   }
 
+  static findById(id, options = {}) {
+    return Assignment.findByName(id, options)
+  }
+
   static findByName(name, options = {}) {
     if (name in assignments) {
       let instance = new Assignment()
