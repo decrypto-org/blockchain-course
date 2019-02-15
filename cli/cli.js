@@ -3,7 +3,7 @@
 // eslint-disable-next-line no-unused-vars
 const colors = require('colors')
 const yargs = require('yargs')
-const { checkUserMiddleware, checkAuxMiddleware } = require('./helpers')
+const { checkUserMiddleware, solutionMiddleware } = require('./helpers')
 
 yargs // eslint-disable-line no-unused-expressions
   .commandDir('cmds')
@@ -19,6 +19,6 @@ yargs // eslint-disable-line no-unused-expressions
     msg = msg ? `\n${msg}` : ''
     console.log(msg)
   })
-  .middleware([checkUserMiddleware, checkAuxMiddleware])
+  .middleware([checkUserMiddleware, solutionMiddleware])
   .help()
   .argv
