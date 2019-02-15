@@ -21,6 +21,10 @@ class Assignment extends FileContainer {
     return null;
   }
 
+  static getJudge(name) {
+    return assignments[name]
+  }
+
   static findAll() {
     return Object.values(assignments).map(res => res.metadata)
   }
