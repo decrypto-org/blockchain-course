@@ -185,13 +185,27 @@ const checkAuxMiddleware = (argv) => {
   return argv
 }
 
+const handleJudgement = async (argv, Assignment) => {
+  const assignment = Assignment.findByName(argv.id)
+  _requireResourceFound(assignment)
+
+  const judge = new assignment.Judge(assignment.Judge, argv.user)
+  const judgement = await judge.judge(argv.aux, argv.user, assignment.Judge, argv.solution)
+
+  console.log(judgement)
+
+  return judgement
+}
+
 module.exports = {
   buildCommand,
   hashFile,
   handleGetEntity,
   handleAddEntity,
   handleUpdateEntity,
+  handleDeleteEntity,
   handleAuxGeneration,
+  handleJudgement,
   checkUserMiddleware,
   checkAuxMiddleware
 }
