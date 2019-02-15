@@ -150,10 +150,9 @@ module.exports = ProofOfWorkAssignmentJudge
 node cli.js <command>
 
 Commands:
-  cli.js add <command>     Add an entity <group|lecture|file>
-  cli.js delete <command>  Delete an entity <group|lecture|file>
-  cli.js get <command>     Get an entity <group|lecture|file>
-  cli.js update <command>  Update an entity <group|lecture|file>
+  cli.js generate <command>  Generate <aux>
+  cli.js get <command>       Get an entity <assignment>
+  cli.js judge <id>          Judge a solution for a specific assignment
 
 Options:
   --version  Show version number                                       [boolean]
