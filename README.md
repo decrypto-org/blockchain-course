@@ -22,7 +22,7 @@ We provide here instructions for setting up and using
   to initialize the database cluster, start the database server and create a
   user. After this step, you should be able to create databases with your normal
   user account.
-- Create a database with the name of your choice, owned by your normal user
+- Create a database with the name of your choice (e.g. `blockchain_course`), owned by your normal user
   account. With Postgres, you can achieve this with `createdb <db_name>`.
 - Create an [OAuth
   App](https://developer.github.com/apps/building-oauth-apps/creating-an-oauth-app/)
