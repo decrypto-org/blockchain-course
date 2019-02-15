@@ -1,5 +1,5 @@
 const { handleGetEntity, buildCommand } = require('../helpers')
-const { LectureGroup, Lecture, File } = require('blockchain-course-db').models
+const { Assignment } = require('blockchain-course-db').models
 
 const commonOptions = {
   all: {
@@ -12,15 +12,13 @@ const commonOptions = {
 const getSubCommands = {
   options: { cmd: ':key [id]', desc: 'Get :key(s)' },
   entries: {
-    file: [File, { ...commonOptions }, handleGetEntity],
-    group: [LectureGroup, { ...commonOptions }, handleGetEntity],
-    lecture: [Lecture, { ...commonOptions }, handleGetEntity]
+    assignment: [Assignment, { ...commonOptions }, handleGetEntity]
   }
 }
 
 const cmd = {
   command: 'get <command>',
-  desc: 'Get an entity <group|lecture|file>'
+  desc: 'Get an entity <assignment>'
 }
 
 module.exports = buildCommand(cmd, getSubCommands)

@@ -90,17 +90,17 @@ const handleGetEntity = async (argv, Model, key) => {
 
   if (argv.all || !argv.id) {
     console.log(`[*] Getting all ${key}s...`)
-    data = await Model.findAll({ limit: 10, raw: true })
+    data = await Model.findAll()
     console.log(`[*] Done!`)
     return data
   }
 
   console.log(`[*] Getting ${key}...`)
-  data = await Model.findById(argv.id, { raw: true })
+  data = await Model.findById(argv.id)
   _requireResourceFound(data)
   console.log(`[*] Done!`)
 
-  return data
+  return data.metadata
 }
 
 const handleAddEntity = async (argv, Model, key) => {
