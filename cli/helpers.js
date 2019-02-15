@@ -157,6 +157,15 @@ const handleDeleteEntity = async (argv, Model, key) => {
   return data.dataValues || data
 }
 
+const checkAuxMiddleware = (argv) => {
+  if (argv.aux) {
+    if (argv.aux.public === undefined && argv.aux.private === undefined) {
+      throw new Error('Aux public and private are undefined')
+    }
+  }
+  return argv
+}
+
 module.exports = {
   buildCommand,
   hashFile,
@@ -164,4 +173,5 @@ module.exports = {
   handleAddEntity,
   handleUpdateEntity,
   handleDeleteEntity
+  checkAuxMiddleware
 }
