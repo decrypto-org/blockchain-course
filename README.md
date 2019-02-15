@@ -46,6 +46,7 @@ We provide here instructions for setting up and using
   development or `.env.production.local` for production and modify the variables
   accordingly. See more at
   [create-react-app](https://facebook.github.io/create-react-app/docs/adding-custom-environment-variables#what-other-env-files-can-be-used).
+- *Optional*: If you plan to develop Solidity exercises, install [ganache](https://truffleframework.com/ganache).
 
 ## Environment variables
 
