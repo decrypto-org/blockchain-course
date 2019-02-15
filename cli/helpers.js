@@ -56,6 +56,15 @@ const _requireResourceFound = (resource) => {
   return resource
 }
 
+const mainCmdbuilder = (yargs, buildedSubCmds) => {
+  for (const key in buildedSubCmds) {
+    if (buildedSubCmds.hasOwnProperty(key)) {
+      yargs.command(buildedSubCmds[key])
+    }
+  }
+  return yargs
+}
+
 const buildCommand = (cmd, subCmds = {}) => {
   const buildedSubCmds = {}
 
@@ -71,19 +80,10 @@ const buildCommand = (cmd, subCmds = {}) => {
     }
   }
 
-  const mainCmdbuilder = (yargs) => {
-    for (const key in buildedSubCmds) {
-      if (buildedSubCmds.hasOwnProperty(key)) {
-        yargs.command(buildedSubCmds[key])
-      }
-    }
-    return yargs
-  }
-
   return {
     command: cmd.command,
     desc: cmd.desc,
-    builder: mainCmdbuilder,
+    builder: (yargs) => mainCmdbuilder(yargs, buildedSubCmds),
     handler: (argv) => {}
   }
 }
@@ -219,5 +219,6 @@ module.exports = {
   handleJudgement,
   checkUserMiddleware,
   checkAuxMiddleware,
-  solutionMiddleware
+  solutionMiddleware,
+  mainCmdbuilder
 }
