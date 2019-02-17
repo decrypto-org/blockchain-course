@@ -158,6 +158,16 @@ const handleJudgement = async (argv, Assignment) => {
   return judgement
 }
 
+const constructTable = (head, rows) => {
+  const table = new Table({
+    head
+  })
+
+  rows.forEach(row => table.push(row))
+
+  return table
+}
+
 module.exports = {
   buildCommand,
   hashFile,
@@ -167,5 +177,7 @@ module.exports = {
   checkUserMiddleware,
   checkAuxMiddleware,
   solutionMiddleware,
-  mainCmdbuilder
+  mainCmdbuilder,
+  constructTable,
+  printAndExit
 }
