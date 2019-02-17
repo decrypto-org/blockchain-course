@@ -57,10 +57,10 @@ module.exports = class AssignmentController extends classMixin(OrderedDataContro
       private: parameterizedAssignment.dataValues.auxPrivate
     }
 
-    let grade = 0
+    let judgement = { grade: 0, msg: 'Wrong! Please try again.' }
 
     try {
-      grade = await judge.judge(aux, req.user, assignment.Judge, solution)
+      judgement = await judge.judge(aux, req.user, assignment.Judge, solution)
       const [solutionModel] = await Solution.findOrCreate(
         {
           where: { studentId: req.user.id, parameterizedAssignmentId: paramId },
@@ -81,9 +81,9 @@ module.exports = class AssignmentController extends classMixin(OrderedDataContro
         errorType === 'AssertionError' ||
         errorType === 'MissingMethodError'
       ) {
-        return res.status(400).send(
+        return res.status(200).send(
           {
-            error: { code: 400, message: e.message }
+            code: 200, judgement: { grade: 0, msg: e.message }
           }
         )
       }
@@ -95,13 +95,13 @@ module.exports = class AssignmentController extends classMixin(OrderedDataContro
       )
     }
 
-    if (grade > 0) {
+    if (judgement.grade > 0) {
       await parameterizedAssignment.update({ solved: true })
     }
 
     return res.status(200).send(
       {
-        success: true, grade
+        success: true, judgement
       }
     )
   }

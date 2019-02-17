@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import Avatar from '@material-ui/core/Avatar'
 import { Close } from '@material-ui/icons/'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 
 import '../../assets/css/Profile.css'
 import '../../assets/css/App.css'
@@ -36,7 +36,7 @@ class Profile extends Component {
 
   render () {
     if (_.isEmpty(this.props.user)) {
-      return null
+      return <Redirect from={this.props.path} to='/' />
     }
 
     return (
@@ -48,7 +48,7 @@ class Profile extends Component {
               <header className='profile-header'>
                 <div className='profile-header-info'>
                   <div className='profile-avatar'>
-                    <Avatar className='avatar'>{this.props.user.firstName[0]}</Avatar>
+                    <Avatar className='avatar'>{this.props.user.firstName ? this.props.user.firstName[0] : 'A'}</Avatar>
                   </div>
                   <div className='profile-full-name'>{this.props.user.firstName} {this.props.user.lastName}</div>
                 </div>
@@ -68,6 +68,25 @@ class Profile extends Component {
                     <div className='row-info-entry'>
                       <div className='label'>Github username</div>
                       <div className='text'>{this.props.user.username}</div>
+                    </div>
+                    <div className='row-info-entry'>
+                      <div className='label'>Github ID</div>
+                      <div className='text'>{this.props.user.githubId}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className='profile-row'>
+                <div className='row-header'>Statistics</div>
+                <div className='row-info'>
+                  <div className='row-info-wrapper'>
+                    <div className='row-info-entry'>
+                      <div className='label'>Assignments solved</div>
+                      <div className='text'>
+                        {Math.floor((this.props.user.statistics.totalSolved /
+                        this.props.user.statistics.totalAssignments) * 100)}%
+                        ({this.props.user.statistics.totalSolved} of {this.props.user.statistics.totalAssignments})
+                      </div>
                     </div>
                   </div>
                 </div>

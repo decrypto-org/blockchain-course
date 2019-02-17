@@ -15,9 +15,9 @@ class BlockchainConnectionError extends Error {
 }
 
 class CompilationError extends Error {
-  constructor (...params) {
-    super(...params)
-    this.message = 'Contract compilation error!'
+  constructor (compilerErrors) {
+    super()
+    this.message = compilerErrors.reduce((previous, current) => `${previous} \n ${current}`, `Contract compilation error!:`)
   }
 }
 
@@ -52,13 +52,13 @@ class SolidityJudge extends BaseJudge {
     const compiled = solc.compile(source, 1)
 
     if (compiled.errors && compiled.errors.length > 0) {
-      throw new CompilationError()
+      throw new CompilationError(compiled.errors)
     }
 
     const formattedName = ':' + name
 
     if (compiled.contracts[formattedName] === undefined) {
-      throw new CompilationError()
+      throw new CompilationError([`Contract name should be ${name}`])
     }
 
     const ABI = JSON.parse(compiled.contracts[formattedName].interface)
@@ -66,11 +66,11 @@ class SolidityJudge extends BaseJudge {
     const contract = new this.web3.eth.Contract(ABI)
 
     if (!this.contractHas(contract.methods, props.methods)) {
-      throw new FunctionalityError('Contract methods are missing!')
+      throw new FunctionalityError(`Contract methods are missing!. Expecting: ${JSON.stringify(props.methods)}`)
     }
 
     if (!this.contractHas(contract.events, props.events)) {
-      throw new FunctionalityError('Contract events are missing!')
+      throw new FunctionalityError(`Contract events are missing!. Expecting: ${JSON.stringify(props.events)}`)
     }
 
     const accounts = await this.web3.eth.getAccounts()

@@ -14,12 +14,18 @@ import {
 const styles = {}
 
 class Messenger extends Component {
+  linesToParagraphs (...nodes) {
+    return nodes
+      .map(node => typeof node === 'string' ?
+        node.split('\n').map(text => <p className='toast-message'>{text}</p>) : node)
+      .reduce((nodes, node) => nodes.concat(node), [])
+  }
   render () {
     return (
       <Snackbar
         open={this.props.notification.open}
         onClose={this.props.actions.closeToast}
-        message={this.props.notification.message}
+        message={this.linesToParagraphs(this.props.notification.message)}
         action={[
           <IconButton
             key='close'

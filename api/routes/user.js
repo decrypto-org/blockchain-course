@@ -1,12 +1,9 @@
 const express = require('express')
 const router = express.Router()
 
-router.get(
-  '/current',
-  (req, res) => {
-    const user = req.user
-    res.json({ success: 200, user: user })
-  }
-)
+const UserController = require('../controllers/UserController')
+const controller = new UserController()
+
+router.get('/current', (req, res, next) => controller.read(req, res, req.user.username).catch(next))
 
 module.exports = router

@@ -11,6 +11,10 @@ class Assignment extends FileContainer {
     return path.resolve(ASSIGNMENT_FOLDER, this.metadata.name)
   }
 
+  static findById(id, options = {}) {
+    return Assignment.findByName(id, options)
+  }
+
   static findByName(name, options = {}) {
     if (name in assignments) {
       let instance = new Assignment()
@@ -21,15 +25,20 @@ class Assignment extends FileContainer {
     return null;
   }
 
+  static getJudge(name) {
+    return assignments[name]
+  }
+
+  static getInstance() {
+    return new Assignment()
+  }
+
   static findAll() {
     return Object.values(assignments).map(res => res.metadata)
   }
 
   static findAllByLecture(lecture) {
-    return _.chain(assignments)
-      .values()
-      .filter(res => res.metadata.lecture == lecture)
-      .value()
+      return Object.values(assignments).filter(assignment => assignment.metadata.lecture === lecture).map(assignment => assignment.metadata)
   }
 }
 

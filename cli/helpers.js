@@ -1,25 +1,17 @@
 const { sequelize } = require('blockchain-course-db').models
+const Table = require('cli-table3')
 const crypto = require('crypto')
 const fs = require('fs')
-const path = require('path')
+const util = require('util')
+const _ = require('lodash')
+
+const readFile = util.promisify(fs.readFile)
 
 class ResourceNotFoundError extends Error {
   constructor () {
     super()
     this.message = 'Resource not found'
   }
-}
-
-const slugify = (string) => {
-  return string
-    .toString()
-    .trim()
-    .toLowerCase()
-    .replace(/\s+/g, '-')
-    .replace(/[^\w-]+/g, '')
-    .replace(/--+/g, '-')
-    .replace(/^-+/, '')
-    .replace(/-+$/, '')
 }
 
 const printAndExit = (data, exitCode = 0) => {
@@ -53,6 +45,15 @@ const _requireResourceFound = (resource) => {
   return resource
 }
 
+const mainCmdbuilder = (yargs, buildedSubCmds) => {
+  for (const key in buildedSubCmds) {
+    if (buildedSubCmds.hasOwnProperty(key)) {
+      yargs.command(buildedSubCmds[key])
+    }
+  }
+  return yargs
+}
+
 const buildCommand = (cmd, subCmds = {}) => {
   const buildedSubCmds = {}
 
@@ -68,21 +69,26 @@ const buildCommand = (cmd, subCmds = {}) => {
     }
   }
 
-  const mainCmdbuilder = (yargs) => {
-    for (const key in buildedSubCmds) {
-      if (buildedSubCmds.hasOwnProperty(key)) {
-        yargs.command(buildedSubCmds[key])
-      }
-    }
-    return yargs
-  }
-
   return {
     command: cmd.command,
     desc: cmd.desc,
-    builder: mainCmdbuilder,
+    builder: (yargs) => mainCmdbuilder(yargs, buildedSubCmds),
     handler: (argv) => {}
   }
+}
+
+const normalizeResponse = (res = []) => {
+  const rows = []
+  const dataKey = res[0].metadata ? 'metadata' : 'dataValues'
+
+  res.forEach(row => {
+    rows.push(Object.values(row[dataKey]))
+  })
+
+  return constructTable(
+    Object.keys(res[0][dataKey]),
+    rows
+  ).toString()
 }
 
 const handleGetEntity = async (argv, Model, key) => {
@@ -90,78 +96,95 @@ const handleGetEntity = async (argv, Model, key) => {
 
   if (argv.all || !argv.id) {
     console.log(`[*] Getting all ${key}s...`)
-    data = await Model.findAll({ limit: 10, raw: true })
+    data = await Model.findAll()
+
+    if (argv._[1] === 'assignment') {
+      data = data.map((item) => {
+        let { description, files, type, ...rest } = item
+        return { metadata: rest }
+      })
+    }
     console.log(`[*] Done!`)
-    return data
+    return normalizeResponse(data)
   }
 
   console.log(`[*] Getting ${key}...`)
-  data = await Model.findById(argv.id, { raw: true })
+  data = await Model.findById(argv.id)
   _requireResourceFound(data)
   console.log(`[*] Done!`)
+  data = [data]
 
-  return data
+  return normalizeResponse(data)
 }
 
-const handleAddEntity = async (argv, Model, key) => {
-  console.log(`[*] Adding ${key}...`)
-
-  const model = Model.build({ ...argv })
-  const { _: cmds } = argv
-
-  if (cmds[1] === 'group') {
-    model.name = slugify(model.title)
-  }
-
-  if (cmds[1] === 'file') {
-    model.hash = await hashFile(argv.file)
-    model.fileType = path.extname(path.basename(argv.file)).substr(1)
-  }
-
-  const data = await model.save()
-
-  console.log(`[*] Done!`)
-
-  return data.dataValues || data
+const handleAuxGeneration = (argv, Assignment, key) => {
+  const assignment = Assignment.findByName(argv.id)
+  _requireResourceFound(assignment)
+  const assignmentJudge = new assignment.Judge()
+  const aux = assignmentJudge.formatAux(assignmentJudge.aux(argv.user, assignment))
+  return { ...aux }
 }
 
-const handleUpdateEntity = async (argv, Model, key) => {
-  console.log(`[*] Updating ${key}...`)
-
-  const model = await Model.findById(argv.id)
-  const { _: cmds } = argv
-
-  if (cmds[1] === 'group' && argv.title) {
-    argv.name = slugify(argv.title)
+const checkUserMiddleware = (argv) => {
+  if (argv.user) {
+    if (argv.user.id === undefined || argv.user.username === undefined) {
+      const user = { id: 1, username: 'fake_user' }
+      console.log(`[*] user.id or user.username is undefined! I am going to use: ${JSON.stringify(user)}`)
+      return { ...argv, user }
+    }
   }
-
-  if (cmds[1] === 'file' && argv.file) {
-    argv.hash = await hashFile(argv.file)
-    argv.fileType = path.extname(path.basename(argv.file)).substr(1)
-  }
-
-  const data = await model.update({ ...argv })
-  console.log(`[*] Done!`)
-
-  return data.dataValues || data
+  return argv
 }
 
-const handleDeleteEntity = async (argv, Model, key) => {
-  console.log(`[*] Deleting ${key}...`)
-  const model = await Model.findById(argv.id)
+const checkAuxMiddleware = (argv) => {
+  if (argv.aux) {
+    if (argv.aux.public === undefined && argv.aux.private === undefined) {
+      throw new Error('Aux public and private are undefined')
+    }
+  }
+  return argv
+}
 
-  _requireResourceFound(model)
+const solutionMiddleware = async (argv) => {
+  if (argv.solution && argv.file) {
+    argv.solution = await readFile(argv.solution, 'utf8')
+  }
 
-  const data = await model.destroy()
-  console.log(`[*] Done!`)
-  return data.dataValues || data
+  return argv
+}
+
+const handleJudgement = async (argv, Assignment) => {
+  const assignment = Assignment.findByName(argv.id)
+  _requireResourceFound(assignment)
+
+  const judge = new assignment.Judge(assignment.Judge, argv.user)
+  const judgement = await judge.judge(argv.aux, argv.user, assignment.Judge, argv.solution)
+
+  console.log(judgement)
+
+  return judgement
+}
+
+const constructTable = (head, rows) => {
+  const table = new Table({
+    head
+  })
+
+  rows.forEach(row => table.push(row))
+
+  return table
 }
 
 module.exports = {
   buildCommand,
   hashFile,
   handleGetEntity,
-  handleAddEntity,
-  handleUpdateEntity,
-  handleDeleteEntity
+  handleAuxGeneration,
+  handleJudgement,
+  checkUserMiddleware,
+  checkAuxMiddleware,
+  solutionMiddleware,
+  mainCmdbuilder,
+  constructTable,
+  printAndExit
 }

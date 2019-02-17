@@ -1,6 +1,7 @@
 const crypto = require('crypto')
 const fs = require('fs')
 const should = require('chai').should()
+const _ = require('lodash')
 
 const isString = (str) => {
   return Object.prototype.toString.call(str) === '[object String]'
@@ -23,7 +24,7 @@ const sha256 = (data) => {
 
 // https://github.com/OpenZeppelin/openzeppelin-solidity/blob/master/test/helpers/shouldFail.js
 
-const shouldFailWithMessage = async (promise, message) => {
+const shouldFailWithMessage = async (promise, message, errorMessage) => {
   try {
     await promise
   } catch (error) {
@@ -31,31 +32,34 @@ const shouldFailWithMessage = async (promise, message) => {
     return
   }
 
-  should.fail(`Expected '${message}' failure not received`)
+  should.fail(errorMessage)
 }
 
-const shouldRevert = async (promise) => {
-  await shouldFailWithMessage(promise, 'revert')
+const shouldRevert = async (promise, errorMessage) => {
+  await shouldFailWithMessage(promise, 'revert', errorMessage)
 }
 
-const shouldThrow = async (promise) => {
-  await shouldFailWithMessage(promise, 'invalid opcode')
+const shouldThrow = async (promise, errorMessage) => {
+  await shouldFailWithMessage(promise, 'invalid opcode', errorMessage)
 }
 
-const shouldBeOutOfGas = async (promise) => {
-  await shouldFailWithMessage(promise, 'out of gas')
+const shouldBeOutOfGas = async (promise, errorMessage) => {
+  await shouldFailWithMessage(promise, 'out of gas', errorMessage)
 }
 
 const expectEventInLogs = (events, eventName, eventArgs = {}) => {
   const event = Object.keys(events).find((e) => {
     if (e === eventName) {
       for (const [k, v] of Object.entries(eventArgs)) {
-        events[e].returnValues[k].should.be.equal(v)
+        if (_.isEmpty(events[e])) {
+          return false
+        }
+        events[e].returnValues[k].should.be.equal(v, 'Event did not emmited')
       }
       return true
     }
   })
-  should.exist(event)
+  should.exist(event, 'Event did not emmited')
   return event
 }
 
