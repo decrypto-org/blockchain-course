@@ -13,18 +13,6 @@ class ResourceNotFoundError extends Error {
   }
 }
 
-const slugify = (string) => {
-  return string
-    .toString()
-    .trim()
-    .toLowerCase()
-    .replace(/\s+/g, '-')
-    .replace(/[^\w-]+/g, '')
-    .replace(/--+/g, '-')
-    .replace(/^-+/, '')
-    .replace(/-+$/, '')
-}
-
 const printAndExit = (data, exitCode = 0) => {
   console.log(data)
   sequelize.close()
@@ -106,60 +94,6 @@ const handleGetEntity = async (argv, Model, key) => {
   return data.metadata
 }
 
-const handleAddEntity = async (argv, Model, key) => {
-  console.log(`[*] Adding ${key}...`)
-
-  const model = Model.build({ ...argv })
-  const { _: cmds } = argv
-
-  if (cmds[1] === 'group') {
-    model.name = slugify(model.title)
-  }
-
-  if (cmds[1] === 'file') {
-    model.hash = await hashFile(argv.file)
-    model.fileType = path.extname(path.basename(argv.file)).substr(1)
-  }
-
-  const data = await model.save()
-
-  console.log(`[*] Done!`)
-
-  return data.dataValues || data
-}
-
-const handleUpdateEntity = async (argv, Model, key) => {
-  console.log(`[*] Updating ${key}...`)
-
-  const model = await Model.findById(argv.id)
-  const { _: cmds } = argv
-
-  if (cmds[1] === 'group' && argv.title) {
-    argv.name = slugify(argv.title)
-  }
-
-  if (cmds[1] === 'file' && argv.file) {
-    argv.hash = await hashFile(argv.file)
-    argv.fileType = path.extname(path.basename(argv.file)).substr(1)
-  }
-
-  const data = await model.update({ ...argv })
-  console.log(`[*] Done!`)
-
-  return data.dataValues || data
-}
-
-const handleDeleteEntity = async (argv, Model, key) => {
-  console.log(`[*] Deleting ${key}...`)
-  const model = await Model.findById(argv.id)
-
-  _requireResourceFound(model)
-
-  const data = await model.destroy()
-  console.log(`[*] Done!`)
-  return data.dataValues || data
-}
-
 const handleAuxGeneration = (argv, Assignment, key) => {
   const assignment = Assignment.findByName(argv.id)
   _requireResourceFound(assignment)
@@ -212,9 +146,6 @@ module.exports = {
   buildCommand,
   hashFile,
   handleGetEntity,
-  handleAddEntity,
-  handleUpdateEntity,
-  handleDeleteEntity,
   handleAuxGeneration,
   handleJudgement,
   checkUserMiddleware,
