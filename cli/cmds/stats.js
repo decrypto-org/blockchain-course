@@ -1,10 +1,41 @@
-const { mainCmdbuilder } = require('../helpers')
-const { Assignment, User } = require('blockchain-course-db').models
+const { mainCmdbuilder, printAndExit, constructTable } = require('../helpers')
+const { Assignment, User, Solution, sequelize, ParameterizedAssignment } = require('blockchain-course-db').models
+
+const getRanking = async (argv, order = 'ASC') => {
+  let res = await ParameterizedAssignment.findAll({
+    include: [{
+      model: User,
+      as: 'student'
+    }],
+    attributes: ['ParameterizedAssignment.studentId', 'student.id', [sequelize.fn('COUNT', 'solved'), 'solved']],
+    where: { solved: true },
+    group: ['ParameterizedAssignment.studentId', 'student.id', 'ParameterizedAssignment.solved'],
+    limit: argv.n,
+    order: [[sequelize.fn('count', sequelize.col('solved')), order]]
+  })
+
+  res = res.map(row => (
+    [
+      row.dataValues.student.id,
+      row.dataValues.student.username,
+      row.dataValues.student.email,
+      row.dataValues.solved
+    ]
+  ))
+
+  const table = constructTable(
+    ['User ID', 'Username', 'Email', 'Total Solved'],
+    res
+  )
+
+  return table.toString()
+}
 
 const orderOptions = {
   number: {
     alias: 'n',
     describe: 'Number of users',
+    default: 10,
     number: true
   }
 }
@@ -14,13 +45,13 @@ const subCommands = {
     command: 'top',
     desc: 'Get top users',
     builder: { ...orderOptions },
-    handler: async (argv) => {}
+    handler: async (argv) => printAndExit(await getRanking(argv, 'DESC'))
   },
   last: {
     command: 'last',
     desc: 'Get last users',
     builder: { ...orderOptions },
-    handler: async (argv) => {}
+    handler: async (argv) => printAndExit(await getRanking(argv, 'ASC'))
   },
   score: {
     command: 'score <id>',
