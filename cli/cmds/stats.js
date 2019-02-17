@@ -23,10 +23,21 @@ const subCommands = {
     handler: async (argv) => {}
   },
   score: {
-    command: '<id>',
+    command: 'score <id>',
     desc: 'Get the score of a user',
     builder: {},
-    handler: async (argv) => {}
+    handler: async (argv) => {
+      const totalSolved = await ParameterizedAssignment.count(
+        {
+          where: { studentId: argv.id, solved: true }
+        })
+      const totalAssignments = Assignment.findAll().length
+      const table = constructTable(
+        ['User ID', 'Total Solved', 'Total Assignments'],
+        [[argv.id, totalSolved, totalAssignments]]
+      )
+      printAndExit(table.toString())
+    }
   }
 }
 
@@ -34,7 +45,5 @@ module.exports = {
   command: 'stats <command>',
   desc: 'Get user stats <top|last|score>',
   builder: (yargs) => mainCmdbuilder(yargs, subCommands),
-  handler: (argv) => {
-    console.log('main', argv)
-  }
+  handler: (argv) => {}
 }
