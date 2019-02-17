@@ -1,8 +1,10 @@
 const { sequelize } = require('blockchain-course-db').models
+const Table = require('cli-table3')
 const crypto = require('crypto')
 const fs = require('fs')
 const path = require('path')
 const util = require('util')
+const _ = require('lodash')
 
 const readFile = util.promisify(fs.readFile)
 
@@ -74,6 +76,20 @@ const buildCommand = (cmd, subCmds = {}) => {
     builder: (yargs) => mainCmdbuilder(yargs, buildedSubCmds),
     handler: (argv) => {}
   }
+}
+
+const normalizeResponse = (res = []) => {
+  const rows = []
+  const dataKey = res[0].metadata ? 'metadata' : 'dataValues'
+
+  res.forEach(row => {
+    rows.push(Object.values(row[dataKey]))
+  })
+
+  return constructTable(
+    Object.keys(res[0][dataKey]),
+    rows
+  ).toString()
 }
 
 const handleGetEntity = async (argv, Model, key) => {
