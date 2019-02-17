@@ -2,7 +2,6 @@ const { sequelize } = require('blockchain-course-db').models
 const Table = require('cli-table3')
 const crypto = require('crypto')
 const fs = require('fs')
-const path = require('path')
 const util = require('util')
 const _ = require('lodash')
 
@@ -98,16 +97,24 @@ const handleGetEntity = async (argv, Model, key) => {
   if (argv.all || !argv.id) {
     console.log(`[*] Getting all ${key}s...`)
     data = await Model.findAll()
+
+    if (argv._[1] === 'assignment') {
+      data = data.map((item) => {
+        let { description, files, type, ...rest } = item
+        return { metadata: rest }
+      })
+    }
     console.log(`[*] Done!`)
-    return data
+    return normalizeResponse(data)
   }
 
   console.log(`[*] Getting ${key}...`)
   data = await Model.findById(argv.id)
   _requireResourceFound(data)
   console.log(`[*] Done!`)
+  data = [data]
 
-  return data.metadata
+  return normalizeResponse(data)
 }
 
 const handleAuxGeneration = (argv, Assignment, key) => {
