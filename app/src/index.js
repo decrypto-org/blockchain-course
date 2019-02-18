@@ -9,13 +9,12 @@ import 'typeface-roboto'
 import configureStore from './store'
 import indexRoutes from 'routes/index.js'
 import { requestThen, requestCatch, responseThen, responseCatch } from './utils/interceptors'
+import { setupInterceptors } from './utils/interceptors'
 import { unregister } from './registerServiceWorker'
-
-axios.interceptors.request.use(requestThen, requestCatch)
-axios.interceptors.response.use(responseThen, responseCatch)
 
 const hist = createBrowserHistory()
 const store = configureStore()
+setupInterceptors(store)
 
 ReactDOM.render(
   <Router history={hist}>
