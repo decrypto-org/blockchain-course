@@ -3,12 +3,12 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import Grid from '@material-ui/core/Grid'
 
-import '../../assets/css/App.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import '../../assets/scss/main.scss'
+
 import Header from '../../components/Header/Header.js'
-import Sidebar from '../../components/Sidebar/Sidebar.js'
+import ToolBar from '../../components/ToolBar/ToolBar.js'
 import Messenger from '../../views/Messenger/Messenger.js'
 import Avatar from '../../views/Avatar/Avatar.js'
 import Spinner from '../../views/Spinner/Spinner.js'
@@ -44,15 +44,11 @@ class App extends Component {
 
   render () {
     return (
-      <div className='app'>
-        <CssBaseline />
-        <Grid className='wrapper' container spacing={0} direction='row' alignItems='flex-start' justify='flex-start'>
-          <Header routes={appRoutes} {...this.props} Avatar={Avatar} />
-          <Sidebar routes={appRoutes} {...this.props} />
-          <main className='container'>
-            {switchRoutes}
-          </main>
-        </Grid>
+      <div className='app container-fluid'>
+        <Header routes={appRoutes} {...this.props} Avatar={Avatar} ToolBar={ToolBar} />
+        <main className='container-fluid'>
+          {switchRoutes}
+        </main>
         <Messenger />
         <Spinner />
       </div>

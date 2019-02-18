@@ -1,0 +1,22 @@
+.avatar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 100%;
+
+  .avatar-wrapper {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .avatar-button {
+    cursor: pointer;
+  }
+
+  .avatar-username {
+    font-family: 'Press Start 2P', cursive;
+    margin-left: 15px;
+  }
+}

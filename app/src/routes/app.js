@@ -1,5 +1,6 @@
-import { createAppRoutes } from '../utils/routes'
+  import { createAppRoutes } from '../utils/routes'
 
+import Home from 'views/Home/Home'
 import LectureList from 'views/Lecture/LectureList'
 import Lecture from 'views/Lecture/Lecture'
 import AssignmentList from 'views/Assignments/AssignmentList'

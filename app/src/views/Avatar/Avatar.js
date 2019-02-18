@@ -3,9 +3,9 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faGithubAlt } from '@fortawesome/free-brands-svg-icons'
 import { Link } from 'react-router-dom'
-import IconButton from '@material-ui/core/IconButton'
-import AccountCircle from '@material-ui/icons/AccountCircle'
 import Popover from '@material-ui/core/Popover'
 import Divider from '@material-ui/core/Divider'
 
@@ -50,17 +50,13 @@ class Avatar extends React.Component {
 
   render () {
     return (
-      <div>
+      <div className='avatar'>
         {this.props.isAuthenticated ? (
-          <div>
-            <IconButton
-              aria-owns={this.state.open ? 'menu-appbar' : null}
-              aria-haspopup='true'
-              onClick={this.openMenu}
-              color='inherit'
-            >
-              <AccountCircle />
-            </IconButton>
+          <div className='avatar-wrapper'>
+            <div className='avatar-button' onClick={this.openMenu}>
+              <FontAwesomeIcon icon={faGithubAlt} size='2x' />
+            </div>
+            <div className='avatar-username'>{this.props.user.username}</div>
             <Popover
               id='menu-appbar'
               anchorEl={this.state.anchorEl}

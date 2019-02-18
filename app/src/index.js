@@ -11,10 +11,13 @@ import indexRoutes from 'routes/index.js'
 import { requestThen, requestCatch, responseThen, responseCatch } from './utils/interceptors'
 import { unregister } from './registerServiceWorker'
 
+import { loadIcons } from './utils/favicons.js'
+
 axios.interceptors.request.use(requestThen, requestCatch)
 axios.interceptors.response.use(responseThen, responseCatch)
 
 const hist = createBrowserHistory()
+loadIcons()
 
 ReactDOM.render(
   <Router history={hist}>
