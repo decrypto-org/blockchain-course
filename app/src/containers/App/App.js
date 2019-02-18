@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Grid from '@material-ui/core/Grid'
 
-import '../../assets/css/App.css'
+import '../../assets/scss/main.scss'
 import Header from '../../components/Header/Header.js'
 import Sidebar from '../../components/Sidebar/Sidebar.js'
 import Messenger from '../../views/Messenger/Messenger.js'

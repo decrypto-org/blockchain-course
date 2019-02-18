@@ -1,3 +1,4 @@
+
 .user-profile {
   position: relative;
 }
@@ -20,10 +21,6 @@
   justify-content: center;
 }
 
-.profile-header {
-  background: #2a56c6;
-}
-
 .profile-header .profile-header-info {
   display: flex;
   align-items: center;
@@ -35,8 +32,8 @@
   width: 90px;
   height: 90px;
   font-size: 40px;
-  background: #d32f2f;
-  color: #fff;
+  // background: #d32f2f;
+  // color: #fff;
   text-align: center;
 }
 

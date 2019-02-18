@@ -1,0 +1,17 @@
+.wrapper {
+  flex-grow: 1;
+  z-index: 1;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+}
+
+.container {
+  flex-grow: 1;
+  padding: 89px 15px 25px 15px;
+  min-width: 0;
+}
+
+.content-box-wrapper {
+  margin-left: -240px;
+}
