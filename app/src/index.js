@@ -6,7 +6,7 @@ import { Provider } from 'react-redux'
 import axios from 'axios'
 import 'typeface-roboto'
 
-import store from './store'
+import configureStore from './store'
 import indexRoutes from 'routes/index.js'
 import { requestThen, requestCatch, responseThen, responseCatch } from './utils/interceptors'
 import { unregister } from './registerServiceWorker'
@@ -15,6 +15,7 @@ axios.interceptors.request.use(requestThen, requestCatch)
 axios.interceptors.response.use(responseThen, responseCatch)
 
 const hist = createBrowserHistory()
+const store = configureStore()
 
 ReactDOM.render(
   <Router history={hist}>
