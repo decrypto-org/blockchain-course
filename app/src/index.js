@@ -1,31 +1,21 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { createBrowserHistory } from 'history'
-import { Router, Route, Switch } from 'react-router-dom'
-import { Provider } from 'react-redux'
-import axios from 'axios'
 import 'typeface-roboto'
 
 import configureStore from './store'
 import indexRoutes from 'routes/index.js'
-import { requestThen, requestCatch, responseThen, responseCatch } from './utils/interceptors'
+import theme from './theme'
 import { setupInterceptors } from './utils/interceptors'
 import { unregister } from './registerServiceWorker'
+import Root from './containers/Root'
 
-const hist = createBrowserHistory()
+const history = createBrowserHistory()
 const store = configureStore()
 setupInterceptors(store)
 
 ReactDOM.render(
-  <Router history={hist}>
-    <Provider store={store}>
-      <Switch>
-        {indexRoutes.map((prop, key) => {
-          return <Route path={prop.path} component={prop.component} key={key} exact={prop.exact} />
-        })}
-      </Switch>
-    </Provider>
-  </Router>,
+  <Root history={history} store={store} routes={indexRoutes} theme={theme} />,
   document.getElementById('root')
 )
 
