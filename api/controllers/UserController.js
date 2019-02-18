@@ -7,7 +7,10 @@ module.exports = class UserController extends BaseController {
   }
 
   async getStatistics (user) {
-    const totalSolved = await Solution.count({ where: { studentId: user.id }, [sequelize.Op.and]: { solved: true } })
+    const totalSolved = await ParameterizedAssignment.count(
+      {
+        where: { studentId: user.id, solved: true }
+      })
     const totalAssignments = Assignment.findAll().length
 
     return { totalSolved, totalAssignments }
