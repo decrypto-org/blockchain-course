@@ -6,6 +6,12 @@
   display: flex;
 }
 
+.app {
+  .wrapper {
+    flex-wrap: nowrap;
+  }
+}
+
 .container {
   flex-grow: 1;
   padding: 89px 15px 25px 15px;

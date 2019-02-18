@@ -6,12 +6,12 @@ import List from '@material-ui/core/List'
 import cx from 'classnames'
 
 export default function withList (ListComponent, key, actions, route, routeKey = 'id') {
-  const mapDispatchToProps = dispatch => ({
-    actions: bindActionCreators({ ...actions }, dispatch)
-  })
-
   const mapStateToProps = state => ({
     [key]: state[key]
+  })
+
+  const mapDispatchToProps = dispatch => ({
+    actions: bindActionCreators({ ...actions }, dispatch)
   })
 
   class ListHOC extends React.Component {
@@ -27,13 +27,13 @@ export default function withList (ListComponent, key, actions, route, routeKey =
       let items = ''
       if (this.props[key] && this.props[key].length > 0) {
         items = this.props[key].map((item, index) => {
-          return <ListComponent {...item} key={index} className={cx('item', key)} to={route + item[routeKey]} />
+          return <ListComponent {...item} key={index} to={route + item[routeKey]} Back={this.props.Back} Front={this.props.Front} />
         })
       }
       return (
         <div>
           <Grid container>
-            <List component='nav' className={cx('list', key)}>
+            <List component='section' className={cx('list', key)}>
               {items}
             </List>
           </Grid>

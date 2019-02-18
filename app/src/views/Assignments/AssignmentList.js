@@ -2,7 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import withList from '../../containers/HOC/withList'
-import ListItem from '../../components/List/ListItem'
+import CardListItem from '../../components/List/CardListItem'
+import Front from './AssignmentFrontCard.js'
+import Back from './AssignmentBackCard.js'
 
 import {
   assignmentActions,
@@ -11,7 +13,7 @@ import {
 
 const fetchAssignments = assignmentActions.fetchAssignments
 
-const Assignments = withList(ListItem, 'assignments', { getList: fetchAssignments }, '/assignment/', 'name')
+const Assignments = withList(CardListItem, 'assignments', { getList: fetchAssignments }, '/assignment/', 'name')
 
 class AssignmentsList extends React.Component {
   componentDidMount () {
@@ -22,7 +24,7 @@ class AssignmentsList extends React.Component {
 
   render () {
     return (
-      this.props.isAuthenticated ? <Assignments /> : null
+      this.props.isAuthenticated ? <Assignments Front={Front} Back={Back} /> : null
     )
   }
 }
