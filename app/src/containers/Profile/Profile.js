@@ -7,23 +7,29 @@ import Grid from '@material-ui/core/Grid'
 import Avatar from '@material-ui/core/Avatar'
 import { Close } from '@material-ui/icons/'
 import { Link, Redirect } from 'react-router-dom'
+import classNames from 'classnames'
 
-import '../../assets/css/Profile.css'
-import '../../assets/css/App.css'
+import '../../assets/scss/main.scss'
 
 import {
   userActions
 } from '../../actions'
 
-const styles = {
+const styles = (theme) => ({
   root: {
     flexGrow: 1
   },
   paper: {
     padding: 16,
     textAlign: 'center'
+  },
+  header: {
+    background: theme.palette.primary.main
+  },
+  avatar: {
+    background: theme.palette.secondary.main
   }
-}
+})
 
 const fetchCurrentUser = userActions.fetchCurrentUser
 
@@ -45,10 +51,10 @@ class Profile extends Component {
         <div className='user-profile-wrapper'>
           <Grid container spacing={24}>
             <Grid item xs={9}>
-              <header className='profile-header'>
+              <header className={classNames('profile-header', this.props.classes.header)} >
                 <div className='profile-header-info'>
                   <div className='profile-avatar'>
-                    <Avatar className='avatar'>{this.props.user.firstName ? this.props.user.firstName[0] : 'A'}</Avatar>
+                    <Avatar className={classNames('avatar', this.props.classes.avatar)}>{this.props.user.firstName ? this.props.user.firstName[0] : 'A'}</Avatar>
                   </div>
                   <div className='profile-full-name'>{this.props.user.firstName} {this.props.user.lastName}</div>
                 </div>
@@ -114,4 +120,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Profile))
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles, { withTheme: true })(Profile))
