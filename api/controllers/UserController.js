@@ -1,5 +1,5 @@
 const BaseController = require('./BaseController')
-const { User, Assignment, ParameterizedAssignment, Solution, sequelize } = require('blockchain-course-db').models
+const { User, Assignment, ParameterizedAssignment } = require('blockchain-course-db').models
 
 module.exports = class UserController extends BaseController {
   constructor () {

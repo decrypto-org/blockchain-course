@@ -1,5 +1,5 @@
 const { mainCmdbuilder, printAndExit, constructTable } = require('../helpers')
-const { Assignment, User, Solution, sequelize, ParameterizedAssignment } = require('blockchain-course-db').models
+const { Assignment, User, sequelize, ParameterizedAssignment } = require('blockchain-course-db').models
 
 const getRanking = async (argv, order = 'ASC') => {
   let res = await ParameterizedAssignment.findAll({
