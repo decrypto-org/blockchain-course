@@ -1,3 +1,4 @@
+const _ = require('lodash')
 const logger = require('../config/winston')
 const OrderedDataController = require('./OrderedDataController')
 const Downloadable = require('./Downloadable')
@@ -7,6 +8,28 @@ const { Assignment, ParameterizedAssignment, Solution } = require('blockchain-co
 module.exports = class AssignmentController extends classMixin(OrderedDataController, Downloadable) {
   constructor () {
     super(Assignment, 'assignments', 'assignments')
+  }
+
+  async list (req, res, name) {
+    let assignments = Assignment.findAll()
+    const paramAssignments = await ParameterizedAssignment.findAll({ where: { studentId: req.user.id }, raw: true })
+    const indexedParamAssignments = paramAssignments.reduce((prev, cur) => ({ ...prev, [cur.assignmentName]: cur }), {})
+
+    assignments = assignments.map(item => {
+      let solved = false
+
+      if (indexedParamAssignments.hasOwnProperty(item.name)) {
+        solved = indexedParamAssignments[item.name].solved
+      }
+
+      return { ...item, solved }
+    })
+
+    return res.status(200).send(
+      {
+        success: true, assignments
+      }
+    )
   }
 
   async read (req, res, name) {
