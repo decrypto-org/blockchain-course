@@ -90,7 +90,7 @@ export default class AssignmentDetails extends React.Component {
                   <Input type='hidden' value={assignment.paramId} name='paramId' />
                 </CardContent>
                 <CardActions className='assignment-actions'>
-                  <Button type='submit' size='small'>Submit</Button>
+                  <Button type='submit' size='small' variant='outlined' color='secondary'>Submit</Button>
                   <div className={solvedClass}><Check /></div>
                 </CardActions>
               </form>
