@@ -104,7 +104,7 @@ class Avatar extends React.Component {
               </div>
             </Popover>
           </div>
-        ) : (<Button variant='outlined' color='inherit' to='/login' component={Link}>Login</Button>)
+        ) : (<Button variant='outlined' color='secondary' to='/login' component={Link}>Login</Button>)
         }
       </div>
     )
