@@ -22,6 +22,6 @@ module.exports = class UserController extends BaseController {
     const user = req.user
     const statistics = await this.getStatistics(user)
 
-    res.json({ success: 200, user: { ...user, statistics } })
+    res.json({ success: 200, user: { ...user.dataValues, statistics } })
   }
 }
