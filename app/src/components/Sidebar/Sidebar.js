@@ -18,9 +18,9 @@ const styles = theme => ({
   },
   menuItem: {
     '&:focus, &.active': {
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: theme.palette.secondary.light,
       '& $textItem, & $icon': {
-        color: theme.palette.common.white
+        color: theme.palette.secondary.contrastText
       }
     }
   },
