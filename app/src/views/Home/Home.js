@@ -3,6 +3,7 @@ import { withStyles } from '@material-ui/core/styles'
 import { Link } from 'react-router-dom'
 import Button from '@material-ui/core/Button'
 import { connect } from 'react-redux'
+import cx from 'classnames'
 
 const styles = theme => ({
   jumbotron: {
@@ -10,6 +11,9 @@ const styles = theme => ({
   },
   button: {
     margin: theme.spacing.unit
+  },
+  buttonFirst: {
+    marginLeft: 0
   }
 })
 
@@ -17,26 +21,28 @@ class Home extends React.Component {
   render () {
     let buttons = []
     let { classes } = this.props
-    console.log(classes)
 
     buttons.push(
-      <Button className={classes.button} classes={{ root: classes.jumbotron }} variant='contained' color='primary' to='/lecture' component={Link}>Begin the lectures</Button>
+      <Button className={cx(classes.button, classes.buttonFirst)} classes={{ root: classes.jumbotron }} variant='contained' color='primary' to='/lecture' component={Link}>Begin the lectures</Button>
     )
+
     if (this.props.isAuthenticated) {
       buttons.push(
-        <Button className={classes.button} variant='outlined' color='inherit' to='/assignment' component={Link}>Solve the puzzles</Button>
+        <Button className={classes.button} variant='outlined' color='secondary' to='/assignment' component={Link}>Solve the puzzles</Button>
       )
     } else {
       buttons.push(
-        <p>
-          or <Button className={classes.button} classes={{ root: classes.jumbotron }} variant='outlined' color='inherit' size='large' to='/login' component={Link}>Login</Button> to solve the puzzles
-        </p>
+        <span>
+          or <Button className={classes.button} classes={{ root: classes.jumbotron }} variant='outlined' color='secondary' size='large' to='/login' component={Link}>Login</Button> to solve the puzzles
+        </span>
       )
     }
     return (
       <div>
         <h1 className='home-title'>An introductory course on blockchain science and engineering</h1>
-        {buttons}
+        <div className='button-row' >
+          {buttons}
+        </div>
       </div>
     )
   }
