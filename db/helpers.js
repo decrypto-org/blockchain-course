@@ -1,11 +1,5 @@
-const crypto = require('crypto')
 const fs = require('fs')
-const should = require('chai').should()
-const _ = require('lodash')
-
-const isString = (str) => {
-  return Object.prototype.toString.call(str) === '[object String]'
-}
+const path = require('path')
 
 const mapJSFiles = (dirname, mapFn, exclude = []) => {
   fs
@@ -16,59 +10,21 @@ const mapJSFiles = (dirname, mapFn, exclude = []) => {
     .forEach(mapFn)
 }
 
-const sha256 = (data) => {
-  const hash = crypto.createHash('sha256')
-  hash.update(data)
-  return hash.digest('hex')
-}
+const loadAssignments = (dirname, cb, exclude = []) => {
+  let dirs = fs.readdirSync(dirname).filter(
+    dirent => fs.statSync(path.join(dirname, dirent)).isDirectory() && !exclude.includes(dirent)
+  )
 
-// https://github.com/OpenZeppelin/openzeppelin-solidity/blob/master/test/helpers/shouldFail.js
-
-const shouldFailWithMessage = async (promise, message, errorMessage) => {
-  try {
-    await promise
-  } catch (error) {
-    error.message.should.include(message, 'Wrong failure type')
-    return
-  }
-
-  should.fail(errorMessage)
-}
-
-const shouldRevert = async (promise, errorMessage) => {
-  await shouldFailWithMessage(promise, 'revert', errorMessage)
-}
-
-const shouldThrow = async (promise, errorMessage) => {
-  await shouldFailWithMessage(promise, 'invalid opcode', errorMessage)
-}
-
-const shouldBeOutOfGas = async (promise, errorMessage) => {
-  await shouldFailWithMessage(promise, 'out of gas', errorMessage)
-}
-
-const expectEventInLogs = (events, eventName, eventArgs = {}) => {
-  const event = Object.keys(events).find((e) => {
-    if (e === eventName) {
-      for (const [k, v] of Object.entries(eventArgs)) {
-        if (_.isEmpty(events[e])) {
-          return false
-        }
-        events[e].returnValues[k].should.be.equal(v, 'Event did not emmited')
-      }
-      return true
-    }
+  return dirs.forEach(dir => {
+    fs.readdirSync(path.join(dirname, dir))
+      .filter(file => {
+        return (file.indexOf('.') !== 0) && (file.slice(-3) === '.js')
+      })
+      .forEach(file => cb(path.join(dirname, dir, file)))
   })
-  should.exist(event, 'Event did not emmited')
-  return event
 }
 
 module.exports = {
-  isString,
   mapJSFiles,
-  sha256,
-  shouldRevert,
-  shouldThrow,
-  shouldBeOutOfGas,
-  expectEventInLogs
+  loadAssignments
 }
