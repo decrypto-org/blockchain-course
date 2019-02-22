@@ -94,7 +94,9 @@ module.exports = class AssignmentController extends classMixin(OrderedDataContro
         }
       )
 
-      await solutionModel.update({ data: solution })
+      if (!parameterizedAssignment.dataValues.solved) {
+        await solutionModel.update({ data: solution })
+      }
     } catch (e) {
       logger.error(`${e.constructor.name}: ${e.message}`)
       const errorType = e.constructor.name
@@ -118,7 +120,7 @@ module.exports = class AssignmentController extends classMixin(OrderedDataContro
       )
     }
 
-    if (judgement.grade > 0) {
+    if (judgement.grade > 0 && !parameterizedAssignment.dataValues.solved) {
       await parameterizedAssignment.update({ solved: true })
     }
 
