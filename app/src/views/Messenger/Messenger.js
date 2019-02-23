@@ -16,8 +16,7 @@ const styles = {}
 class Messenger extends Component {
   linesToParagraphs (...nodes) {
     return nodes
-      .map(node => typeof node === 'string' ?
-        node.split('\n').map(text => <p className='toast-message'>{text}</p>) : node)
+      .map(node => typeof node === 'string' ? node.split('\n').map(text => <p className='toast-message'>{text}</p>) : node)
       .reduce((nodes, node) => nodes.concat(node), [])
   }
   render () {

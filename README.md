@@ -146,6 +146,10 @@ module.exports = ProofOfWorkAssignmentJudge
 
 ## CLI Usage
 
+The CLI provides various functionalities to aid in the development of exercises without the need of API or APP deployment. Be aware that the CLI depends on the DBMS used by the course so any database instructions must be executed beforehand.
+
+### Usage
+
 ```
 node cli.js <command>
 
@@ -157,4 +161,13 @@ Commands:
 Options:
   --version  Show version number                                       [boolean]
   --help     Show help                                                 [boolean]
+```
+
+### Examples
+
+```
+node cli.js generate aux proof-of-work
+node cli.js generate aux proof-of-work --user.id=2 --user.username='foo'
+node cli.js judge proof-of-work --solution 'a_solution' --aux.public=2
+node cli.js judge simple-storage --solution=/Users/username/SimpleStorage.sol --file
 ```

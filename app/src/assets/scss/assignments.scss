@@ -1,0 +1,29 @@
+.assignment-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.assignment-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.assignment-material {
+  margin: 16px 0;
+
+  button {
+    padding-left: 0;
+    width: 100%;
+    align-items: center;
+    justify-content: flex-start;
+
+    svg {
+      margin-right: 15px;
+    }
+  }
+}
+
+.solved {
+  color: #4caf50;
+}

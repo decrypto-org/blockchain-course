@@ -8,18 +8,21 @@ import MenuIcon from '@material-ui/icons/Menu'
 import { withStyles } from '@material-ui/core/styles'
 import { Link } from 'react-router-dom'
 
-const styles = {
+const styles = (theme) => ({
   appBar: {
     zIndex: 10000
   },
   headerTitle: {
-    flex: 1
+    flex: 1,
+    '& a': {
+      color: theme.palette.primary.contrastText
+    }
   },
   menuButton: {
     marginLeft: -12,
     marginRight: 20
   }
-}
+})
 
 function Header ({ ...props }) {
   const { classes, Avatar } = props

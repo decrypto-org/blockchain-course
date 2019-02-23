@@ -1,5 +1,5 @@
 const BaseController = require('./BaseController')
-const { User, Assignment, ParameterizedAssignment, Solution, sequelize } = require('blockchain-course-db').models
+const { User, Assignment, ParameterizedAssignment } = require('blockchain-course-db').models
 
 module.exports = class UserController extends BaseController {
   constructor () {
@@ -7,7 +7,10 @@ module.exports = class UserController extends BaseController {
   }
 
   async getStatistics (user) {
-    const totalSolved = await Solution.count({ where: { studentId: user.id }, [sequelize.Op.and]: { solved: true } })
+    const totalSolved = await ParameterizedAssignment.count(
+      {
+        where: { studentId: user.id, solved: true }
+      })
     const totalAssignments = Assignment.findAll().length
 
     return { totalSolved, totalAssignments }
@@ -19,6 +22,6 @@ module.exports = class UserController extends BaseController {
     const user = req.user
     const statistics = await this.getStatistics(user)
 
-    res.json({ success: 200, user: { ...user, statistics } })
+    res.json({ success: 200, user: { ...user.dataValues, statistics } })
   }
 }

@@ -1,0 +1,33 @@
+
+.user-popover-wrapper {
+  min-width: 240px;
+}
+
+.user-popover-actions,
+.user-popover-content {
+  padding: 20px;
+}
+
+.user-popover-content {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  line-height: normal;
+}
+
+.user-info {
+  font-size: 13px;
+}
+
+.user-info .title {
+  font-weight: 700;
+}
+
+.user-info .sub-title {
+  color: #666;
+}
+
+.user-popover-actions {
+  display: flex;
+  justify-content: space-between;
+}

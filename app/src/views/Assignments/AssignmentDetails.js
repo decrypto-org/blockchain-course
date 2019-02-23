@@ -10,10 +10,20 @@ import CardActions from '@material-ui/core/CardActions'
 import Check from '@material-ui/icons/Check'
 import cx from 'classnames'
 import { sprintf } from 'sprintf-js'
+import { withStyles } from '@material-ui/core/styles'
 
 import FileIcon from '../../components/Item/FileIcon'
 
-export default class AssignmentDetails extends React.Component {
+const styles = theme => ({
+  materialButton: {
+    '&:hover, &.hover': {
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.primary.contrastText,
+    }
+  }
+})
+
+class AssignmentDetails extends React.Component {
   render () {
     const { classes } = this.props
     const assignment = this.props.item
@@ -30,7 +40,7 @@ export default class AssignmentDetails extends React.Component {
         </Typography>
         {
           assignment.files.map((file, index) =>
-            <Button onClick={() => this.props.dowloadFile(file.hash)} key={index}>
+            <Button onClick={() => this.props.dowloadFile(file.hash)} key={index} className={this.props.classes.materialButton}>
               <FileIcon type={file.fileType} />
               {`${file.title}.${file.fileType}`}
             </Button>
@@ -90,7 +100,7 @@ export default class AssignmentDetails extends React.Component {
                   <Input type='hidden' value={assignment.paramId} name='paramId' />
                 </CardContent>
                 <CardActions className='assignment-actions'>
-                  <Button type='submit' size='small'>Submit</Button>
+                  <Button type='submit' size='small' variant='outlined' color='secondary'>Submit</Button>
                   <div className={solvedClass}><Check /></div>
                 </CardActions>
               </form>
@@ -101,3 +111,5 @@ export default class AssignmentDetails extends React.Component {
     )
   }
 }
+
+export default withStyles(styles)(AssignmentDetails)

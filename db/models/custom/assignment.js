@@ -1,10 +1,26 @@
+const path = require('path')
+const logger = require('../../config/winston')
+const { loadAssignments } = require('../../helpers')
+const FileContainer = require('./FileContainer')
+
 const ASSIGNMENT_FOLDER = process.env.ASSIGNMENT_FOLDER || '../../assignments'
 
-const assignments = require(ASSIGNMENT_FOLDER)
-const _ = require('lodash')
-const path = require('path');
+const assignments = {}
+const validJudges = ['BaseJudge', 'SolidityJudge']
 
-const FileContainer = require('./FileContainer')
+loadAssignments(ASSIGNMENT_FOLDER, (file) => {
+  const assignment = require(file)
+
+  if (!(validJudges.includes(Object.getPrototypeOf(assignment.prototype.constructor).name))) {
+    logger.info('Skipping non-assignment', { file })
+    return
+  }
+  if (typeof assignment.metadata === 'undefined' || typeof assignment.metadata.name === 'undefined') {
+    logger.warn('Assignment ' + file + ' did not define metadata or name')
+    return
+  }
+  assignments[assignment.metadata.name] = assignment
+}, ['judge', 'solidity', '.git', 'node_modules'])
 
 class Assignment extends FileContainer {
   getResourceFolderPath() {

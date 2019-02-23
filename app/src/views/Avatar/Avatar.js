@@ -8,6 +8,7 @@ import IconButton from '@material-ui/core/IconButton'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import Popover from '@material-ui/core/Popover'
 import Divider from '@material-ui/core/Divider'
+import RingProgress from '../../components/Progress/Ring'
 
 import {
   userActions
@@ -48,11 +49,20 @@ class Avatar extends React.Component {
     this.props.actions.logout()
   }
 
+  getAssignmentProgress () {
+    if (!this.props.user.statistics) {
+      return 0
+    }
+
+    return Math.floor((this.props.user.statistics.totalSolved /
+    this.props.user.statistics.totalAssignments) * 100)
+  }
+
   render () {
     return (
       <div>
         {this.props.isAuthenticated ? (
-          <div>
+          <div className='header-toolbar'>
             <IconButton
               aria-owns={this.state.open ? 'menu-appbar' : null}
               aria-haspopup='true'
@@ -61,6 +71,7 @@ class Avatar extends React.Component {
             >
               <AccountCircle />
             </IconButton>
+            <RingProgress className='progress' radius={25} stroke={4} progress={this.getAssignmentProgress()} />
             <Popover
               id='menu-appbar'
               anchorEl={this.state.anchorEl}
@@ -93,7 +104,7 @@ class Avatar extends React.Component {
               </div>
             </Popover>
           </div>
-        ) : (<Button variant='outlined' color='inherit' to='/login' component={Link}>Login</Button>)
+        ) : (<Button variant='outlined' color='secondary' to='/login' component={Link}>Login</Button>)
         }
       </div>
     )
