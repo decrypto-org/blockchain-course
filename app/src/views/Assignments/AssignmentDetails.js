@@ -20,10 +20,26 @@ const styles = theme => ({
       backgroundColor: theme.palette.primary.main,
       color: theme.palette.primary.contrastText
     }
+  },
+  author: {
+    color: theme.palette.secondary.light
   }
 })
 
 class AssignmentDetails extends React.Component {
+  formatAuthors (authors) {
+    if (authors && authors.length > 0) {
+      if (authors.length === 1) {
+        return `Created by ${authors[0]}`
+      }
+
+      const last = authors.pop()
+      return `Created by ${authors.join(', ')}${authors.length === 1 ? '' : ','} and ${last}`
+    }
+
+    return null
+  }
+
   render () {
     const { classes } = this.props
     const assignment = this.props.item
@@ -105,6 +121,7 @@ class AssignmentDetails extends React.Component {
                 </CardActions>
               </form>
             </Card>
+            <span className={`author ${this.props.classes.author}`}>{this.formatAuthors(assignment.authors)}</span>
           </article>
         </Grid>
       </div>
