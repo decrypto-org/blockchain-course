@@ -1,9 +1,10 @@
+const _ = require('lodash')
 const path = require('path')
 const logger = require('../../config/winston')
 const { loadAssignments } = require('../../helpers')
 const FileContainer = require('./FileContainer')
 
-const ASSIGNMENT_FOLDER = process.env.ASSIGNMENT_FOLDER || '../../assignments'
+const ASSIGNMENT_FOLDER = process.env.ASSIGNMENT_FOLDER || path.resolve(__dirname, '../../assignments')
 
 const assignments = {}
 const validJudges = ['BaseJudge', 'SolidityJudge']
@@ -15,6 +16,7 @@ loadAssignments(ASSIGNMENT_FOLDER, (file) => {
     logger.info('Skipping non-assignment', { file })
     return
   }
+
   if (typeof assignment.metadata === 'undefined' || typeof assignment.metadata.name === 'undefined') {
     logger.warn('Assignment ' + file + ' did not define metadata or name')
     return
