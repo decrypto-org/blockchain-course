@@ -1,5 +1,7 @@
 const _ = require('lodash')
 const path = require('path')
+require('dotenv').config({ path: path.resolve(__dirname, '../../.env') })
+
 const logger = require('../../config/winston')
 const { loadAssignments } = require('../../helpers')
 const FileContainer = require('./FileContainer')

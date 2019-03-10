@@ -1,7 +1,8 @@
 const { mainCmdbuilder, printAndExit, constructTable } = require('../helpers')
-const { Assignment, User, sequelize, ParameterizedAssignment } = require('blockchain-course-db').models
 
 const getRanking = async (argv, order = 'ASC') => {
+  const { User, sequelize, ParameterizedAssignment } = require('blockchain-course-db').models
+
   let res = await ParameterizedAssignment.findAll({
     include: [{
       model: User,
@@ -26,6 +27,24 @@ const getRanking = async (argv, order = 'ASC') => {
   const table = constructTable(
     ['User ID', 'Username', 'Email', 'Total Solved'],
     res
+  )
+
+  return table.toString()
+}
+
+const getScore = async (argv) => {
+  const { ParameterizedAssignment } = require('blockchain-course-db').models
+  
+  const totalSolved = await ParameterizedAssignment.count(
+    {
+      where: { studentId: argv.id, solved: true }
+    }
+  )
+
+  const totalAssignments = Assignment.findAll().length
+  const table = constructTable(
+    ['User ID', 'Total Solved', 'Total Assignments'],
+    [[argv.id, totalSolved, totalAssignments]]
   )
 
   return table.toString()
@@ -57,18 +76,7 @@ const subCommands = {
     command: 'score <id>',
     desc: 'Get the score of a user',
     builder: {},
-    handler: async (argv) => {
-      const totalSolved = await ParameterizedAssignment.count(
-        {
-          where: { studentId: argv.id, solved: true }
-        })
-      const totalAssignments = Assignment.findAll().length
-      const table = constructTable(
-        ['User ID', 'Total Solved', 'Total Assignments'],
-        [[argv.id, totalSolved, totalAssignments]]
-      )
-      printAndExit(table.toString())
-    }
+    handler: async (argv) => printAndExit(await getScore(argv, 'DESC'))
   }
 }
 

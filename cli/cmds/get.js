@@ -1,5 +1,4 @@
 const { handleGetEntity, buildCommand } = require('../helpers')
-const { Assignment, User } = require('blockchain-course-db').models
 
 const commonOptions = {
   all: {
@@ -12,8 +11,8 @@ const commonOptions = {
 const getSubCommands = {
   options: { cmd: ':key [id]', desc: 'Get :key(s)' },
   entries: {
-    assignment: [Assignment, { ...commonOptions }, handleGetEntity],
-    user: [User, { ...commonOptions }, handleGetEntity]
+    assignment: ['Assignment', { ...commonOptions }, handleGetEntity],
+    user: ['User', { ...commonOptions }, handleGetEntity]
   }
 }
 

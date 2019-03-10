@@ -1,4 +1,3 @@
-const { sequelize } = require('blockchain-course-db').models
 const Table = require('cli-table3')
 const crypto = require('crypto')
 const fs = require('fs')
@@ -15,7 +14,7 @@ class ResourceNotFoundError extends Error {
 
 const printAndExit = (data, exitCode = 0) => {
   console.log(data)
-  sequelize.close()
+  process.exit(0)
 }
 
 const hashFile = (filePath) => {
@@ -90,7 +89,16 @@ const normalizeResponse = (res = []) => {
   ).toString()
 }
 
-const handleGetEntity = async (argv, Model, key) => {
+const handleGetEntity = async (argv, model, key) => {
+  let Model = null
+
+  if (model !== 'Assignment') {
+    let models = require('blockchain-course-db').models
+    Model = models[model]
+  } else {
+    Model = require('../db/models/custom/assignment')
+  }
+
   let data = null
 
   if (argv.all || !argv.id) {
@@ -116,7 +124,8 @@ const handleGetEntity = async (argv, Model, key) => {
   return normalizeResponse(data)
 }
 
-const handleAuxGeneration = (argv, Assignment, key) => {
+const handleAuxGeneration = (argv, model, key) => {
+  const Assignment = require('../db/models/custom/assignment')
   const assignment = Assignment.findByName(argv.id)
   _requireResourceFound(assignment)
   const assignmentJudge = new assignment.Judge()
@@ -152,7 +161,9 @@ const solutionMiddleware = async (argv) => {
   return argv
 }
 
-const handleJudgement = async (argv, Assignment) => {
+const handleJudgement = async (argv, model, key) => {
+  const Assignment = require('../db/models/custom/assignment')
+
   const assignment = Assignment.findByName(argv.id)
   _requireResourceFound(assignment)
 

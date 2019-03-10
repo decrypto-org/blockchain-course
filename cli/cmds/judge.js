@@ -1,5 +1,4 @@
 const { handleJudgement } = require('../helpers')
-const { Assignment } = require('blockchain-course-db').models
 
 const judgeOptions = {
   user: {
@@ -28,7 +27,7 @@ const cmd = {
   command: 'judge <id>',
   desc: 'Judge a solution for a specific assignment',
   builder: { ...judgeOptions },
-  handler: (argv) => handleJudgement(argv, Assignment)
+  handler: (argv) => handleJudgement(argv)
 }
 
 module.exports = cmd
