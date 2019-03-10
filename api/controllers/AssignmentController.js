@@ -1,4 +1,3 @@
-const _ = require('lodash')
 const logger = require('../config/winston')
 const OrderedDataController = require('./OrderedDataController')
 const Downloadable = require('./Downloadable')

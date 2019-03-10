@@ -7,7 +7,6 @@ import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
-import cx from 'classnames'
 
 import FileIcon from './FileIcon'
 
@@ -16,9 +15,9 @@ const styles = theme => ({
     '&:hover, &.hover': {
       backgroundColor: theme.palette.primary.main,
       color: theme.palette.primary.contrastText,
-        '& $textItem, & $icon': {
-          color: theme.palette.primary.contrastText,
-        }
+      '& $textItem, & $icon': {
+        color: theme.palette.primary.contrastText
+      }
     }
   },
   textItem: {},
@@ -47,7 +46,7 @@ function FileContent ({ ...props }) {
                   primary={subItem.title}
                   secondary={subItem.description}
                   className={classes.textItem}
-                  classes={{primary: classes.textItem, secondary: classes.textItem}}
+                  classes={{ primary: classes.textItem, secondary: classes.textItem }}
                 />
               </ListItem>
             ))

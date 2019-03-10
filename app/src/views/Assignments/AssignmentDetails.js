@@ -18,7 +18,7 @@ const styles = theme => ({
   materialButton: {
     '&:hover, &.hover': {
       backgroundColor: theme.palette.primary.main,
-      color: theme.palette.primary.contrastText,
+      color: theme.palette.primary.contrastText
     }
   }
 })
