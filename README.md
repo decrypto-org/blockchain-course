@@ -10,6 +10,8 @@ You can take the course online at
 
 ## Installation
 
+### Full
+
 This installation needs a database to function correctly. Any database will do.
 We provide here instructions for setting up and using
 [Postgres](https://www.postgresql.org/).
@@ -47,6 +49,14 @@ We provide here instructions for setting up and using
   accordingly. See more at
   [create-react-app](https://facebook.github.io/create-react-app/docs/adding-custom-environment-variables#what-other-env-files-can-be-used).
 - *Optional*: If you plan to develop Solidity exercises, install [ganache](https://truffleframework.com/ganache).
+
+### CLI (without database)
+
+Assignment creation and testing do not need a database management system (DBMS). Please note that CLI commands such as `get user` or `stats top` still need a DBMS and you should follow the [full installation instructions](#full).
+
+- `cd db & yarn link & yarn install`
+- `cd ../db/cli & yarn install && yarn link blockchain-course-db`
+
 
 ## Environment variables
 
@@ -130,9 +140,6 @@ module.exports = ProofOfWorkAssignmentJudge
 
 ## Development
 
-- Place the files of your assignment in `db/assignments/<assignment_name>/`.
-  Each assignment must be in its own directory and should contain a file named
-  `<assignment_name>.js` that exports the assignment.
 - `cd api && yarn start`
 - `cd app && yarn start`
 
@@ -146,7 +153,7 @@ module.exports = ProofOfWorkAssignmentJudge
 
 ## CLI Usage
 
-The CLI provides various functionalities to aid in the development of exercises without the need of API or APP deployment. Be aware that the CLI depends on the DBMS used by the course so any database instructions must be executed beforehand.
+The CLI provides various functionalities to aid in the development of exercises, without the need of API or APP deployment, and provide useful statistics. If only want to create and test assignments you do not need to install any DBMS.
 
 ### Usage
 
@@ -157,6 +164,7 @@ Commands:
   cli.js generate <command>  Generate <aux>
   cli.js get <command>       Get an entity <assignment>
   cli.js judge <id>          Judge a solution for a specific assignment
+  cli.js stats <command>     Get user stats <top|last|score>
 
 Options:
   --version  Show version number                                       [boolean]
