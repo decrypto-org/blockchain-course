@@ -1,5 +1,4 @@
 const { handleAuxGeneration, buildCommand } = require('../helpers')
-const { Assignment } = require('blockchain-course-db').models
 
 const userOptions = {
   user: {
@@ -10,15 +9,15 @@ const userOptions = {
 }
 
 const getSubCommands = {
-  options: { cmd: ':key <id>', desc: 'Generate an aux for a specific assignment' },
+  options: { cmd: ':key <assignment>', desc: 'Generate aux data for an assignment' },
   entries: {
-    aux: [Assignment, { ...userOptions }, handleAuxGeneration]
+    aux: ['Assignment', { ...userOptions }, handleAuxGeneration]
   }
 }
 
 const cmd = {
-  command: 'generate <command>',
-  desc: 'Generate <aux>'
+  command: 'generate aux <assignment>',
+  desc: 'Generate aux data for assignment <assignment>. Run cli.js generate aux --help for more information.'
 }
 
 module.exports = buildCommand(cmd, getSubCommands)
