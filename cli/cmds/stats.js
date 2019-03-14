@@ -62,27 +62,27 @@ const orderOptions = {
 const subCommands = {
   top: {
     command: 'top',
-    desc: 'Get top users',
+    desc: 'Get top users. You can specify the number of users you want to retrieve by specifing --number option. Run cli.js stats top --help for more information.',
     builder: { ...orderOptions },
     handler: async (argv) => printAndExit(await getRanking(argv, 'DESC'))
   },
   last: {
     command: 'last',
-    desc: 'Get last users',
+    desc: 'Get last users. You can specify the number of users you want to retrieve by specifing --number option. Run cli.js stats last --help for more information.',
     builder: { ...orderOptions },
     handler: async (argv) => printAndExit(await getRanking(argv, 'ASC'))
   },
   score: {
     command: 'score <id>',
-    desc: 'Get the score of a user',
+    desc: 'Get the score of a specific user given by id.',
     builder: {},
     handler: async (argv) => printAndExit(await getScore(argv, 'DESC'))
   }
 }
 
 module.exports = {
-  command: 'stats <command>',
-  desc: 'Get user stats <top|last|score>',
+  command: 'stats <top|last|score>',
+  desc: 'Print stats about users or the score of the specific user. Run cli.js stats --help for more information.',
   builder: (yargs) => mainCmdbuilder(yargs, subCommands),
   handler: (argv) => {}
 }

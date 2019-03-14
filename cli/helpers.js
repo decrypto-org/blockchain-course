@@ -126,7 +126,7 @@ const handleGetEntity = async (argv, model, key) => {
 
 const handleAuxGeneration = (argv, model, key) => {
   const Assignment = require('../db/models/custom/assignment')
-  const assignment = Assignment.findByName(argv.id)
+  const assignment = Assignment.findByName(argv.assignment)
   _requireResourceFound(assignment)
   const assignmentJudge = new assignment.Judge()
   const aux = assignmentJudge.formatAux(assignmentJudge.aux(argv.user, assignment))
