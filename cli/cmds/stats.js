@@ -34,7 +34,8 @@ const getRanking = async (argv, order = 'ASC') => {
 
 const getScore = async (argv) => {
   const { ParameterizedAssignment } = require('blockchain-course-db').models
-  
+  const Assignment = require('../../db/models/custom/assignment')
+
   const totalSolved = await ParameterizedAssignment.count(
     {
       where: { studentId: argv.id, solved: true }
