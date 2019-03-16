@@ -45,7 +45,9 @@ class AssignmentDetails extends React.Component {
     const assignment = this.props.item
     const solvedClass = cx('solved', { hidden: !assignment.solved })
 
-    assignment.description = sprintf(assignment.description, [assignment.aux])
+    const aux = assignment.aux ? assignment.aux : ''
+
+    assignment.description = sprintf(assignment.description, ...aux.split(','))
     let description = assignment.description.split('\n')
     let material
 
