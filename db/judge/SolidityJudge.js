@@ -4,6 +4,7 @@ const BaseJudge = require('./BaseJudge')
 const _ = require('lodash')
 
 const PROVIDER = process.env.PROVIDER || 'ws://localhost:7545'
+const TESTNET_PROVIDER = `wss://ropsten.infura.io/ws`
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 const EMPTY_UINT = '0x0000000000000000000000000000000000000000000000000000000000000000'
 
@@ -29,9 +30,12 @@ class FunctionalityError extends Error {
 }
 
 class SolidityJudge extends BaseJudge {
-  constructor (assignment, user) {
+  constructor (assignment, user, testnet = false) {
     super(assignment, user)
-    this.web3 = new Web3(new Web3.providers.WebsocketProvider(PROVIDER))
+
+    let provider = testnet ? TESTNET_PROVIDER : PROVIDER
+
+    this.web3 = new Web3(new Web3.providers.WebsocketProvider(provider))
   }
 
   static get ZERO_ADDRESS () {
