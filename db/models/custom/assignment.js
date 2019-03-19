@@ -14,6 +14,10 @@ const validJudges = ['BaseJudge', 'SolidityJudge']
 loadAssignments(ASSIGNMENT_FOLDER, (file) => {
   const assignment = require(file)
 
+  if (!assignment.prototype) {
+    return
+  }
+
   if (!(validJudges.includes(Object.getPrototypeOf(assignment.prototype.constructor).name))) {
     logger.info('Skipping non-assignment', { file })
     return
@@ -24,7 +28,7 @@ loadAssignments(ASSIGNMENT_FOLDER, (file) => {
     return
   }
   assignments[assignment.metadata.name] = assignment
-}, ['judge', 'solidity', '.git', 'node_modules'])
+}, ['judge', 'solidity', '.git', 'node_modules', 'migration', 'contracts', 'test', 'truffle-config.js'])
 
 class Assignment extends FileContainer {
   getResourceFolderPath() {

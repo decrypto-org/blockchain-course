@@ -18,7 +18,7 @@ const loadAssignments = (dirname, cb, exclude = []) => {
   return dirs.forEach(dir => {
     fs.readdirSync(path.join(dirname, dir))
       .filter(file => {
-        return (file.indexOf('.') !== 0) && (file.slice(-3) === '.js')
+        return (file.indexOf('.') !== 0) && (file.slice(-3) === '.js' && !exclude.includes(file))
       })
       .forEach(file => cb(path.join(dirname, dir, file)))
   })
