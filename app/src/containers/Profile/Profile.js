@@ -28,6 +28,12 @@ const styles = (theme) => ({
   },
   avatar: {
     background: theme.palette.secondary.main
+  },
+  grid: {
+    [theme.breakpoints.down('md')]: {
+      width: '100%',
+      margin: 0
+    }
   }
 })
 
@@ -49,7 +55,7 @@ class Profile extends Component {
       <div className='app user-profile'>
         <div className='icon close-icon'><Link to='/'><Close /></Link></div>
         <div className='user-profile-wrapper'>
-          <Grid container spacing={24}>
+          <Grid container spacing={24} className={this.props.classes.grid}>
             <Grid item xs={12} lg={9}>
               <header className={classNames('profile-header', this.props.classes.header)}>
                 <div className='profile-header-info'>
