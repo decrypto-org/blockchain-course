@@ -28,7 +28,9 @@ const types = [
   'LOGOUT_SUCCESS',
   'UNAUTHORIZED_ACTION',
   'REQUEST_STARTED',
-  'REQUEST_FINISHED'
+  'REQUEST_FINISHED',
+  'GET_TOP_USER',
+  'GET_TOP_USER_SUCCESS'
 ]
 
 const objTypes = buildActionTypes(types)
