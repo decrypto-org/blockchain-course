@@ -9,6 +9,10 @@
   justify-content: space-between;
 }
 
+.assignment {
+  width: 800px;
+}
+
 .assignment-material {
   margin: 16px 0;
 
@@ -26,4 +30,10 @@
 
 .solved {
   color: #4caf50;
+}
+
+@media all and (max-width: 1280px) {
+   .assignment {
+     width: 100%;
+   }
 }
