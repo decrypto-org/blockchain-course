@@ -18,7 +18,10 @@ const styles = theme => ({
     width: 240,
     paddingTop: 64,
     backgroundColor: '#e8e8e8',
-    border: 0
+    border: 0,
+    [theme.breakpoints.down('md')]: {
+      paddingTop: 5
+    }
   },
   menuItem: {
     '&:focus, &.active': {

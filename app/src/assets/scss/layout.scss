@@ -25,4 +25,11 @@
 .button-row {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+}
+
+@media all and (max-width: 1280px) {
+  .content-box-wrapper {
+    margin-left: 0;
+  }
 }
