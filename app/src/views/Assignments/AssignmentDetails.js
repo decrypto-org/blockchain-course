@@ -23,6 +23,12 @@ const styles = theme => ({
   },
   author: {
     color: theme.palette.secondary.light
+  },
+  root: {
+    maxWidth: '100%'
+  },
+  card: {
+    width: '100%'
   }
 })
 
@@ -71,13 +77,13 @@ class AssignmentDetails extends React.Component {
       <div>
         <Grid container className='assignment-wrapper'>
           <article className='content-box-wrapper assignment'>
-            <Card className={classes.card}>
+            <Card className={{ root: classes.root, card: classes.card }}>
               <form className={classes.container} noValidate autoComplete='off' action='post' onSubmit={this.props.submitSolution}>
                 <CardContent>
                   <Typography gutterBottom variant='headline' component='h2'>
                     {assignment.title}
                   </Typography>
-                  <Typography paragraph>
+                  <Typography paragraph className='description'>
                     {
                       description.map((el, index) => (
                         <span key={index}>

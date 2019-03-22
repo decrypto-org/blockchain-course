@@ -25,11 +25,11 @@ const styles = (theme) => ({
 })
 
 function Header ({ ...props }) {
-  const { classes, Avatar } = props
+  const { classes, Avatar, onMenuIconClick } = props
   return (
     <AppBar position='absolute' className={classes.appBar}>
       <Toolbar>
-        <IconButton className={classes.menuButton} color='inherit' aria-label='Menu'>
+        <IconButton className={classes.menuButton} color='inherit' aria-label='Menu' onClick={onMenuIconClick}>
           <MenuIcon />
         </IconButton>
         <Typography variant='title' color='inherit' className={cx(classes.headerTitle, 'header-link')}>

@@ -82,3 +82,23 @@
 .row-info-entry:not(:first-child) {
   margin-top: 20px;
 }
+
+@media all and (max-width: 1280px) {
+  .user-profile-wrapper {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .profile-row {
+    padding: 25px 15px 0 15px;
+    flex-wrap: wrap;
+  }
+
+  .profile-row .row-header {
+    flex: 1 0 100%;
+  }
+
+  .user-profile .close-icon {
+    right: 10px;
+  }
+}

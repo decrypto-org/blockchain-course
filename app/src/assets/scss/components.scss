@@ -120,3 +120,15 @@ a.jumpotron {
   display: block;
   margin-top: 10px;
 }
+
+@media all and (max-width: 1280px) {
+  .list {
+    flex-direction: column;
+  }
+
+  .list-item {
+    width: 90%;
+    margin-left: 0;
+    margin-bottom: 10px;
+  }
+}
