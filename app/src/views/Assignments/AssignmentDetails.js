@@ -1,10 +1,7 @@
 import React from 'react'
 import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
-import TextField from '@material-ui/core/TextField'
-import Input from '@material-ui/core/Input'
 import Button from '@material-ui/core/Button'
 import CardActions from '@material-ui/core/CardActions'
 import Check from '@material-ui/icons/Check'
@@ -12,6 +9,7 @@ import cx from 'classnames'
 import { sprintf } from 'sprintf-js'
 import { withStyles } from '@material-ui/core/styles'
 
+import SingleAssignment from './SingleAssignment'
 import FileIcon from '../../components/Item/FileIcon'
 
 const styles = theme => ({
@@ -46,19 +44,9 @@ class AssignmentDetails extends React.Component {
     return null
   }
 
-  render () {
-    const { classes } = this.props
-    const assignment = this.props.item
-    const solvedClass = cx('solved', { hidden: !assignment.solved })
-
-    const aux = assignment.aux ? assignment.aux : ''
-
-    assignment.description = sprintf(assignment.description, ...aux.split(','))
-    let description = assignment.description.split('\n')
-    let material
-
+  getMaterial (assignment) {
     if (assignment.files && assignment.files.length > 0) {
-      material = <div className='assignment-material'>
+      return <div className='assignment-material'>
         <Typography gutterBottom variant='headline' component='h2'>
             Material
         </Typography>
@@ -73,63 +61,50 @@ class AssignmentDetails extends React.Component {
       </div>
     }
 
+    return null
+  }
+
+  getDescription (assignment) {
+    const aux = assignment.aux ? assignment.aux : ''
+
+    assignment.description = sprintf(assignment.description, ...aux.split(','))
+    let description = assignment.description.split('\n')
+
+    return description.map((el, index) => (
+      <span key={index}>
+        {el}
+        <br />
+      </span>
+    ))
+  }
+
+  render () {
+    const { classes } = this.props
+    const assignment = this.props.item
+    console.log(assignment)
+    const solvedClass = cx('solved', { hidden: !assignment.solved })
+    classes.solvedClass = solvedClass
+
     return (
       <div>
         <Grid container className='assignment-wrapper'>
           <article className='content-box-wrapper assignment'>
-            <Card className={{ root: classes.root, card: classes.card }}>
+            <Card className={`${classes.root} ${classes.card}`}>
               <form className={classes.container} noValidate autoComplete='off' action='post' onSubmit={this.props.submitSolution}>
-                <CardContent>
-                  <Typography gutterBottom variant='headline' component='h2'>
-                    {assignment.title}
-                  </Typography>
-                  <Typography paragraph className='description'>
-                    {
-                      description.map((el, index) => (
-                        <span key={index}>
-                          {el}
-                          <br />
-                        </span>
-                      ))
-                    }
-                  </Typography>
-                  {material}
-                  <Typography gutterBottom variant='headline' component='h2'>
-                    Solution
-                  </Typography>
-                  {assignment.type !== 2
-                    ? (
-                      <TextField
-                        id='solution'
-                        fullWidth
-                        value={this.props.solution}
-                        onChange={this.props.handleInputChange}
-                        margin='normal'
-                        name='solution'
-                      />
-                    ) : (
-                      <TextField
-                        id='solution'
-                        name='solution'
-                        fullWidth
-                        multiline
-                        rows='6'
-                        variant='outlined'
-                        placeholder='Paste your solidity code here'
-                        value={this.props.solution}
-                        onChange={this.props.handleInputChange}
-                        margin='normal'
-                      />
-                    )}
-                  <Input type='hidden' value={assignment.paramId} name='paramId' />
-                </CardContent>
+                <SingleAssignment
+                  assignment={assignment}
+                  material={this.getMaterial(assignment)}
+                  desc={this.getDescription(assignment)}
+                  solution={this.props.solution}
+                  handleInputChange={this.props.handleInputChange}
+                />
                 <CardActions className='assignment-actions'>
                   <Button type='submit' size='small' variant='outlined' color='secondary'>Submit</Button>
                   <div className={solvedClass}><Check /></div>
                 </CardActions>
               </form>
             </Card>
-            <span className={`author ${this.props.classes.author}`}>{this.formatAuthors(assignment.authors)}</span>
+            <span className={`author ${classes.author}`}>{this.formatAuthors(assignment.authors)}</span>
           </article>
         </Grid>
       </div>
