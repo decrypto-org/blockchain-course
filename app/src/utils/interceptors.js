@@ -24,7 +24,7 @@ const setupInterceptors = (store) => {
     console.log(error)
     store.dispatch(requestFinish())
 
-    if (!error.hasOwnProperty('response')) {
+    if (error.response === undefined) {
       store.dispatch(notify(`Error: ${error.message}`))
       return Promise.reject(error)
     }
