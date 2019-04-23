@@ -1,4 +1,5 @@
 const solc = require('solc')
+const _ = require('lodash')
 const Web3 = require('web3')
 const BaseJudge = require('./BaseJudge')
 const _ = require('lodash')
@@ -18,7 +19,7 @@ class BlockchainConnectionError extends Error {
 class CompilationError extends Error {
   constructor (compilerErrors) {
     super()
-    this.message = compilerErrors.reduce((previous, current) => `${previous} \n ${current}`, `Contract compilation error!:`)
+    this.message = compilerErrors.reduce((previous, current) => `${previous} ${current.formattedMessage}`, `Contract compilation error!:`)
   }
 }
 
@@ -53,39 +54,68 @@ class SolidityJudge extends BaseJudge {
       throw new BlockchainConnectionError()
     }
 
-    const compiled = solc.compile(source, 1)
+    const input = {
+      language: 'Solidity',
+      sources: {
+        [`${name}.sol`]: {
+          content: source
+        }
+      },
+      settings: {
+        outputSelection: {
+          '*': {
+            '*': [ '*' ]
+          }
+        }
+      }
+    }
+
+    let compiled = solc.compile(JSON.stringify(input))
+    compiled = JSON.parse(compiled)
 
     if (compiled.errors && compiled.errors.length > 0) {
       throw new CompilationError(compiled.errors)
     }
 
-    const formattedName = ':' + name
-
-    if (compiled.contracts[formattedName] === undefined) {
-      throw new CompilationError([`Contract name should be ${name}`])
+    if (Object.keys(compiled.contracts[`${name}.sol`])[0] !== name) {
+      throw new CompilationError([{ formattedMessage: `Contract name should be ${name}` }])
     }
 
-    const ABI = JSON.parse(compiled.contracts[formattedName].interface)
-    const bytecode = compiled.contracts[formattedName].bytecode
-    const contract = new this.web3.eth.Contract(ABI)
+    const compiledContract = compiled.contracts[`${name}.sol`][name]
+    const contractMethods = _.chain(compiledContract.abi).filter({ type: 'function' }).map('name').value()
+    const contractEvents = _.chain(compiledContract.abi).filter({ type: 'event' }).map('name').value()
 
-    if (!this.contractHas(contract.methods, props.methods)) {
+    if (!this.contractHas(contractMethods, props.methods)) {
       throw new FunctionalityError(`Contract methods are missing!. Expecting: ${JSON.stringify(props.methods)}`)
     }
 
-    if (!this.contractHas(contract.events, props.events)) {
+    if (!this.contractHas(contractEvents, props.events)) {
       throw new FunctionalityError(`Contract events are missing!. Expecting: ${JSON.stringify(props.events)}`)
     }
 
+    const ABI = compiledContract.abi
+    const bytecode = compiledContract.evm.bytecode.object
+    const contract = new this.web3.eth.Contract(ABI)
+
     const accounts = await this.web3.eth.getAccounts()
 
-    const instance = await contract
-      .deploy({ data: bytecode, arguments: props.args })
-      .send({ from: accounts[0], gas: 1000000 })
-
+    const instance = await this._deploy(contract, ABI, bytecode, accounts[0], props.args)
     this.contractInstance = instance
-
     return instance
+  }
+
+  _deploy (contract, ABI, data, from, args) {
+    return new Promise(async (resolve, reject) => {
+      contract
+        .deploy({ data, arguments: args })
+        .send({ from, gas: 2000000 })
+        .on('receipt', (receipt) => {
+          const instance = new this.web3.eth.Contract(ABI, receipt.contractAddress)
+          this.contractInstance = instance
+          resolve(instance)
+        })
+        .on('error', reject)
+    })
   }
 
   async getAccounts () {
@@ -94,25 +124,21 @@ class SolidityJudge extends BaseJudge {
   }
 
   contractHas (type, values) {
-    return _.difference(
-      values,
-      Object.keys(type)
-    )
-      .length === 0
+    return values.every(item => type.includes(item))
   }
 
   // https://github.com/OpenZeppelin/openzeppelin-solidity
 
   async balanceDifferenceOfAction (account, promise, args) {
     const balanceBefore = await this.web3.eth.getBalance(account)
-    const tx = await promise({ ...args })
+    const tx = await this.promisifyTx(promise, { ...args })
     const balanceAfter = await this.web3.eth.getBalance(account)
     const diff = this.getDiff(balanceBefore, balanceAfter)
     return { diff, tx }
   }
 
   getDiff (a, b) {
-    return (new this.web3.utils.BN(a)).sub(new this.web3.utils.BN(b))
+    return (this.toBN(a)).sub(this.toBN(b))
   }
 
   async txWithoutGas (ammount, gas) {
@@ -121,7 +147,7 @@ class SolidityJudge extends BaseJudge {
   }
 
   sendEther (from, to, value) {
-    return this.web3.eth.sendTransaction({
+    return this.promisifyTx(this.web3.eth.sendTransaction, {
       from: from,
       to: to,
       value: value,
@@ -130,7 +156,7 @@ class SolidityJudge extends BaseJudge {
   }
 
   ether (n) {
-    return new this.web3.utils.BN(this.web3.utils.toWei(n.toString(), 'ether'))
+    return this.toBN(this.web3.utils.toWei(n.toString(), 'ether'))
   }
 
   toBN (num) {
@@ -139,6 +165,20 @@ class SolidityJudge extends BaseJudge {
 
   hash (...args) {
     return this.web3.utils.soliditySha3(...args)
+  }
+
+  promisifyTx (tx, args) {
+    return new Promise((resolve, reject) => {
+      tx({ ...args })
+        .on('confirmation', (confNumber, receipt) => {
+          if (confNumber >= 1) {
+            resolve(receipt)
+          }
+        })
+        .on('error', (err) => {
+          reject(err)
+        })
+    })
   }
 }
 
