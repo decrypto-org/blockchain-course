@@ -19,9 +19,19 @@ const mapJSFiles = (dirname, mapFn, exclude = []) => {
 
 const classMixin = (A, B) => class A extends B {}
 
+const serialize = (msg) => {
+  return JSON.stringify(msg)
+}
+
+const unserialize = (msg) => {
+  return JSON.parse(msg)
+}
+
 module.exports = {
   isString,
   inPath,
   mapJSFiles,
-  classMixin
+  classMixin,
+  serialize,
+  unserialize
 }
