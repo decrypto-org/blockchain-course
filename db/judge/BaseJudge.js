@@ -85,4 +85,6 @@ BaseJudge.difficulty= {
   HARD: 3
 }
 
+BaseJudge.isAsync = false
+
 module.exports = BaseJudge

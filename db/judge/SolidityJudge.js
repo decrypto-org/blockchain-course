@@ -142,4 +142,6 @@ class SolidityJudge extends BaseJudge {
   }
 }
 
+SolidityJudge.isAsync = true
+
 module.exports = SolidityJudge

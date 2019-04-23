@@ -3,6 +3,7 @@ const OrderedDataController = require('./OrderedDataController')
 const Downloadable = require('./Downloadable')
 const { classMixin } = require('../utils/helpers')
 const { Assignment, ParameterizedAssignment, Solution } = require('blockchain-course-db').models
+const { appEmitterBus } = require('../emitters.js')
 
 module.exports = class AssignmentController extends classMixin(OrderedDataController, Downloadable) {
   constructor () {
@@ -64,12 +65,9 @@ module.exports = class AssignmentController extends classMixin(OrderedDataContro
     /* throws an HTTPError if the resource is not found */
     this.requireResourceFound(assignment)
 
-    const judge = new assignment.Judge(assignment.judge, req.user)
-
     const solution = req.body.solution
-    const paramId = req.body.paramId
 
-    const parameterizedAssignment = await ParameterizedAssignment.findById(paramId)
+    const parameterizedAssignment = await ParameterizedAssignment.findById(req.body.paramId)
 
     /* throws an HTTPError if the resource is not found */
     this.requireResourceFound(parameterizedAssignment)
@@ -79,54 +77,68 @@ module.exports = class AssignmentController extends classMixin(OrderedDataContro
       private: parameterizedAssignment.dataValues.auxPrivate
     }
 
+    return this.processSolution({ req, res, aux, assignment, solution, parameterizedAssignment })
+  }
+
+  async evaluateSolution (params, correct, incorrect) {
+    const { req, aux, assignment, solution, parameterizedAssignment } = params
     let judgement = { grade: 0, msg: 'Wrong! Please try again.' }
+    const judge = new assignment.Judge(assignment.judge, req.user)
 
     try {
       judgement = await judge.judge(aux, req.user, assignment.Judge, solution)
-      const [solutionModel] = await Solution.findOrCreate(
-        {
-          where: { studentId: req.user.id, parameterizedAssignmentId: paramId },
-          defaults: {
-            studentId: req.user.id,
-            parameterizedAssignmentId: paramId
-          }
-        }
-      )
-
-      if (!parameterizedAssignment.dataValues.solved) {
-        await solutionModel.update({ data: solution })
-      }
+      await this.updateSolution(req, parameterizedAssignment, solution)
+      await this.updateSolved(judgement, parameterizedAssignment)
+      correct(judgement)
     } catch (e) {
-      logger.error(`${e.constructor.name}: ${e.message}`)
-      const errorType = e.constructor.name
-
-      if (
-        errorType === 'CompilationError' ||
-        errorType === 'AssertionError' ||
-        errorType === 'MissingMethodError'
-      ) {
-        return res.status(200).send(
-          {
-            code: 200, judgement: { grade: 0, msg: e.message }
-          }
-        )
-      }
-
-      return res.status(500).send(
-        {
-          error: { code: 500, message: e.message }
-        }
-      )
+      logger.error(e)
+      incorrect(e)
     }
+  }
 
-    if (judgement.grade > 0 && !parameterizedAssignment.dataValues.solved) {
+  async processSolution (params) {
+    if (params.assignment.Judge.isAsync) {
+      params.res.status(202).send({ code: 202, judgement: { grade: 0, msg: 'Solution is being processed. Please wait!' } })
+      await this.evaluateSolution(
+        params,
+        judgement => {
+          appEmitterBus.emit('solution-judgement-available', { ...judgement })
+        },
+        err => {
+          let judgement = { grade: 0, msg: err.message }
+          appEmitterBus.emit('solution-judgement-available', { ...judgement })
+        })
+    } else {
+      await this.evaluateSolution(
+        params,
+        judgement => {
+          params.res.status(200).send({ success: true, judgement })
+        },
+        err => {
+          params.res.status(500).send({ error: { code: 500, message: err.message } })
+        })
+    }
+  }
+
+  async updateSolution (req, parameterizedAssignment, solution) {
+    const [solutionModel] = await Solution.findOrCreate(
+      {
+        where: { studentId: req.user.id, parameterizedAssignmentId: req.body.paramId },
+        defaults: {
+          studentId: req.user.id,
+          parameterizedAssignmentId: req.body.paramId
+        }
+      }
+      )
+
+    if (!parameterizedAssignment.dataValues.solved) {
+      await solutionModel.update({ data: solution })
+    }
+  }
+
+  async updateSolved (judgement, parameterizedAssignment) {
+    if (judgement && judgement.grade && judgement.grade > 0 && !parameterizedAssignment.dataValues.solved) {
       await parameterizedAssignment.update({ solved: true })
     }
-
-    return res.status(200).send(
-      {
-        success: true, judgement
-      }
-    )
   }
 }
