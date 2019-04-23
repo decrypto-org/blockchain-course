@@ -81,7 +81,6 @@ class AssignmentDetails extends React.Component {
   render () {
     const { classes } = this.props
     const assignment = this.props.item
-    console.log(assignment)
     const solvedClass = cx('solved', { hidden: !assignment.solved })
     classes.solvedClass = solvedClass
 
