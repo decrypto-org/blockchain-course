@@ -2,7 +2,6 @@ const solc = require('solc')
 const _ = require('lodash')
 const Web3 = require('web3')
 const BaseJudge = require('./BaseJudge')
-const _ = require('lodash')
 
 const PROVIDER = process.env.PROVIDER || 'ws://localhost:7545'
 const TESTNET_PROVIDER = `wss://ropsten.infura.io/ws`

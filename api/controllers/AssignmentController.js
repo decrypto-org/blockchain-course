@@ -128,8 +128,7 @@ module.exports = class AssignmentController extends classMixin(OrderedDataContro
           studentId: req.user.id,
           parameterizedAssignmentId: req.body.paramId
         }
-      }
-      )
+      })
 
     if (!parameterizedAssignment.dataValues.solved) {
       await solutionModel.update({ data: solution })
