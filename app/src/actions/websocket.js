@@ -1,10 +1,11 @@
 /* global WebSocket */
 import types from './actionTypes'
+import { store } from '../store'
 
 const URI = process.env.REACT_APP_WS || 'ws://localhost:3000'
-const webSocket = new WebSocket(URI)
+let webSocket = null
 
-let pingTimeout
+let pingTimeout = null
 
 const heartbeat = () => {
   clearTimeout(pingTimeout)
@@ -14,7 +15,13 @@ const heartbeat = () => {
   }, 30000 + 1000) // 30 seconds
 }
 
-const initWebsocket = (store) => {
+const check = () => {
+  if (!webSocket || webSocket.readyState === WebSocket.CLOSED) initWebsocket()
+}
+
+const initWebsocket = () => {
+  webSocket = new WebSocket(URI)
+
   webSocket.onmessage = (event) => {
     const data = JSON.parse(event.data)
 
@@ -33,7 +40,9 @@ const initWebsocket = (store) => {
   }
   webSocket.onclose = () => {
     console.log(` Ws: Disconnected from server`)
+    webSocket = null
     clearTimeout(pingTimeout)
+    check()
   }
 }
 
