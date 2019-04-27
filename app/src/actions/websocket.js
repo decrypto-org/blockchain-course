@@ -1,26 +1,20 @@
-/* global WebSocket */
 import types from './actionTypes'
 import { store } from '../store'
+import ReconnectingWebSocket from 'reconnecting-websocket'
 
 const URI = process.env.REACT_APP_WS || 'ws://localhost:3000'
-let webSocket = null
-
 let pingTimeout = null
 
-const heartbeat = () => {
+const heartbeat = (ws) => {
   clearTimeout(pingTimeout)
 
   pingTimeout = setTimeout(() => {
-    webSocket.close()
+    ws.close()
   }, 30000 + 1000) // 30 seconds
 }
 
-const check = () => {
-  if (!webSocket || webSocket.readyState === WebSocket.CLOSED) initWebsocket()
-}
-
 const initWebsocket = () => {
-  webSocket = new WebSocket(URI)
+  const webSocket = new ReconnectingWebSocket(URI)
 
   webSocket.onmessage = (event) => {
     const data = JSON.parse(event.data)
@@ -36,19 +30,15 @@ const initWebsocket = () => {
 
   webSocket.onopen = () => {
     console.log(` Ws: Connected to ${URI}`)
-    heartbeat()
+    heartbeat(webSocket)
   }
+
   webSocket.onclose = () => {
     console.log(` Ws: Disconnected from server`)
-    webSocket = null
     clearTimeout(pingTimeout)
-    check()
   }
 }
 
-const emit = (type, payload) => webSocket.send(JSON.stringify({ type, payload }))
-
 export {
-  initWebsocket,
-  emit
+  initWebsocket
 }
