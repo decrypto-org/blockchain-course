@@ -5,7 +5,7 @@ const HTTPErrorHandler = (err, req, res, next) => {
     return res.status(err.statusCode).json({
       error: {
         code: err.statusCode,
-        msg: err.message
+        message: err.message
       }
     })
   }
