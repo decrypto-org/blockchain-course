@@ -2,8 +2,9 @@ const logger = require('../config/winston')
 const OrderedDataController = require('./OrderedDataController')
 const Downloadable = require('./Downloadable')
 const { classMixin } = require('../utils/helpers')
-const { Assignment, ParameterizedAssignment, Solution } = require('blockchain-course-db').models
+const { Assignment, ParameterizedAssignment, Solution, Sequelize } = require('blockchain-course-db').models
 const { appEmitterBus } = require('../emitters.js')
+const { HTTPError } = require('../errors')
 
 module.exports = class AssignmentController extends classMixin(OrderedDataController, Downloadable) {
   constructor () {
@@ -92,6 +93,10 @@ module.exports = class AssignmentController extends classMixin(OrderedDataContro
       correct(judgement)
     } catch (e) {
       logger.error(e)
+      if (e instanceof Sequelize.Error) {
+        throw new HTTPError(500, `Server error: ${e.message}`)
+      }
+
       incorrect(e)
     }
   }
