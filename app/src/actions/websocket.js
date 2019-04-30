@@ -25,7 +25,8 @@ const initWebsocket = () => {
       return
     }
 
-    store.dispatch({ type: types.OPEN_TOAST, payload: { message: data.judgement.msg } })
+    const message = { title: data.judgement.assignment.title, content: data.judgement.msg }
+    store.dispatch({ type: types.OPEN_TOAST, payload: { message } })
   }
 
   webSocket.onopen = () => {
