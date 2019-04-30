@@ -25,7 +25,7 @@ const setupInterceptors = (store) => {
     store.dispatch(requestFinish())
 
     if (error.response === undefined) {
-      store.dispatch(notify(`Error: ${error.message}`))
+      store.dispatch(notify({ title: 'Error', content: error.message }))
       return Promise.reject(error)
     }
 
@@ -35,16 +35,16 @@ const setupInterceptors = (store) => {
 
     if (error.response.data && error.response.data.error) {
       const e = error.response.data.error
-      store.dispatch(notify(e.message))
+      store.dispatch(notify({ title: 'Error', content: e.message }))
       return Promise.reject(error)
     }
 
     if (error.response.status === 404) {
-      store.dispatch(notify('404! The page you are looking for can\'t be found'))
+      store.dispatch(notify({ content: '404! The page you are looking for can\'t be found' }))
     }
 
     if (error.response.status === 500) {
-      store.dispatch(notify(`Request failed with status code 500: ${error.message}`))
+      store.dispatch(notify({ content: `Request failed with status code 500: ${error.message}` }))
     }
 
     return Promise.reject(error)
