@@ -18,7 +18,7 @@ const Assignments = withList(CardListItem, 'assignments', { getList: fetchAssign
 class AssignmentsList extends React.Component {
   componentDidMount () {
     if (!this.props.isAuthenticated) {
-      this.props.actions.notify('Unauthorized action! Please login.')
+      this.props.actions.notify({ content: 'Unauthorized action! Please login.' })
     }
   }
 

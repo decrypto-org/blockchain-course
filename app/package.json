@@ -39,6 +39,7 @@
     "react-router-redux": "^4.0.8",
     "react-scripts": "2.1.8",
     "react-spinners": "^0.4.7",
+    "reconnecting-websocket": "^4.1.10",
     "redux": "^4.0.0",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",

@@ -16,31 +16,31 @@ const SingleAssignment = ({ assignment, material, desc, solution, handleInputCha
       {material}
       <Typography gutterBottom variant='headline' component='h2'>
                     Solution
-                  </Typography>
+      </Typography>
       {assignment.type !== 2
-                    ? (
-                      <TextField
-                        id='solution'
-                        fullWidth
-                        value={solution}
-                        onChange={handleInputChange}
-                        margin='normal'
-                        name='solution'
-                      />
-                    ) : (
-                      <TextField
-                        id='solution'
-                        name='solution'
-                        fullWidth
-                        multiline
-                        rows='6'
-                        variant='outlined'
-                        placeholder='Paste your solidity code here'
-                        value={solution}
-                        onChange={handleInputChange}
-                        margin='normal'
-                      />
-                    )}
+        ? (
+          <TextField
+            id='solution'
+            fullWidth
+            value={solution}
+            onChange={handleInputChange}
+            margin='normal'
+            name='solution'
+          />
+        ) : (
+          <TextField
+            id='solution'
+            name='solution'
+            fullWidth
+            multiline
+            rows='6'
+            variant='outlined'
+            placeholder='Paste your solidity code here'
+            value={solution}
+            onChange={handleInputChange}
+            margin='normal'
+          />
+        )}
       <Input type='hidden' value={assignment.paramId} name='paramId' />
     </CardContent>
   )

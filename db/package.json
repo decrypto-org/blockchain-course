@@ -31,14 +31,14 @@
     "pg": "^7.4.3",
     "sequelize": "^4.39.0",
     "sequelize-cli": "^4.1.1",
-    "solc": "^0.4.25",
-    "web3": "^1.0.0-beta.36",
+    "solc": "^0.5.7",
+    "web3": "^1.0.0-beta.52",
     "winston": "^3.1.0"
   },
   "devDependencies": {
-    "standard": "^12.0.1",
     "nodemon": "^1.17.5",
-    "run.env": "^1.0.1"
+    "run.env": "^1.0.1",
+    "standard": "^12.0.1"
   },
   "standard": {
     "ignore": [

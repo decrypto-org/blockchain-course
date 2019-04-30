@@ -12,6 +12,7 @@ const cors = require('cors')
 const session = require('express-session')
 const { loginRequired } = require('./middlewares/authentication')
 const { HTTPErrorHandler } = require('./middlewares/error')
+const { setupWss } = require('./ws-server.js')
 
 ;(async () => {
   app.set('trust proxy', '127.0.0.1')
@@ -20,7 +21,7 @@ const { HTTPErrorHandler } = require('./middlewares/error')
   app.use(bodyParser.json())
   app.use(bodyParser.urlencoded({ extended: true }))
 
-  app.use(session({
+  const sessionMiddleware = session({
     secret: process.env.APP_SECRET || 'blockchain course default session secret',
     resave: false,
     saveUninitialized: false,
@@ -28,7 +29,9 @@ const { HTTPErrorHandler } = require('./middlewares/error')
       httpOnly: false,
       secure: false
     }
-  }))
+  })
+
+  app.use(sessionMiddleware)
   app.use(passport.initialize())
   app.use(passport.session())
 
@@ -40,7 +43,10 @@ const { HTTPErrorHandler } = require('./middlewares/error')
 
   app.use(HTTPErrorHandler)
 
-  app.listen(LISTEN_PORT, () => {
+  const server = app.listen(LISTEN_PORT, () => {
     logger.info('Blockchain Course API server running on port %d', LISTEN_PORT)
   })
+
+  setupWss(server, sessionMiddleware)
+  process.on('warning', e => console.warn(e.stack))
 })()

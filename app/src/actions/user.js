@@ -15,7 +15,7 @@ const logout = () => {
 const unauthorize = () => {
   return dispatch => {
     dispatch({ type: types.UNAUTHORIZED_ACTION, payload: {} })
-    dispatch(notify('Unauthorized action! Please login.'))
+    dispatch(notify({ content: 'Unauthorized action! Please login.' }))
     dispatch(logout())
   }
 }

@@ -64,7 +64,7 @@ class Assignment extends React.Component {
 
     this.props.actions.submitSolution({ id: this.props.match.params.id }, objData)
       .then((res) => {
-        this.props.actions.notify(res.judgement.msg)
+        this.props.actions.notify({ content: res.judgement.msg })
       })
   }
 

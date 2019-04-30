@@ -14,6 +14,12 @@ import {
 const styles = {}
 
 class Messenger extends Component {
+  formatMessage (message) {
+    const title = message.title ? <b>{message.title}:</b> : null
+    const content = message.content ? this.linesToParagraphs(message.content) : null
+    return <span>{title} {content}</span>
+  }
+
   linesToParagraphs (...nodes) {
     return nodes
       .map(node => typeof node === 'string' ? node.split('\n').map(text => <p className='toast-message'>{text}</p>) : node)
@@ -24,7 +30,7 @@ class Messenger extends Component {
       <Snackbar
         open={this.props.notification.open}
         onClose={this.props.actions.closeToast}
-        message={this.linesToParagraphs(this.props.notification.message)}
+        message={this.formatMessage(this.props.notification.message)}
         action={[
           <IconButton
             key='close'

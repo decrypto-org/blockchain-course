@@ -78,11 +78,13 @@ BaseJudge.type = {
   CONTRACT: 2
 }
 
-BaseJudge.difficulty= {
+BaseJudge.difficulty = {
   VERY_EASY: 0,
   EASY: 1,
   MEDIUM: 2,
   HARD: 3
 }
+
+BaseJudge.isAsync = false
 
 module.exports = BaseJudge
