@@ -128,9 +128,9 @@ class SolidityJudge extends BaseJudge {
 
   // https://github.com/OpenZeppelin/openzeppelin-solidity
 
-  async balanceDifferenceOfAction (account, promise, args) {
+  async balanceDifferenceOfAction (account, promise) {
     const balanceBefore = await this.web3.eth.getBalance(account)
-    const tx = await this.ensureConfirmed(promise, { ...args })
+    const tx = await promise
     const balanceAfter = await this.web3.eth.getBalance(account)
     const diff = this.getDiff(balanceBefore, balanceAfter)
     return { diff, tx }
