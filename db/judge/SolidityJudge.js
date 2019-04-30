@@ -130,7 +130,7 @@ class SolidityJudge extends BaseJudge {
 
   async balanceDifferenceOfAction (account, promise, args) {
     const balanceBefore = await this.web3.eth.getBalance(account)
-    const tx = await this.promisifyTx(promise, { ...args })
+    const tx = await this.ensureConfirmed(promise, { ...args })
     const balanceAfter = await this.web3.eth.getBalance(account)
     const diff = this.getDiff(balanceBefore, balanceAfter)
     return { diff, tx }
@@ -146,7 +146,7 @@ class SolidityJudge extends BaseJudge {
   }
 
   sendEther (from, to, value) {
-    return this.promisifyTx(this.web3.eth.sendTransaction, {
+    return this.ensureConfirmed(this.web3.eth.sendTransaction, {
       from: from,
       to: to,
       value: value,
@@ -166,11 +166,11 @@ class SolidityJudge extends BaseJudge {
     return this.web3.utils.soliditySha3(...args)
   }
 
-  promisifyTx (tx, args) {
+  ensureConfirmed (tx, args, times = 1) {
     return new Promise((resolve, reject) => {
       tx({ ...args })
         .on('confirmation', (confNumber, receipt) => {
-          if (confNumber >= 1) {
+          if (confNumber >= times) {
             resolve(receipt)
           }
         })
