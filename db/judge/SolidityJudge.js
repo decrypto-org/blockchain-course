@@ -179,6 +179,22 @@ class SolidityJudge extends BaseJudge {
         })
     })
   }
+
+  send (method, methodArgs = [], txArgs = {}) {
+    if (_.isEmpty(this.contractInstance.methods[method])) {
+      throw new Error('Method is not defined!')
+    }
+
+    return this.ensureConfirmed(this.contractInstance.methods[method](...methodArgs).send, { ...txArgs })
+  }
+
+  call (method, methodArgs = [], txArgs = {}) {
+    if (_.isEmpty(this.contractInstance.methods[method])) {
+      throw new Error('Method is not defined!')
+    }
+
+    return this.contractInstance.methods[method](...methodArgs).call({ ...txArgs })
+  }
 }
 
 SolidityJudge.isAsync = true
