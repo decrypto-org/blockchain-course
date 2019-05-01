@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     const {User, Assignment} = require('.')
 
     const assignment = Assignment.findByName(parameterizedAssignment.assignmentName)
-    const user = await User.findById(parameterizedAssignment.studentId)
+    const user = await User.findByPk(parameterizedAssignment.studentId)
 
     const assignmentJudge = new assignment.Judge()
 

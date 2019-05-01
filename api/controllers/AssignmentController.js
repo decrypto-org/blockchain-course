@@ -68,7 +68,7 @@ module.exports = class AssignmentController extends classMixin(OrderedDataContro
 
     const solution = req.body.solution
 
-    const parameterizedAssignment = await ParameterizedAssignment.findById(req.body.paramId)
+    const parameterizedAssignment = await ParameterizedAssignment.findByPk(req.body.paramId)
 
     /* throws an HTTPError if the resource is not found */
     this.requireResourceFound(parameterizedAssignment)

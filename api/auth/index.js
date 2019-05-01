@@ -10,7 +10,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (id, done) => {
   winston.log('debug', 'Deserializing user', { id })
-  done(null, await User.findById(id))
+  done(null, await User.findByPk(id))
 })
 
 passport.use(GitHubStrategy)

@@ -116,7 +116,7 @@ const handleGetEntity = async (argv, model, key) => {
   }
 
   console.log(`[*] Getting ${key}...`)
-  data = await Model.findById(argv.id)
+  data = await Model.findByPk(argv.id)
   _requireResourceFound(data)
   console.log(`[*] Done!`)
   data = [data]

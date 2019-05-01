@@ -34,7 +34,7 @@ class Assignment extends FileContainer {
     return path.resolve(ASSIGNMENT_FOLDER, this.metadata.name)
   }
 
-  static findById (id, options = {}) {
+  static findByPk (id, options = {}) {
     return Assignment.findByName(id, options)
   }
 

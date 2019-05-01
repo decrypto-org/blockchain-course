@@ -33,7 +33,7 @@ module.exports = class BaseController extends AbstractController {
    *
    */
   async read (req, res, id) {
-    const data = await this.model.findById(id)
+    const data = await this.model.findByPk(id)
 
     /* throws an HTTPError if the resource is not found */
     this.requireResourceFound(data)
