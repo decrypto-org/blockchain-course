@@ -81,7 +81,7 @@ module.exports = class AssignmentController extends classMixin(OrderedDataContro
     return this.processSolution({ req, res, aux, assignment, solution, parameterizedAssignment })
   }
 
-  async evaluateSolution (params, correct, incorrect) {
+  async evaluateSolution (params) {
     const { req, aux, assignment, solution, parameterizedAssignment } = params
     let judgement = { grade: 0, msg: 'Wrong! Please try again.' }
     const judge = new assignment.Judge(assignment.judge, req.user)
@@ -90,14 +90,14 @@ module.exports = class AssignmentController extends classMixin(OrderedDataContro
       judgement = await judge.judge(aux, req.user, assignment.Judge, solution)
       await this.updateSolution(req, parameterizedAssignment, solution)
       await this.updateSolved(judgement, parameterizedAssignment)
-      correct(judgement)
+      return judgement
     } catch (e) {
       logger.error(e)
       if (e instanceof Sequelize.Error) {
         throw new HTTPError(500, `Server error: ${e.message}`)
       }
 
-      incorrect(e)
+      throw e
     }
   }
 
@@ -106,24 +106,20 @@ module.exports = class AssignmentController extends classMixin(OrderedDataContro
       const assignmentDescription = { name: params.assignment.metadata.name, title: params.assignment.metadata.title }
       params.res.status(202).send({ code: 202, judgement: { grade: 0, msg: 'Solution is being processed. Please wait!' } })
 
-      await this.evaluateSolution(
-        params,
-        judgement => {
-          appEmitterBus.emit('solution-judgement-available', { ...judgement, assignment: assignmentDescription })
-        },
-        err => {
-          let judgement = { grade: 0, msg: err.message }
-          appEmitterBus.emit('solution-judgement-available', { ...judgement, assignment: assignmentDescription })
-        })
+      try {
+        let judgement = await this.evaluateSolution(params)
+        appEmitterBus.emit('solution-judgement-available', { ...judgement, assignment: assignmentDescription })
+      } catch (err) {
+        let judgement = { grade: 0, msg: err.message }
+        appEmitterBus.emit('solution-judgement-available', { ...judgement, assignment: assignmentDescription })
+      }
     } else {
-      await this.evaluateSolution(
-        params,
-        judgement => {
-          params.res.status(200).send({ success: true, judgement })
-        },
-        err => {
-          params.res.status(500).send({ error: { code: 500, message: err.message } })
-        })
+      try {
+        const judgement = await this.evaluateSolution(params)
+        params.res.status(200).send({ success: true, judgement })
+      } catch (err) {
+        params.res.status(500).send({ error: { code: 500, message: err.message } })
+      }
     }
   }
 
