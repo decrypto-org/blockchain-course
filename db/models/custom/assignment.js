@@ -23,7 +23,7 @@ loadAssignments(ASSIGNMENT_FOLDER, (file) => {
   }
 
   if (!(validJudges.includes(Object.getPrototypeOf(assignment.prototype.constructor).name))) {
-    logger.info('Skipping non-assignment', { file })
+    logger.debug('Skipping non-assignment', { file })
     return
   }
 
