@@ -84,9 +84,13 @@ class SolidityJudge extends BaseJudge {
     const contractMethods = _.chain(compiledContract.abi).filter({ type: 'function' }).map('name').value()
     const contractEvents = _.chain(compiledContract.abi).filter({ type: 'event' }).map('name').value()
 
+    props.methods = props.methods || []
+
     if (!this.contractHas(contractMethods, props.methods)) {
       throw new FunctionalityError(`Contract methods are missing!. Expecting: ${JSON.stringify(props.methods)}`)
     }
+
+    props.events = props.events || []
 
     if (!this.contractHas(contractEvents, props.events)) {
       throw new FunctionalityError(`Contract events are missing!. Expecting: ${JSON.stringify(props.events)}`)
