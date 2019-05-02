@@ -8,6 +8,7 @@ import Avatar from '@material-ui/core/Avatar'
 import { Close } from '@material-ui/icons/'
 import { Link, Redirect } from 'react-router-dom'
 import classNames from 'classnames'
+import SolutionsTable from '../../components/Table/SolutionsTable'
 
 import '../../assets/scss/main.scss'
 
@@ -46,10 +47,22 @@ class Profile extends Component {
     }
   }
 
+  formatSolution (solution) {
+    solution = solution.split('\n')
+    return solution.map((el, index) => (
+      <span key={index}>
+        {el.replace(/\s/g, '\u00a0')}
+        <br />
+      </span>
+    ))
+  }
+
   render () {
     if (_.isEmpty(this.props.user)) {
       return <Redirect from={this.props.path} to='/' />
     }
+
+    const solutions = this.props.user.solutions.map(s => ({ ...s, solution: this.formatSolution(s.solution) }))
 
     return (
       <div className='app user-profile'>
@@ -99,6 +112,16 @@ class Profile extends Component {
                         this.props.user.statistics.totalAssignments) * 100)}%
                         ({this.props.user.statistics.totalSolved} of {this.props.user.statistics.totalAssignments})
                       </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className='profile-row'>
+                <div className='row-header'>Solutions</div>
+                <div className='row-info'>
+                  <div className='row-info-wrapper'>
+                    <div className='row-info-entry'>
+                      <SolutionsTable rows={solutions} labels={['Name', 'Solution']} />
                     </div>
                   </div>
                 </div>
