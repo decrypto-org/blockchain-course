@@ -1,3 +1,4 @@
+const logger = require('../config/winston')
 const util = require('util')
 const { isString } = require('./judge-helpers')
 
@@ -79,9 +80,8 @@ class BaseJudge {
       return await this.judge(...params)
     }
     catch (e) {
-      if (e instanceof IncorrectSolutionError) {
-        return { grade: 0, msg: e.message }
-      }
+      logger.info('Judge raised error: ' + e.message + '\n' + e.stack)
+      return { grade: 0, msg: e.message }
     }
   }
 
