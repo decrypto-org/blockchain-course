@@ -1,4 +1,4 @@
-const winston = require('winston')
+const logger = require('../config/winston')
 const express = require('express')
 const passport = require('passport')
 const router = express.Router()
@@ -19,7 +19,7 @@ router.get(
 )
 router.get('/logout', (req, res) => {
   if (req.user) {
-    winston.log('debug', 'Logging out user', req.user)
+    logger.debug(`Logging out user ${req.user}`)
     req.session.destroy()
     res.clearCookie('connect.sid')
     return res.json({ msg: 'Logged out' })
