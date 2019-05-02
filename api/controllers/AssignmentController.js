@@ -87,7 +87,7 @@ module.exports = class AssignmentController extends classMixin(OrderedDataContro
     const judge = new assignment.Judge(assignment.judge, req.user)
 
     try {
-      judgement = await judge.judge(aux, req.user, assignment.Judge, solution)
+      judgement = await judge.performJudgement(aux, req.user, assignment.Judge, solution)
       await this.updateSolution(req, parameterizedAssignment, solution)
       await this.updateSolved(judgement, parameterizedAssignment)
       return judgement
