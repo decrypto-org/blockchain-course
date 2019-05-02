@@ -11,6 +11,11 @@ const assignments = {}
 const validJudges = ['BaseJudge', 'SolidityJudge']
 
 loadAssignments(ASSIGNMENT_FOLDER, (file) => {
+  if (path.basename(file)[0] == '_') {
+    logger.debug('Skipping masked assignment file', { file })
+    return
+  }
+
   const assignment = require(file)
 
   if (!assignment.prototype) {
