@@ -1,15 +1,15 @@
-const winston = require('winston')
+const logger = require('../config/winston')
 const passport = require('passport')
 const GitHubStrategy = require('./github')
 const { User } = require('blockchain-course-db').models
 
 passport.serializeUser((user, done) => {
-  winston.log('debug', 'Serializing user', { user })
+  logger.debug(`Serializing user ${user}`)
   done(null, user.id)
 })
 
 passport.deserializeUser(async (id, done) => {
-  winston.log('debug', 'Deserializing user', { id })
+  logger.debug(`Deserializing user ${id}`)
   done(null, await User.findByPk(id))
 })
 

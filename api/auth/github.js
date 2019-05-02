@@ -1,4 +1,4 @@
-const winston = require('winston')
+const logger = require('../config/winston')
 const GitHubStrategy = require('passport-github')
 const { User } = require('blockchain-course-db').models
 
@@ -9,7 +9,7 @@ const strategy = new GitHubStrategy(
     callbackURL: process.env.GITHUB_CALLBACK_URL
   },
   async (authToken, refreshToken, profile, cb) => {
-    winston.log('debug', 'Received profile from GitHub', { profile })
+    logger.debug(`Received profile from GitHub ${profile}`)
     const defaults = {
       username: profile.username,
       email: '',
@@ -33,9 +33,9 @@ const strategy = new GitHubStrategy(
       }
     )
     if (created) {
-      winston.log('debug', 'Registered new user', { user })
+      logger.debug(`Registered new user ${user}`)
     } else {
-      winston.log('debug', 'Logged in existing user', { user })
+      logger.debug(`Logged in existing user ${user}`)
     }
     return cb(null, user)
   }
