@@ -199,6 +199,14 @@ class SolidityJudge extends BaseJudge {
 
     return this.contractInstance.methods[method](...methodArgs).call({ ...txArgs })
   }
+
+  toBytes32 (value) {
+    return this.web3.utils.padRight(this.web3.utils.utf8ToHex(value), 64)
+  }
+
+  fromBytes32 (value) {
+    return this.web3.utils.hexToUtf8(value)
+  }
 }
 
 SolidityJudge.isAsync = true
