@@ -11,6 +11,13 @@ const PASS = {
   msg: 'Congratulations! Solution correct.'
 }
 
+class IncorrectSolutionError extends Error {
+  constructor (msg) {
+    super(msg)
+    this.message = msg
+  }
+}
+
 class BaseJudge {
   constructor (assignment, user) {
     this.assignment = assignment
@@ -59,11 +66,26 @@ class BaseJudge {
     return aux
   }
 
+  fail (msg) {
+    throw new IncorrectSolutionError(msg)
+  }
+
   /*
    * Returns false, if solution is not a valid solution
    * or integer, designating the grade of the solution
    */
-  judge (solution) {
+  async performJudgement (...params) {
+    try {
+      return await this.judge(...params)
+    }
+    catch (e) {
+      if (e instanceof IncorrectSolutionError) {
+        return { grade: 0, msg: e.message }
+      }
+    }
+  }
+
+  async judge (aux, user, assignment, solution) {
     throw new Error('Not implemented')
   }
 

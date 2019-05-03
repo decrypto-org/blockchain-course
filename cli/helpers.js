@@ -168,7 +168,7 @@ const handleJudgement = async (argv, model, key) => {
   _requireResourceFound(assignment)
 
   const judge = new assignment.Judge(assignment.Judge, argv.user)
-  const judgement = await judge.judge(argv.aux, argv.user, assignment.Judge, argv.solution)
+  const judgement = await judge.performJudgement(argv.aux, argv.user, assignment.Judge, argv.solution)
 
   console.log(judgement)
 

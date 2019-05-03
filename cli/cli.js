@@ -11,6 +11,7 @@ yargs // eslint-disable-line no-unused-expressions
   .fail((msg, err) => {
     if (err) {
       console.error(`An error has occured: ${err.message}`.red)
+      console.error(`Callstack:\n`, err)
       process.exit(1)
     }
 
