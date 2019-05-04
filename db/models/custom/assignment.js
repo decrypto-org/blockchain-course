@@ -11,6 +11,11 @@ const assignments = {}
 const validJudges = ['BaseJudge', 'SolidityJudge']
 
 loadAssignments(ASSIGNMENT_FOLDER, (file) => {
+  if (path.basename(file)[0] == '_') {
+    logger.debug('Skipping masked assignment file', { file })
+    return
+  }
+
   const assignment = require(file)
 
   if (!assignment.prototype) {
@@ -18,7 +23,7 @@ loadAssignments(ASSIGNMENT_FOLDER, (file) => {
   }
 
   if (!(validJudges.includes(Object.getPrototypeOf(assignment.prototype.constructor).name))) {
-    logger.info('Skipping non-assignment', { file })
+    logger.debug('Skipping non-assignment', { file })
     return
   }
 
