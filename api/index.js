@@ -3,6 +3,7 @@ require('dotenv').config()
 const LISTEN_PORT = process.env.PORT || 3000
 const express = require('express')
 const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser')
 const routes = require('./routes')
 const passport = require('./auth')
 const logger = require('./config/winston')
@@ -20,6 +21,7 @@ const { setupWss } = require('./ws-server.js')
   app.use(cors({ credentials: true, origin: process.env.APP_URL, methods: ['GET', 'PUT', 'POST'] }))
   app.use(bodyParser.json())
   app.use(bodyParser.urlencoded({ extended: true }))
+  app.use(cookieParser())
 
   const sessionMiddleware = session({
     secret: process.env.APP_SECRET || 'blockchain course default session secret',
