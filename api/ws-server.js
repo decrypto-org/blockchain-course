@@ -6,9 +6,6 @@ const { appEmitterBus } = require('./emitters.js')
 const setupWss = async (server, sessionMiddleware) => {
   const io = new Server(server)
 
-  io.use((socket, next) => {
-    sessionMiddleware(socket.request, socket.request.res, next)
-  })
 
   io.origins([process.env.APP_URL])
 
