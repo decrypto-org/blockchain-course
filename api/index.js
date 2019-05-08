@@ -58,6 +58,6 @@ const { setupWss } = require('./ws-server.js')
     logger.info('Blockchain Course API server running on port %d', LISTEN_PORT)
   })
 
-  setupWss(server, sessionMiddleware)
+  setupWss(server, sessionStore)
   process.on('warning', e => console.warn(e.stack))
 })()

@@ -1,12 +1,20 @@
 const Server = require('socket.io')
+const passportSocketIo = require('passport.socketio')
 
+const passport = require('./auth')
 const logger = require('./config/winston')
 const { appEmitterBus } = require('./emitters.js')
 
-const setupWss = async (server, sessionMiddleware) => {
+const setupWss = async (server, sessionStore) => {
   const io = new Server(server)
 
 
+  io.use(passportSocketIo.authorize({
+    cookieParser: require('cookie-parser'),
+    secret: process.env.APP_SECRET || 'blockchain course default session secret',
+    store: sessionStore,
+    passport
+  }))
 
   io.on('connection', (ws) => {
     logger.info('Web client connected.')
