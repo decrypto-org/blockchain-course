@@ -38,6 +38,7 @@
     "npm": "^6.0.1",
     "passport": "^0.4.0",
     "passport-github": "^1.1.0",
+    "passport.socketio": "^3.7.0",
     "pg": "^7.4.3",
     "sequelize": "^5.8.2",
     "sequelize-cli": "^5.4.0",
