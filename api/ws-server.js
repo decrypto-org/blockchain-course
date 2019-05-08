@@ -5,9 +5,10 @@ const passport = require('./auth')
 const logger = require('./config/winston')
 const { appEmitterBus } = require('./emitters.js')
 
+const clients = {}
+
 const setupWss = async (server, sessionStore) => {
   const io = new Server(server)
-
 
   io.use(passportSocketIo.authorize({
     cookieParser: require('cookie-parser'),
@@ -16,13 +17,14 @@ const setupWss = async (server, sessionStore) => {
     passport
   }))
 
-  io.on('connection', (ws) => {
-    logger.info('Web client connected.')
+  io.on('connection', (client) => {
+    logger.info(`Web client connected: ID: ${client.id}`)
+    const user = { ...client.request.user.dataValues }
+    clients[user.id] = { socketID: client.id, user }
 
-    appEmitterBus.on('solution-judgement-available', (msg) => {
-      if (msg) {
-        ws.emit('solution-judgement-available', { message: 'solution', judgement: msg })
-      }
+    client.on('disconnect', (reason) => {
+      logger.info(`Web client disconnected: ${reason}`)
+      delete clients[user.id]
     })
   })
 }
