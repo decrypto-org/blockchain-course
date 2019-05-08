@@ -7,7 +7,6 @@ const setupWss = async (server, sessionMiddleware) => {
   const io = new Server(server)
 
 
-  io.origins([process.env.APP_URL])
 
   io.on('connection', (ws) => {
     logger.info('Web client connected.')
