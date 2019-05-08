@@ -3,6 +3,7 @@ import thunkMiddleware from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 
 import appReducers from './reducers'
+import authService from './utils/AuthService'
 
 const loggerMiddleware = createLogger()
 
@@ -11,7 +12,8 @@ const configureStore = () => {
     appReducers,
     applyMiddleware(
       thunkMiddleware,
-      loggerMiddleware
+      loggerMiddleware,
+      authService.logoutMiddleware
     )
   )
 }

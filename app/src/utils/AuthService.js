@@ -13,8 +13,17 @@ const logout = () => {
   return cookies.remove('connect.sid')
 }
 
+const logoutMiddleware = store => next => action => {
+  if (action === 'LOGOUT_SUCCESS') {
+    logout()
+  }
+
+  next(action)
+}
+
 export default {
   getSession,
   isAuthenticated,
-  logout
+  logout,
+  logoutMiddleware
 }
