@@ -103,15 +103,15 @@ module.exports = class AssignmentController extends classMixin(OrderedDataContro
 
   async processSolution (params) {
     if (params.assignment.Judge.isAsync) {
-      const assignmentDescription = { name: params.assignment.metadata.name, title: params.assignment.metadata.title }
+      const assignmentDescription = { name: params.assignment.metadata.name, title: params.assignment.metadata.title, userId: params.parameterizedAssignment.dataValues.studentId }
       params.res.status(202).send({ code: 202, judgement: { grade: 0, msg: 'Solution is being processed. Please wait!' } })
 
       try {
         let judgement = await this.evaluateSolution(params)
-        appEmitterBus.emit('solution-judgement-available', { ...judgement, assignment: assignmentDescription })
+        appEmitterBus.emit('solution-judgement-available', { judgement, assignment: assignmentDescription, currentUser: { ...params.req.user.dataValues } })
       } catch (err) {
         let judgement = { grade: 0, msg: err.message }
-        appEmitterBus.emit('solution-judgement-available', { ...judgement, assignment: assignmentDescription })
+        appEmitterBus.emit('solution-judgement-available', { judgement, assignment: assignmentDescription, currentUser: { ...params.req.user.dataValues } })
       }
     } else {
       try {
