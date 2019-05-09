@@ -27,6 +27,12 @@ const setupWss = async (server, sessionStore) => {
       delete clients[user.id]
     })
   })
+
+  appEmitterBus.on('solution-judgement-available', (data) => {
+    if (data && data.currentUser && data.assignment && clients[data.assignment.userId]) {
+      io.to(clients[data.assignment.userId].socketID).emit('solution-judgement-available', { message: 'solution', judgement: { assignment: data.assignment, ...data.judgement } })
+    }
+  })
 }
 
 module.exports = { setupWss }
