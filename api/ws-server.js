@@ -20,7 +20,12 @@ const setupWss = async (server, sessionStore) => {
   io.on('connection', (client) => {
     logger.info(`Web client connected: ID: ${client.id}`)
     const user = { ...client.request.user.dataValues }
-    clients[user.id] = { socketID: client.id, user }
+
+    if (!clients[user.id]) {
+      clients[user.id] = { sockets: [], user }
+    }
+
+    clients[user.id].sockets.push(client.id)
 
     client.on('disconnect', (reason) => {
       logger.info(`Web client disconnected: ${reason}`)
@@ -29,8 +34,10 @@ const setupWss = async (server, sessionStore) => {
   })
 
   appEmitterBus.on('solution-judgement-available', (data) => {
-    if (data && data.currentUser && data.assignment && clients[data.assignment.userId]) {
-      io.to(clients[data.assignment.userId].socketID).emit('solution-judgement-available', { message: 'solution', judgement: { assignment: data.assignment, ...data.judgement } })
+    if (data && data.assignment && clients[data.assignment.userId]) {
+      for (let socket of clients[data.assignment.userId].sockets) {
+        io.to(socket).emit('solution-judgement-available', { message: 'solution', judgement: { assignment: data.assignment, ...data.judgement } })
+      }
     }
   })
 }
