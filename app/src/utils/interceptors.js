@@ -43,8 +43,8 @@ const setupInterceptors = (store) => {
       store.dispatch(notify({ content: '404! The page you are looking for can\'t be found' }))
     }
 
-    if (error.response.status === 500) {
-      store.dispatch(notify({ content: `Request failed with status code 500: ${error.message}` }))
+    if (error.response.status >= 500) {
+      store.dispatch(notify({ content: `Request failed with status code ${error.response.status}: ${error.message}` }))
     }
 
     return Promise.reject(error)

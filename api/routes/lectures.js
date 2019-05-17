@@ -1,6 +1,12 @@
 const { createSimpleRouter, createDownloadableRoute } = require('../utils/routes')
 
-let { router, controller } = createSimpleRouter('LectureController', ':name', 'name')
+const opts = {
+  controllerName: 'LectureController',
+  path: ':name',
+  param: 'name'
+}
+
+let { router, controller } = createSimpleRouter({ ...opts })
 
 router = createDownloadableRoute(router, controller)
 

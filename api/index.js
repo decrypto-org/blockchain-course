@@ -3,6 +3,7 @@ require('dotenv').config()
 const LISTEN_PORT = process.env.PORT || 3000
 const express = require('express')
 const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser')
 const routes = require('./routes')
 const passport = require('./auth')
 const logger = require('./config/winston')
@@ -10,6 +11,8 @@ const app = express()
 const helmet = require('helmet')
 const cors = require('cors')
 const session = require('express-session')
+const SequelizeStore = require('connect-session-sequelize')(session.Store)
+const { sequelize } = require('blockchain-course-db').models
 const { loginRequired } = require('./middlewares/authentication')
 const { HTTPErrorHandler } = require('./middlewares/error')
 const { setupWss } = require('./ws-server.js')
@@ -20,6 +23,11 @@ const { setupWss } = require('./ws-server.js')
   app.use(cors({ credentials: true, origin: process.env.APP_URL, methods: ['GET', 'PUT', 'POST'] }))
   app.use(bodyParser.json())
   app.use(bodyParser.urlencoded({ extended: true }))
+  app.use(cookieParser())
+
+  const sessionStore = new SequelizeStore({
+    db: sequelize
+  })
 
   const sessionMiddleware = session({
     secret: process.env.APP_SECRET || 'blockchain course default session secret',
@@ -28,7 +36,8 @@ const { setupWss } = require('./ws-server.js')
     cookie: {
       httpOnly: false,
       secure: false
-    }
+    },
+    store: sessionStore
   })
 
   app.use(sessionMiddleware)
@@ -43,10 +52,12 @@ const { setupWss } = require('./ws-server.js')
 
   app.use(HTTPErrorHandler)
 
+  sessionStore.sync()
+
   const server = app.listen(LISTEN_PORT, () => {
     logger.info('Blockchain Course API server running on port %d', LISTEN_PORT)
   })
 
-  setupWss(server, sessionMiddleware)
+  setupWss(server, sessionStore)
   process.on('warning', e => console.warn(e.stack))
 })()

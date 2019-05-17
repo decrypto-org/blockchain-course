@@ -7,6 +7,7 @@ router.get(
   '/github',
   passport.authenticate('github', { scope: ['profile'] })
 )
+
 router.get(
   '/github/callback',
   passport.authenticate(
@@ -17,14 +18,17 @@ router.get(
     }
   )
 )
+
 router.get('/logout', (req, res) => {
   if (req.user) {
     logger.debug(`Logging out user ${req.user}`)
     req.session.destroy()
+    req.logout()
     res.clearCookie('connect.sid')
-    return res.json({ msg: 'Logged out' })
+    return res.status(200).json({})
   }
-  return res.json({ msg: 'You are not logged in' })
+
+  return res.status(403).json({ error: { status: 403, message: 'Unauthorized action! Please login.' } })
 })
 
 module.exports = router

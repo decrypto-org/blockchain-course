@@ -1,6 +1,12 @@
 const { createSimpleRouter, createDownloadableRoute } = require('../utils/routes')
 
-let { router, controller } = createSimpleRouter('AssignmentController', ':name', 'name')
+const opts = {
+  controllerName: 'AssignmentController',
+  path: ':name',
+  param: 'name'
+}
+
+let { router, controller } = createSimpleRouter({ ...opts })
 
 router.post(
   '/:name/solution',
