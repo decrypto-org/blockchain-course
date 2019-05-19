@@ -109,6 +109,8 @@
 }
 
 .toast-message {
+  word-break: break-all;
+  word-wrap: break-word;
   margin: 3px 0 0 0;
 }
 
