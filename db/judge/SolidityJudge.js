@@ -186,7 +186,7 @@ class SolidityJudge extends BaseJudge {
 
   send (method, methodArgs = [], txArgs = {}) {
     if (_.isEmpty(this.contractInstance.methods[method])) {
-      throw new Error('Method is not defined!')
+      throw new Error(`${method}: Method is not defined!`)
     }
 
     return this.ensureConfirmed(this.contractInstance.methods[method](...methodArgs).send, { ...txArgs })
@@ -194,7 +194,7 @@ class SolidityJudge extends BaseJudge {
 
   call (method, methodArgs = [], txArgs = {}) {
     if (_.isEmpty(this.contractInstance.methods[method])) {
-      throw new Error('Method is not defined!')
+      throw new Error(`${method}: Method is not defined!`)
     }
 
     return this.contractInstance.methods[method](...methodArgs).call({ ...txArgs })
