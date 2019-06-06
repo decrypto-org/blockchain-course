@@ -176,6 +176,10 @@ const handleJudgement = async (argv, model, key) => {
 }
 
 const constructTable = (head, rows) => {
+  if (!rows) {
+    rows = []
+  }
+
   const table = new Table({
     head
   })
