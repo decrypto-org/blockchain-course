@@ -35,7 +35,7 @@ class SolidityJudge extends BaseJudge {
 
     let provider = testnet ? TESTNET_PROVIDER : PROVIDER
 
-    this.web3 = new Web3(new Web3.providers.WebsocketProvider(provider))
+    this.web3 = new Web3(new Web3.providers.WebsocketProvider(provider), null, { transactionConfirmationBlocks: 1 })
   }
 
   static get ZERO_ADDRESS () {
@@ -114,7 +114,6 @@ class SolidityJudge extends BaseJudge {
         .send({ from, gas: 2000000 })
         .on('receipt', (receipt) => {
           const instance = new this.web3.eth.Contract(ABI, receipt.contractAddress)
-          this.contractInstance = instance
           resolve(instance)
         })
         .on('error', reject)
@@ -185,15 +184,15 @@ class SolidityJudge extends BaseJudge {
   }
 
   send (method, methodArgs = [], txArgs = {}) {
-    if (_.isEmpty(this.contractInstance.methods[method])) {
+    if (!_.isFunction(this.contractInstance.methods[method])) {
       throw new Error(`${method}: Method is not defined!`)
     }
 
-    return this.ensureConfirmed(this.contractInstance.methods[method](...methodArgs).send, { ...txArgs })
+    return this.contractInstance.methods[method](...methodArgs).send({ ...txArgs })
   }
 
   call (method, methodArgs = [], txArgs = {}) {
-    if (_.isEmpty(this.contractInstance.methods[method])) {
+    if (!_.isFunction(this.contractInstance.methods[method])) {
       throw new Error(`${method}: Method is not defined!`)
     }
 
