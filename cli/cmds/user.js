@@ -27,6 +27,7 @@ const getAssignments = async (argv) => {
 
 const getSolutions = async (argv) => {
   const { ParameterizedAssignment, Solution } = require('blockchain-course-db').models
+  const solvedOnly = argv['solved-only'] === 'undefined'? false: argv.solvedOnly
 
   let res = await ParameterizedAssignment.findAll({
     include: [{
@@ -37,16 +38,21 @@ const getSolutions = async (argv) => {
     where: { studentId: argv.id }
   })
 
-  res = res.map(row => (
-    [
-      row.dataValues.assignmentName,
-      row.dataValues.solved,
-      _.isEmpty(row.dataValues.Solutions) ? '' : row.dataValues.Solutions[0].dataValues.data
-    ]
-  ))
+  res = res.map(row => {
+    const ret = [row.dataValues.assignmentName, row.dataValues.solved]
+    if (!solvedOnly) {
+      ret.push(_.isEmpty(row.dataValues.Solutions) ? '' : row.dataValues.Solutions[0].dataValues.data)
+    }
+    return ret
+  })
+
+  const columnNames = ['Assignment Name', 'Solved']
+  if (!solvedOnly) {
+    columnNames.push('Solution')
+  }
 
   const table = constructTable(
-    ['Assignment Name', 'Solution', 'Solved'],
+    columnNames,
     res
   )
 
