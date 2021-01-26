@@ -9,6 +9,7 @@ import singleAssignment from './assignment'
 import notification from './notifications'
 import request from './requests'
 import auth from './auth'
+import stats from './stats'
 
 const app = combineReducers({
   user,
@@ -20,7 +21,8 @@ const app = combineReducers({
   request,
   auth,
   groups,
-  group
+  group,
+  stats
 })
 
 export default app

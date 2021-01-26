@@ -6,10 +6,12 @@ import AssignmentList from 'views/Assignments/AssignmentList'
 import SingleAssignment from 'views/Assignments/Assignment'
 import LoginCallback from 'views/Callbacks/LoginCallback.js'
 import Home from 'views/Home/Home.js'
+import HallOfFame from 'views/Stats/HallOfFame'
 
 import {
   Class,
-  Assignment
+  Assignment,
+  Poll
 } from '@material-ui/icons/'
 
 const appRoutes = [
@@ -48,6 +50,13 @@ const appRoutes = [
   {
     path: '/loginCallback',
     component: LoginCallback
+  },
+  {
+    path: '/hall-of-fame',
+    sidebarName: 'Hall of Fame',
+    icon: Poll,
+    component: HallOfFame,
+    show: true
   }
 ]
 
